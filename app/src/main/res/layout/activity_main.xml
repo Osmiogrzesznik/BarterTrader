@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="0dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="0dp"
+        android:text="Rules:\n- do not delete this activity(this will be for quick testing)\n- add your own Activity (Basic Activity)\n- give meaningful id's to your views(MainNavTestBtns,edittexts,and so on) that are not likely to repeat\n    no &quot;Button3&quot; but  &quot;PostNewItem_UploadImageButton&quot; if your activity is PostNewItemActivity\n    no &quot;EditText3&quot; but &quot;Login_userEmail&quot; if your activity is LoginActivity\n    please, this will reduce name collision errors\n\n    Use MainNavTestBtns below to navigate to your activities\n"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/MainNavTestBtn19"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:background="#D5BECAB9"
+        android:includeFontPadding="false"
+        android:onClick="GO_TO_activity_SellerReviews"
+        android:padding="0dp"
+        android:text="SellerReviews"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/MainNavTestBtn15"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/MainNavTestBtn5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:background="#D5BECAB9"
+        android:includeFontPadding="false"
+        android:onClick="GO_TO_activity_MyReviews"
+        android:padding="0dp"
+        android:text="MyReviews"
+        app:layout_constraintBottom_toTopOf="@+id/MainNavTestBtn19"
+        app:layout_constraintEnd_toStartOf="@+id/MainNavTestBtn3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/MainNavTestBtn2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="GO_TO_activity_Register"
+        android:padding="0dp"
+        android:text="Register"
+        app:layout_constraintBottom_toTopOf="@+id/MainNavTestBtn10"
+        app:layout_constraintEnd_toStartOf="@+id/MainNavTestBtn14"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/MainNavTestBtn14"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="GO_TO_activity_Welcome"
+        android:padding="0dp"
+        android:text="Welcome"
+        app:layout_constraintBottom_toTopOf="@+id/MainNavTestBtn4"
+        app:layout_constraintEnd_toStartOf="@+id/MainNavTestBtn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/MainNavTestBtn2"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/MainNavTestBtn17"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="GO_TO_activity_SellerProfile"
+        android:padding="0dp"
+        android:text="SellerProfile"
+        app:layout_constraintBottom_toTopOf="@+id/MainNavTestBtn16"
+        app:layout_constraintEnd_toStartOf="@+id/MainNavTestBtn9"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/MainNavTestBtn10" />
+
+    <Button
+        android:id="@+id/MainNavTestBtn10"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="GO_TO_activity_MyProfile"
+        android:padding="0dp"
+        android:text="MyProfile"
+        app:layout_constraintBottom_toTopOf="@+id/MainNavTestBtn17"
+        app:layout_constraintEnd_toStartOf="@+id/MainNavTestBtn4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/MainNavTestBtn2" />
+
+    <Button
+        android:id="@+id/MainNavTestBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="GO_TO_activity_Login"
+        android:padding="0dp"
+        android:text="Login"
+        app:layout_constraintBottom_toTopOf="@+id/MainNavTestBtn11"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/MainNavTestBtn14"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/MainNavTestBtn18"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="GO_TO_activity_Chat"
+        android:padding="0dp"
+        android:text="Chat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/MainNavTestBtn16"
+        app:layout_constraintTop_toBottomOf="@+id/MainNavTestBtn8" />
+
+    <Button
+        android:id="@+id/MainNavTestBtn16"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="GO_TO_activity_ItemDetails"
+        android:padding="0dp"
+        android:text="ItemDetails"
+        app:layout_constraintEnd_toStartOf="@+id/MainNavTestBtn18"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/MainNavTestBtn17" />
+
+    <Button
+        android:id="@+id/MainNavTestBtn8"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="GO_TO_activity_Inbox"
+        android:padding="0dp"
+        android:text="Inbox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/MainNavTestBtn9"
+        app:layout_constraintTop_toBottomOf="@+id/MainNavTestBtn11" />
+
+    <Button
+        android:id="@+id/MainNavTestBtn11"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="GO_TO_activity_PostNewItem"
+        android:padding="0dp"
+        android:text="PostNewItem"
+        app:layout_constraintBottom_toTopOf="@+id/MainNavTestBtn8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/MainNavTestBtn4"
+        app:layout_constraintTop_toBottomOf="@+id/MainNavTestBtn" />
+
+    <Button
+        android:id="@+id/MainNavTestBtn4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="GO_TO_activity_Dashboard"
+        android:padding="0dp"
+        android:text="Dashboard"
+        app:layout_constraintBottom_toTopOf="@+id/MainNavTestBtn9"
+        app:layout_constraintEnd_toStartOf="@+id/MainNavTestBtn11"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/MainNavTestBtn10"
+        app:layout_constraintTop_toBottomOf="@+id/MainNavTestBtn14" />
+
+    <Button
+        android:id="@+id/MainNavTestBtn9"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="GO_TO_activity_Categories"
+        android:padding="0dp"
+        android:rotation="6"
+        android:rotationX="6"
+        android:rotationY="20"
+        android:shadowColor="#1239EE"
+        android:shadowRadius="10"
+        android:text="Categories"
+        app:layout_constraintEnd_toStartOf="@+id/MainNavTestBtn8"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/MainNavTestBtn17"
+        app:layout_constraintTop_toBottomOf="@+id/MainNavTestBtn4" />
+
+    <Button
+        android:id="@+id/MainNavTestBtn15"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:background="#D5D3C2C2"
+        android:includeFontPadding="false"
+        android:onClick="GO_TO_activity_ItemsBySeller"
+        android:padding="0dp"
+        android:text="ItemsBySeller"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/MainNavTestBtn19" />
+
+    <Button
+        android:id="@+id/MainNavTestBtn7"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:background="#D5D3C2C2"
+        android:includeFontPadding="false"
+        android:onClick="GO_TO_activity_ItemsByMe"
+        android:padding="0dp"
+        android:text="ItemsByMe"
+        app:layout_constraintBottom_toTopOf="@+id/MainNavTestBtn3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/MainNavTestBtn5" />
+
+    <Button
+        android:id="@+id/MainNavTestBtn3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:background="#D5D3C2C2"
+        android:includeFontPadding="false"
+        android:onClick="GO_TO_activity_ItemsByCategory"
+        android:padding="0dp"
+        android:text="ItemsByCategory"
+        app:layout_constraintBottom_toTopOf="@+id/MainNavTestBtn15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/MainNavTestBtn5" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:background="#D5D3C2C2"
+        android:includeFontPadding="false"
+        android:padding="0dp"
+        android:text="these may be one"
+        app:layout_constraintBottom_toTopOf="@+id/MainNavTestBtn7"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:layout_marginBottom="2dp"
+        android:background="#D5BECAB9"
+        android:includeFontPadding="false"
+        android:padding="0dp"
+        android:text="these may be one"
+        app:layout_constraintBottom_toTopOf="@+id/MainNavTestBtn5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
