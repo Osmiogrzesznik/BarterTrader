@@ -98,4 +98,9 @@ public class MainActivity extends AppCompatActivity {
 //        Intent intent = new Intent(this, ItemsBySellerActivity.class);
 //        startActivity(intent);
     }
+
+    public void GOT_TO_WatchItemVideoActivity(View view) {
+//        Intent intent = new Intent(this, WatchItemVideoActivity.class);
+//        startActivity(intent);
+    }
 }

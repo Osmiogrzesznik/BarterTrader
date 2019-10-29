@@ -260,4 +260,14 @@
         app:layout_constraintBottom_toTopOf="@+id/MainNavTestBtn5"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/MainNavTestBtn20"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="GOT_TO_WatchItemVideoActivity"
+        android:text="Bonus:WatchItemVideoActivity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/MainNavTestBtn16" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
