@@ -11,40 +11,18 @@ import java.util.List;
 public class Category {
     public static String[] CATEGORIES = {
             "clothes",
-//            "CD DVD",
-//            "sport",
             "gadgets",
             "tools",
             "toys",
-//            "phones",
-//            "watches",
-            "bicycles",
-//            "cameras",
-//            "for pets",
-//            "newborn",
-//            "cars",
-//            "no money service",
-//            "nomoney",
-//            "service"
+//            "bicycles",
     };
 
     public static int[] ICONS = {
             R.drawable.ic_cat_clothes,
-//            R.drawable.ic_cat_cd_dvd,
-//            R.drawable.ic_cat_sports2,
             R.drawable.ic_cat_gadgets,
             R.drawable.ic_cat_tools,
             R.drawable.ic_cat_toys,
-//            R.drawable.ic_cat_phones,
-//            R.drawable.ic_cat_watches,
-            R.drawable.ic_cat_bicycles,
-//            R.drawable.ic_cat_cameras,
-//            R.drawable.ic_cat_for_pets,
-//            R.drawable.ic_cat_newborn,
-//            R.drawable.ic_cat_cars,
-//            R.drawable.ic_btapp_logo,
-//            R.drawable.ic_cat_nomoneyservice2,
-//            R.drawable.ic_cat_nomoneyservice
+//            R.drawable.ic_cat_bicycles,
     };
 
     private static ArrayList<Category> ALL_CATEGORIES;
