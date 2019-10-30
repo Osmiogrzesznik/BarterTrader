@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">BarterTraderAppGithubAllSetUp</string>
+
+    <string-array name="Cathegories">
+        <item>CathegoryONE</item>
+        <item>CathegoryTWO</item>
+        <item>CathegoryTHREE</item>
+        <item>CathegoryFOUR</item>
+        <item>CathegoryFIVE</item>
+    </string-array>
+
 </resources>
