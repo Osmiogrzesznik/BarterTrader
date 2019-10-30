@@ -27,13 +27,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void GO_TO_activity_Login(View view) {
-//        Intent intent = new Intent(this, LoginActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
     public void GO_TO_activity_Register(View view) {
-//        Intent intent = new Intent(this, RegisterActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
     }
 
     public void GO_TO_activity_Dashboard(View view) {
