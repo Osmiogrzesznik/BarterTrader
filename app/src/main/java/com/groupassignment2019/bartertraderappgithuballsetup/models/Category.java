@@ -10,11 +10,27 @@ import java.util.List;
 
 public class Category {
     public static String[] CATEGORIES = {
-            "clothes",
-            "gadgets",
-            "tools",
-            "toys",
+            "Clothes",
+            "Gadgets",
+            "Tools",
+            "Toys",
 //            "bicycles",
+    };
+
+    public static String[] DESCRIPTIONS = {
+            "Clothes, shoes, sportwear",
+            "Mobile devices, consoles, electronics",
+            "DIY, materials, equipment",
+            "For Kids and For Grownups",
+//            "bicycles",
+    };
+
+    public static int[] BACKGROUND_DRAWABLES = {
+            R.drawable.back_bright,
+            R.drawable.back_medium,
+            R.drawable.back_dark,
+            R.drawable.back_darkest,
+//            R.drawable.ic_cat_bicycles,
     };
 
     public static int[] ICONS = {
@@ -36,7 +52,7 @@ public class Category {
 
         for (int i = 0; i < CATEGORIES.length ; i++) {
 
-            ALL_CATEGORIES.add(new Category(CATEGORIES[i], ICONS[i]));
+            ALL_CATEGORIES.add(new Category(CATEGORIES[i], ICONS[i], BACKGROUND_DRAWABLES[i], DESCRIPTIONS[i]));
 
         }
 
@@ -44,12 +60,13 @@ public class Category {
     }
 
 
-    String categoryTitle;
-    Uri imageUri;
+    public String categoryTitle;
+    public Uri imageUri;
 
 
-
-    int imageResource;
+    public int backgroundDrawableId;
+    public int imageResource;
+    public String description;
 
     public Uri getImageUri() {
         return imageUri;
@@ -59,9 +76,12 @@ public class Category {
         this.imageUri = imageUri;
     }
 
-    public Category(String categoryTitle, int imageResource) {
+
+    public Category(String categoryTitle, int imageResource,int backgroundDrawableId, String description) {
         this.categoryTitle = categoryTitle;
+        this.backgroundDrawableId = backgroundDrawableId;
         this.imageResource = imageResource;
+        this.description = description;
     }
 
     public int getImageResource() {

@@ -94,7 +94,7 @@ public class CategoriesActivity extends AppCompatActivity {
     private void prepareRecyclerView(List<Category> categories) {
         mInflater = LayoutInflater.from(this.getBaseContext());
         RecyclerView recyclerView = findViewById(R.id.reviewsRecyclerView);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false));
         adapter = new CategoryRVAdapter(mInflater, categories);
 
 

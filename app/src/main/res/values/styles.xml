@@ -28,5 +28,14 @@
         <item name="android:shadowRadius">10</item>
     </style>
 
+    <style name="titleTextViewStyle">
+        <item name="android:background">#00000000</item>
+        <item name="android:fadingEdge">horizontal|vertical</item>
+        <item name="android:fontFamily">@font/alegreya_sans</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/textGentleWhite</item>
+        <item name="android:textSize">36sp</item>
+    </style>
+
 
 </resources>

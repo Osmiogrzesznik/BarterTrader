@@ -4,4 +4,20 @@
     <color name="colorPrimaryDark">#3D0315</color>
     <color name="colorAccent">#F8400D4E</color>
     <color name="colorHintText">#92FFFFFF</color>
+    <color name="colorBrightest">#40cbc6</color>
+    <color name="colorBright">#4d9fcf</color>
+    <color name="colorMedium">#4974a9</color>
+    <color name="colorDark">#5c538c</color>
+    <color name="colorDarkest">#534266</color>
+    <color name="brightestStart">#40cbc6</color>
+    <color name="brightestEnd">#3b7b8f</color>
+    <color name="brightStart">#56b0d3</color>
+    <color name="brightEnd">#417FAD</color>
+    <color name="mediumStart">#4c82bc</color>
+    <color name="mediumEnd">#335474</color>
+    <color name="darkStart">#63529f</color>
+    <color name="darkEnd">#4A456F</color>
+    <color name="darkestStart">#604278</color>
+    <color name="darkestEnd">#4B3E5C</color>
+    <color name="textGentleWhite">#D2FFFFFF</color>
 </resources>

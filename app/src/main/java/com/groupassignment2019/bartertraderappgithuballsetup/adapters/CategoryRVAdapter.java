@@ -28,7 +28,7 @@ public class CategoryRVAdapter extends RecyclerView.Adapter<CategoryRVAdapter.Ca
     private OnItemClickListener onItemClickListener;
     private List<Category> categories;
     private List<Category> categoriesFull;
-    private Random rnd;
+    //private Random rnd;
     private LayoutInflater mInflater;
 
     public interface OnItemClickListener {
@@ -44,7 +44,7 @@ public class CategoryRVAdapter extends RecyclerView.Adapter<CategoryRVAdapter.Ca
         this.categories = categories;
         this.categoriesFull = new ArrayList<>(categories);
         this.mInflater = mInflater;
-        this.rnd = new Random();
+        //this.rnd = new Random();
 
     }
 
@@ -53,7 +53,7 @@ public class CategoryRVAdapter extends RecyclerView.Adapter<CategoryRVAdapter.Ca
     public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View cardview = mInflater
-                .inflate(R.layout.cardview_item, parent, false);
+                .inflate(R.layout.cardview_category, parent, false);
         return new CategoryViewHolder(cardview);
     }
 
@@ -64,7 +64,9 @@ public class CategoryRVAdapter extends RecyclerView.Adapter<CategoryRVAdapter.Ca
 
         holder.textViewCategoryTitle.setText(category.getCategoryTitle());
         holder.imageViewCategoryCard.setImageResource(category.getImageResource());
-        holder.categoryCardParentWrapper.setBackgroundColor(Color.argb(200, rnd.nextInt(200), rnd.nextInt(200), rnd.nextInt(200)));
+        //holder.categoryCardParentWrapper.setBackgroundColor(Color.argb(200, rnd.nextInt(200), rnd.nextInt(200), rnd.nextInt(200)));
+    holder.categoryCardParentWrapper.setBackgroundResource(category.backgroundDrawableId);
+    holder.textViewCategoryDescription.setText(category.description);
     }
 
     @Override
@@ -81,6 +83,7 @@ public class CategoryRVAdapter extends RecyclerView.Adapter<CategoryRVAdapter.Ca
     public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final AppCompatImageView imageViewCategoryCard;
         private TextView textViewCategoryTitle;
+        private TextView textViewCategoryDescription;
         private ConstraintLayout categoryCardParentWrapper;
 
         public CategoryViewHolder(@NonNull View itemView) {
@@ -88,6 +91,7 @@ public class CategoryRVAdapter extends RecyclerView.Adapter<CategoryRVAdapter.Ca
             categoryCardParentWrapper = itemView.findViewById(R.id.categoryCardParentWrapper);
             textViewCategoryTitle = itemView.findViewById(R.id.textViewCategoryTitle);
             imageViewCategoryCard = itemView.findViewById(R.id.categoryCardImageView);
+            textViewCategoryDescription = itemView.findViewById(R.id.textViewCategoryDescription);
             itemView.setOnClickListener(this);
         }
 

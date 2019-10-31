@@ -5,13 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="2dp"
-    android:elevation="3dp">
+    android:elevation="3dp"
+    app:cardBackgroundColor="#00000000"
+    app:cardElevation="20dp"
+    tools:background="#00000000">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/categoryCardParentWrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#004D40">
+        android:background="#00000000"
+        android:fadingEdge="vertical">
 
         <Button
             android:id="@+id/button"
@@ -30,11 +34,11 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:padding="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_cat_clothes" />
+            app:srcCompat="@drawable/ic_menu_black_24dp" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageView"
@@ -47,19 +51,41 @@
 
         <TextView
             android:id="@+id/textViewCategoryTitle"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="40dp"
-            android:background="#B0272727"
-            android:gravity="center"
-            android:text="Category Title"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/categoryCardImageView"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:fontFamily="@font/alegreya_sans"
+            android:gravity="left|center_vertical"
+            android:text=" MENU"
+            android:textAlignment="gravity"
+            android:textColor="@color/textGentleWhite"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/textViewCategoryDescription"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/categoryCardImageView"
-            app:layout_constraintTop_toBottomOf="@+id/categoryCardImageView" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/categoryCardImageView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/textViewCategoryDescription"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:fontFamily="@font/alegreya_sans"
+            android:gravity="left|center_vertical"
+            android:text=" Select one of categories below"
+            android:textAlignment="gravity"
+            android:textColor="@color/textGentleWhite"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/categoryCardImageView"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCategoryTitle"
+            app:layout_constraintVertical_chainStyle="packed" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
