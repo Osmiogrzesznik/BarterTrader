@@ -61,9 +61,9 @@ public class ItemsByCategoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        TextView tv = findViewById(R.id.CategoryNameTextView);
-        setContentView(R.layout.activity_items_by_category);
+       setContentView(R.layout.activity_items_by_category);
         setTitle("Choose one of items");
+        TextView tv = findViewById(R.id.Item_list_NarrowDownTitle);
 
         mInflater = LayoutInflater.from(this.getBaseContext());
         final RecyclerView recyclerView = findViewById(R.id.itemsRecyclerView);
@@ -79,7 +79,7 @@ public class ItemsByCategoryActivity extends AppCompatActivity {
         String filterType = intent_that_started_me.getExtras().getString("by");
         if (filterType.equalsIgnoreCase("category")) {
             String filterValue = intent_that_started_me.getExtras().getString(filterType);//if filter Type was category it will get category title
-//            tv.setText("ItemData: " + filterValue.toUpperCase());
+            tv.setText("Items by " + filterType+ " :" + filterValue.toUpperCase());
             Toast.makeText(ItemsByCategoryActivity.this, filterValue, Toast.LENGTH_LONG).show();
             items = new ArrayList<>();
             mDatabaseRef = FirebaseDatabase.getInstance().getReference(filterValue.toLowerCase());
