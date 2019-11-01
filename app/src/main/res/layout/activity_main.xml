@@ -116,6 +116,7 @@
 
     <Button
         android:id="@+id/MainNavTestBtn18"
+        style="@style/look_of_a_button_when_activity_is_work_in_progress"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:onClick="GO_TO_activity_Chat"
@@ -228,6 +229,7 @@
         android:onClick="GO_TO_activity_ItemsByCategory"
         android:padding="0dp"
         android:text="ItemsByCategory"
+        style="@style/look_of_a_button_when_activity_is_work_in_progress"
         app:layout_constraintBottom_toTopOf="@+id/MainNavTestBtn15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

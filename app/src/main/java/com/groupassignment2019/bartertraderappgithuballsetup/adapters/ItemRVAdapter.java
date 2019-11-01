@@ -1,7 +1,7 @@
 package com.groupassignment2019.bartertraderappgithuballsetup.adapters;
 
 
-import android.graphics.Color;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,34 +15,34 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.groupassignment2019.bartertraderappgithuballsetup.R;
-import com.groupassignment2019.bartertraderappgithuballsetup.models.Category;
+import com.groupassignment2019.bartertraderappgithuballsetup.models.ItemData;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 
-public class CategoryRVAdapter extends RecyclerView.Adapter<CategoryRVAdapter.CategoryViewHolder> implements Filterable {
+public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.ItemDataViewHolder> implements Filterable {
     private OnItemClickListener onItemClickListener;
-    private List<Category> categories;
-    private List<Category> categoriesFull;
+//    private Context mContext;
+    private List<ItemData> items;
+    private List<ItemData> itemsFull;
     //private Random rnd;
     private LayoutInflater mInflater;
 
     public interface OnItemClickListener {
-        void onItemClick(Category clickedCategory);
+        void onItemClick(ItemData clickedItemData);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
-    public CategoryRVAdapter(LayoutInflater mInflater, List<Category> categories) {
-
-        this.categories = categories;
-        this.categoriesFull = new ArrayList<>(categories);
+    public ItemRVAdapter( LayoutInflater mInflater, List<ItemData> items) {
+//this.mContext = context;
+        this.items = items;
+        this.itemsFull = new ArrayList<>(items);
         this.mInflater = mInflater;
         //this.rnd = new Random();
 
@@ -50,28 +50,30 @@ public class CategoryRVAdapter extends RecyclerView.Adapter<CategoryRVAdapter.Ca
 
     @NonNull
     @Override
-    public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ItemDataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View cardview = mInflater
-                .inflate(R.layout.cardview_category, parent, false);
-        return new CategoryViewHolder(cardview);
+                .inflate(R.layout.cardview_item_in_item_list, parent, false);
+        return new ItemDataViewHolder(cardview);
     }
 
 
     @Override
-    public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
-        Category category = categories.get(position);
-
-        holder.textViewCategoryTitle.setText(category.getCategoryTitle());
-        holder.imageViewCategoryCard.setImageResource(category.getImageResource());
-        //holder.categoryCardParentWrapper.setBackgroundColor(Color.argb(200, rnd.nextInt(200), rnd.nextInt(200), rnd.nextInt(200)));
-    holder.categoryCardParentWrapper.setBackgroundResource(category.backgroundDrawableId);
-    holder.textViewCategoryDescription.setText(category.description);
+    public void onBindViewHolder(@NonNull ItemDataViewHolder holder, int position) {
+        ItemData item = items.get(position);
+holder.textViewItemDataTitle.setText(item.getTitle());
+// TODO: 01/11/2019 should each category be colorcoded - so lists with toys have bright color, and those with tools dark
+        Picasso.get()
+                .load(item.getPictureURI())
+//                .centerCrop()
+                .fit()
+                .centerInside()
+                .into(holder.imageViewItemDataCard);
     }
 
     @Override
     public int getItemCount() {
-        return categories.size();
+        return items.size();
     }
 
 
@@ -80,18 +82,17 @@ public class CategoryRVAdapter extends RecyclerView.Adapter<CategoryRVAdapter.Ca
     /**
      * View holder
      */
-    public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private final AppCompatImageView imageViewCategoryCard;
-        private TextView textViewCategoryTitle;
-        private TextView textViewCategoryDescription;
+    public class ItemDataViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private final AppCompatImageView imageViewItemDataCard;
+        private TextView textViewItemDataTitle;
         private ConstraintLayout categoryCardParentWrapper;
 
-        public CategoryViewHolder(@NonNull View itemView) {
+        public ItemDataViewHolder(@NonNull View itemView) {
             super(itemView);
-            categoryCardParentWrapper = itemView.findViewById(R.id.categoryCardParentWrapper);
-            textViewCategoryTitle = itemView.findViewById(R.id.textViewCategoryTitle);
-            imageViewCategoryCard = itemView.findViewById(R.id.item_cardview_imageView);
-            textViewCategoryDescription = itemView.findViewById(R.id.textViewCategoryDescription);
+            categoryCardParentWrapper = itemView.findViewById(R.id.item_CardParentWrapper);
+            textViewItemDataTitle = itemView.findViewById(R.id.textViewItemTitle);
+            imageViewItemDataCard = itemView.findViewById(R.id.item_cardview_imageView);
+
             itemView.setOnClickListener(this);
         }
 
@@ -100,7 +101,7 @@ public class CategoryRVAdapter extends RecyclerView.Adapter<CategoryRVAdapter.Ca
             if (onItemClickListener != null) {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
-                    onItemClickListener.onItemClick(categories.get(position));
+                    onItemClickListener.onItemClick(items.get(position));
                 }
             }
         }
@@ -124,14 +125,14 @@ public class CategoryRVAdapter extends RecyclerView.Adapter<CategoryRVAdapter.Ca
     private Filter categoryFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<Category> filteredList = new ArrayList<>();
+            List<ItemData> filteredList = new ArrayList<>();
             if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(categoriesFull);
+                filteredList.addAll(itemsFull);
             } else {
                 String searchQuery = constraint.toString().toLowerCase().trim();
 
-                for (Category category : categoriesFull) {
-                    if (category.getCategoryTitle().toLowerCase().contains(searchQuery)) {
+                for (ItemData category : itemsFull) {
+                    if (category.getTitle().toLowerCase().contains(searchQuery)) {
                         filteredList.add(category);
                     }
                 }
@@ -146,8 +147,8 @@ public class CategoryRVAdapter extends RecyclerView.Adapter<CategoryRVAdapter.Ca
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            categories.clear();
-            categories.addAll((List) results.values);
+            items.clear();
+            items.addAll((List) results.values);
             notifyDataSetChanged();
         }
 

@@ -1,6 +1,7 @@
 package com.groupassignment2019.bartertraderappgithuballsetup;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -102,6 +103,10 @@ public class CategoriesActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Category clickedCategory) {
                 Toast.makeText(CategoriesActivity.this, "you clicked" + clickedCategory.getCategoryTitle(), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(CategoriesActivity.this, ItemsByCategoryActivity.class);
+                intent.putExtra("by","category");
+                intent.putExtra("category",clickedCategory.getCategoryTitle());//sends the name of the selected category to ItemsByAnythingActivity
+                startActivity(intent);
             }
         };
 

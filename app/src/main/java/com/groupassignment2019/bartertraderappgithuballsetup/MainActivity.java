@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void GO_TO_activity_Register(View view) {
-    //    Intent intent = new Intent(this, RegisterActivity.class);
-    //    startActivity(intent);
+            Intent intent = new Intent(this, RegisterActivity.class);
+            startActivity(intent);
     }
 
     public void GO_TO_activity_Dashboard(View view) {
@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void GO_TO_activity_PostNewItem(View view) {
- Intent intent = new Intent(this, PostNewItemActivity.class);
- startActivity(intent);
+        Intent intent = new Intent(this, PostNewItemActivity.class);
+        startActivity(intent);
     }
 
     public void GO_TO_activity_Categories(View view) {
@@ -93,8 +93,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void GO_TO_activity_ItemsByCategory(View view) {
-//        Intent intent = new Intent(this, ItemsByCategoryActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, ItemsByCategoryActivity.class);
+        intent.putExtra("by", "category");
+        intent.putExtra("category", "gadgets");
+        startActivity(intent);
     }
 
     public void GO_TO_activity_ItemsBySeller(View view) {
