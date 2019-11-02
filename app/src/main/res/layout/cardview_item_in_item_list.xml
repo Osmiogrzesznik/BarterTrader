@@ -46,8 +46,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_min="wrap"
-            app:srcCompat="@drawable/gadgets"
-            tools:srcCompat="@drawable/gadgets" />
+            app:srcCompat="@drawable/gadgets_example_pic"
+            tools:srcCompat="@drawable/gadgets_example_pic" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageView"
