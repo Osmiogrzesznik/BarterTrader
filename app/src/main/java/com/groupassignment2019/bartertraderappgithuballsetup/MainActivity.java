@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+         int bfdghgg = 6;
         //when you create your activity uncomment the appropriate code that redirects to it,
         // if your activity has different name, rename it by pressing CTRL + F6 on the file name(recommended)
         // , or rename class inside functions below (not recommended for clarity)
@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void GO_TO_activity_Dashboard(View view) {
-//        Intent intent = new Intent(this, DashboardActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, DashboardActivity.class);
+        startActivity(intent);
     }
 
     public void GO_TO_activity_MyProfile(View view) {
