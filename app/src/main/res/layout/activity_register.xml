@@ -52,16 +52,15 @@
 
             <Button
 
+                android:id="@+id/btn_reg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Log In"
                 android:background="@drawable/ed_design"
                 android:padding="6dp"
+                android:text="Log In"
                 android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="@android:color/white"
-                android:id="@+id/btn_reg"
-                />
+                android:textColor="@android:color/white" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -77,5 +76,12 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/registrationPageProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
 
 </LinearLayout>

@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,7 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private ProgressDialog mDialog;
-
+private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         mAuth= FirebaseAuth.getInstance();
         mDialog=new ProgressDialog(this);
-
+        progressBar = findViewById(R.id.registrationPageProgressBar);
         firstname=findViewById(R.id.first_reg);
         lastname=findViewById(R.id.last_reg);
         email=findViewById(R.id.email_reg);
@@ -52,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String mEmail = email.getText().toString().trim();
                 String mPass = pass.getText().toString().trim();
+                String mmsmsm = "fabian";
 
                 if (TextUtils.isEmpty(mEmail)) {
                     email.setError("Required Field..");
@@ -61,15 +63,14 @@ public class RegisterActivity extends AppCompatActivity {
                     pass.setError("Required Field..");
                     return;
                 }
-                if (pass.length() <6){
+
+                if (mPass.length() <6){
                     pass.setError("Password muust be >= 6 characters");
                     return;
-
                 }
 
 
-                mDialog.setMessage("Processing..");
-                mDialog.show();
+                progressBar.setVisibility(View.VISIBLE);
 
                 mAuth.createUserWithEmailAndPassword(mEmail,mPass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -77,10 +78,13 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful()){
                             startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
                             Toast.makeText(getApplicationContext(),"Successfull",Toast.LENGTH_SHORT).show();
-                            mDialog.dismiss();
+                            //mDialog.dismiss();
+                            progressBar.setVisibility(View.INVISIBLE);
+
                         }else {
                             Toast.makeText(getApplicationContext(),"Failed..",Toast.LENGTH_SHORT).show();
-                            mDialog.dismiss();
+                            //mDialog.dismiss();
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
                     }
                 });
@@ -89,4 +93,6 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     }
+
+
 }
