@@ -1,30 +1,96 @@
 package com.groupassignment2019.bartertraderappgithuballsetup;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
 public class LoginActivity extends AppCompatActivity {
-EditText et;
+
+    private EditText email;
+    private EditText pass;
+    private Button btnLogin;
+    private TextView signUp;
+    private ProgressBar progressBar_on_login_screen;
+    private FirebaseAuth mAuth;
+
+    private ProgressDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_activity);
-        et = findViewById(R.id.email_login);
+        setContentView(R.layout.activity_login);
+
+        mAuth= FirebaseAuth.getInstance();
+
+        mDialog=new ProgressDialog(this);
+        progressBar_on_login_screen = findViewById(R.id.progressBar_on_login_screen);
+        email=findViewById(R.id.email_login);
+        pass=findViewById(R.id.password_login);
+        btnLogin=findViewById(R.id.btn_login);
+        signUp=findViewById(R.id.signup_txt);
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String mEmail=email.getText().toString().trim();
+                String mPass=pass.getText().toString().trim();
+
+
+                if (TextUtils.isEmpty(mEmail)){
+                    email.setError("Required Field..");
+                    return;
+                }
+                if (TextUtils.isEmpty(mPass)){
+                    pass.setError("Required Field..");
+                    return;
+                }
+
+                mDialog.setMessage("Processing..");
+                mDialog.show();
+
+                mAuth.signInWithEmailAndPassword(mEmail,mPass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
+                            startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
+                            Toast.makeText(getApplicationContext(),"Successful",Toast.LENGTH_SHORT).show();
+                            mDialog.dismiss();
+                        }
+                        else {
+
+                            Toast.makeText(getApplicationContext(),"Failed",Toast.LENGTH_SHORT).show();
+                            mDialog.dismiss();
+                        }
+                    }
+                });
+            }
+        });
+
+        signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+            }
+        });
 
 
 
-    }
-
-    public void loginuser(View view) {
-        if (et.getText().toString().matches(Patterns.EMAIL_ADDRESS.toString())){
-            et.setError("this is not valid email");
-        }
-        //edittext.setError shows user that the have a mistake
 
     }
 }

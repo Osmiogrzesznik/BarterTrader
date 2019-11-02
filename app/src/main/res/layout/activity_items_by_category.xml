@@ -10,6 +10,7 @@
 
 
     <TextView
+
         android:id="@+id/Item_list_NarrowDownTitle"
         style="@style/titleTextViewStyle"
         android:layout_width="0dp"

@@ -12,6 +12,7 @@
         <activity android:name=".PostNewItemActivity" />
         <activity android:name=".CategoriesActivity" />
         <activity android:name=".RegisterActivity" />
+        <activity android:name=".DashboardActivity"></activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
