@@ -1,12 +1,12 @@
 package com.groupassignment2019.bartertraderappgithuballsetup;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.ShowPasswordOnTouchListener;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -27,8 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView signUp;
     private ProgressBar progressBar_on_login_screen;
     private FirebaseAuth mAuth;
-
-    private ProgressDialog mDialog;
+    private ImageView showPasswordIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +37,16 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth= FirebaseAuth.getInstance();
 
-        mDialog=new ProgressDialog(this);
+
+        //mDialog=new ProgressDialog(this);
         progressBar_on_login_screen = findViewById(R.id.progressBar_on_login_screen);
+        progressBar_on_login_screen.setVisibility(View.GONE);
         email=findViewById(R.id.email_login);
         pass=findViewById(R.id.password_login);
         btnLogin=findViewById(R.id.btn_login);
         signUp=findViewById(R.id.signup_txt);
+        showPasswordIcon = findViewById(R.id.showLoginPasswordIcon);
+        showPasswordIcon.setOnTouchListener(new ShowPasswordOnTouchListener(pass));
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,23 +64,27 @@ public class LoginActivity extends AppCompatActivity {
                     pass.setError("Required Field..");
                     return;
                 }
-
-                mDialog.setMessage("Processing..");
-                mDialog.show();
+//
+//                mDialog.setMessage("Processing..");
+//                mDialog.show();
 
                 mAuth.signInWithEmailAndPassword(mEmail,mPass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        progressBar_on_login_screen.setVisibility(View.VISIBLE);
                         if (task.isSuccessful()){
                             startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
                             Toast.makeText(getApplicationContext(),"Successful",Toast.LENGTH_SHORT).show();
-                            mDialog.dismiss();
+//                            mDialog.dismiss();
+
                         }
                         else {
 
                             Toast.makeText(getApplicationContext(),"Failed",Toast.LENGTH_SHORT).show();
-                            mDialog.dismiss();
+  //                          mDialog.dismiss();
                         }
+                        progressBar_on_login_screen.setVisibility(View.GONE);
                     }
                 });
             }

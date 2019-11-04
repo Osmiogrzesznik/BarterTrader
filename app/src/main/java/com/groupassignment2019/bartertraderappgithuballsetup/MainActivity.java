@@ -12,7 +12,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        View v = new View(this);
 
+        //GO_TO_activity_Register(new View(this));
         //when you create your activity uncomment the appropriate code that redirects to it,
         // if your activity has different name, rename it by pressing CTRL + F6 on the file name(recommended)
         // , or rename class inside functions below (not recommended for clarity)
