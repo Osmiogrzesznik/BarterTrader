@@ -9,25 +9,27 @@ import java.net.URI;
 public class ItemData {
     @Exclude
     public static final ItemData EMPTY_TEST() {
-        return EMPTY_TEST("test");
+        return EMPTY_TEST("testTitle");
     }
 
     @Exclude
     public static final ItemData EMPTY_TEST(String title){
-    return new ItemData(title, "test", Uri.parse("http://lorempixel.com/160/90"), "test");
+    return new ItemData(title, "testDesc", Uri.parse("http://lorempixel.com/160/90"),"testCategory", "testUUID");
     }
     private String title;
     private String description;
     private Uri pictureURI;
+    private String category;
     private String seller_user_UUID;
 
     public ItemData() {
     }
 
-    public ItemData(String title, String description, Uri pictureURI, String seller_user_UUID) {
+    public ItemData(String title, String description, Uri pictureURI, String category, String seller_user_UUID) {
         this.title = title;
         this.description = description;
         this.pictureURI = pictureURI;
+        this.category = category;
         this.seller_user_UUID = seller_user_UUID;
     }
 
@@ -71,6 +73,14 @@ public class ItemData {
 
     public void setSeller_user_UUID(String seller_user_UUID) {
         this.seller_user_UUID = seller_user_UUID;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
 

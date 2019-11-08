@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.AddElementToListValueListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.adapters.ItemRVAdapter;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.ItemData;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.UserDataModel;
@@ -45,7 +46,7 @@ public class ItemsByCategoryActivity extends AppCompatActivity {
     private LinearLayoutManager linearLayoutManager;
     private RecyclerView recyclerView;
     private TextView textViewItem_list_NarrowDownTitle;
-    private List<ItemData> itemsArray;
+    private List<ItemData> itemsArrayList;
     private LayoutInflater mInflater;
     private ItemRVAdapter adapter;
     private DatabaseReference mRootReference;
@@ -98,14 +99,14 @@ public class ItemsByCategoryActivity extends AppCompatActivity {
         DB_Items_reference = mRootReference.child("items");
 
 
-        itemsArray = new ArrayList<>();
+        itemsArrayList = new ArrayList<>();
 
         //prepare RecyclerView
         mInflater = LayoutInflater.from(this.getBaseContext());
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false));
 //        recyclerView.setAdapter(adapter);
 //        adapter.setOnItemClickListener(clickListener);
-        adapter = new ItemRVAdapter(mInflater, itemsArray);
+        adapter = new ItemRVAdapter(mInflater, itemsArrayList);
         //recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(clickListener);
@@ -114,6 +115,10 @@ public class ItemsByCategoryActivity extends AppCompatActivity {
         intentThatStartedMe = getIntent();
 
         checkWhatTypeOfListUserShouldSee();
+
+        //this will happen for every itemID
+        addItemToListOnValueEvent = new AddElementToListValueListener<ItemData>(this,itemsArrayList,adapter,ItemData.class);
+
 
         if (userShouldSeeItemsInCategory()) {
             setUpAdapterToBeFilledWithItemsFromCategory();
@@ -159,31 +164,14 @@ public class ItemsByCategoryActivity extends AppCompatActivity {
         mDBCategoryNameRef = FirebaseDatabase.getInstance().getReference("categories").child(userIdOrCategoryName.toLowerCase());
 
 
-        //this will happen for every itemID
-        addItemToListOnValueEvent = new ValueEventListener() {
 
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ItemData item = dataSnapshot.getValue(ItemData.class);
-                itemsArray.add(item);
-                adapter.notifyDataSetChanged();
-                //here somthing should happen to inform adapter that something has changed
-                Log.d(BOLO, item.getTitle());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(ItemsByCategoryActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-
-        };
 
         //this gets a list of itemIds under the selected category
         mDBCategoryNameRef.addValueEventListener(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        itemsArray.clear();
+                        itemsArrayList.clear();
                         for (DataSnapshot itemID : dataSnapshot.getChildren()) {
                             String itemIDKey = itemID.getKey();
                             Log.d(BOLO, itemIDKey);
@@ -234,7 +222,7 @@ public class ItemsByCategoryActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         ItemData itemData = dataSnapshot.getValue(ItemData.class);
-                        itemsArray.add(itemData);
+                        itemsArrayList.add(itemData);
                         Log.d("BOLO", itemData.toString());
 //
                     }
@@ -255,7 +243,7 @@ public class ItemsByCategoryActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot ids) {
                             // System.out.println(lectureSnapshot.child("title").getValue());
                             ItemData itda = ids.getValue(ItemData.class);
-                            itemsArray.add(itda);
+                            itemsArrayList.add(itda);
 
                             Log.d(BOLO, itda.toString());
                         }
@@ -271,7 +259,7 @@ public class ItemsByCategoryActivity extends AppCompatActivity {
                     });
                 }
 
-                adapter = new ItemRVAdapter(mInflater, itemsArray);
+                adapter = new ItemRVAdapter(mInflater, itemsArrayList);
                 recyclerView.setAdapter(adapter);
                 adapter.setOnItemClickListener(clickListener);
             }
