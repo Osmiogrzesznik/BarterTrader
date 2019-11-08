@@ -1,22 +1,24 @@
 package com.groupassignment2019.bartertraderappgithuballsetup.Helpers;
 
-import android.text.BoringLayout;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.widget.EditText;
-
-import java.util.regex.Matcher;
 
 public class InputValidator {
     public static final String REQUIRED_FIELD = "Required field";
 
 
     public boolean notEmpty(EditText et){
-        if (TextUtils.isEmpty(et.getText().toString().trim())) {
+        if (!notShorterThan(et,1)) {
             et.setError(REQUIRED_FIELD);
             return false;
         }
             return true;
+    }
+
+
+    public boolean notEmpty(String s){
+        return !s.trim().isEmpty();
     }
 
     public boolean notEmptyAll(EditText[] manyEditTexts){
@@ -27,12 +29,26 @@ public class InputValidator {
      return allOk;
     }
 
+    public boolean notEmptyAll(String[] strings){
+        boolean allOk = true;
+        for (String string: strings){
+            allOk = allOk && notEmpty(string);
+        }
+        return allOk;
+    }
+
     public boolean notShorterThan (EditText et,int minLength){
-        if (et.getText().toString().trim().length() < 6) {
-            et.setError("must be >= " + minLength + " characters");
+        if (notShorterThan(txtFrom(et),minLength)) {
+            et.setError("minimum " + minLength + " characters");
             return false;
         }
         return true;
+    }
+
+    public boolean notShorterThan (String s,int minLength){
+        System.out.println("s: \""+ s +"\" is " + s.trim().length() + " chars long. Min Length is:" + minLength);
+        return (notEmpty(s) && s.trim().length() >= minLength);
+
     }
 
     public boolean doesNotContainInvalidCharacters(EditText et, String[] invalidCharacters){
@@ -48,19 +64,28 @@ public class InputValidator {
     }
 
     public boolean isValidEmail(EditText et){
-        boolean ok = Patterns.EMAIL_ADDRESS.matcher(text(et)).matches();
+        boolean ok = isValidEmail(txtFrom(et));
         if(!ok){et.setError("email not valid");};
         return ok;
     }
 
+    public boolean isValidEmail(String s){
+        return Patterns.EMAIL_ADDRESS.matcher(s.trim()).matches();
+    }
+
+    public boolean isValidPhone(String s){
+        return Patterns.PHONE.matcher(s.trim()).matches();
+    }
+
     public boolean isValidPhone(EditText et){
-        boolean ok = Patterns.PHONE.matcher(text(et)).matches();
+        boolean ok = isValidPhone(txtFrom(et));
         if(!ok){et.setError("phone not valid");};
         return ok;
     }
 
 
-    public String text(EditText et){
-        return et.getText().toString().trim();
+    public String txtFrom(EditText et){
+        return et.getText().toString();
     }
 }
+

@@ -48,6 +48,12 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.ItemDataVi
 
     }
 
+    public void updateItems(List<ItemData> newList){
+        this.items = newList;
+        notifyDataSetChanged();
+    }
+
+
     @NonNull
     @Override
     public ItemDataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

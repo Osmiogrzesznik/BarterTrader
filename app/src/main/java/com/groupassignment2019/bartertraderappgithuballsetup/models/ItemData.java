@@ -2,9 +2,20 @@ package com.groupassignment2019.bartertraderappgithuballsetup.models;
 
 import android.net.Uri;
 
+import com.google.firebase.database.Exclude;
+
 import java.net.URI;
 
 public class ItemData {
+    @Exclude
+    public static final ItemData EMPTY_TEST() {
+        return EMPTY_TEST("test");
+    }
+
+    @Exclude
+    public static final ItemData EMPTY_TEST(String title){
+    return new ItemData(title, "test", Uri.parse("http://lorempixel.com/160/90"), "test");
+    }
     private String title;
     private String description;
     private Uri pictureURI;
