@@ -99,13 +99,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void GO_TO_activity_SellerReviews(View view) {
-//        Intent intent = new Intent(this, SellerReviewsActivity.class);
-//        startActivity(intent);
+        final FirebaseAuth fa = FirebaseAuth.getInstance();
+        fa.signInWithEmailAndPassword("test@test.com", "password").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                FirebaseUser user = fa.getCurrentUser();
+                if (task.isSuccessful() && user != null) {
+                    Intent intent = new Intent(MainActivity.this, ReviewsActivity.class);
+                    intent.putExtra("uuid", "0uuub5A248c530044dbCB24ADDa7");
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "unsuccesful login", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     public void GO_TO_activity_MyReviews(View view) {
-//        Intent intent = new Intent(this, MyReviewsActivity.class);
-//        startActivity(intent);
+        final FirebaseAuth fa = FirebaseAuth.getInstance();
+        fa.signInWithEmailAndPassword("test@test.com", "password").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                FirebaseUser user = fa.getCurrentUser();
+                if (task.isSuccessful() && user != null) {
+                    Intent intent = new Intent(MainActivity.this, ReviewsActivity.class);
+                    intent.putExtra("uuid", user.getUid());
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "unsuccesful login", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
     }
 
     public void GO_TO_activity_ItemsByMe(View view) {

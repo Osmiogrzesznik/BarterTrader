@@ -80,7 +80,6 @@ public class CategoriesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
         setTitle("Choose one of Categories");
-
         categories = prepareCategoriesList();
         prepareRecyclerView(categories);
 
@@ -93,7 +92,7 @@ public class CategoriesActivity extends AppCompatActivity {
 
     private void prepareRecyclerView(List<Category> categories) {
         mInflater = LayoutInflater.from(this.getBaseContext());
-        RecyclerView recyclerView = findViewById(R.id.reviewsRecyclerView);
+        RecyclerView recyclerView = findViewById(R.id.categoriesRecyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false));
         adapter = new CategoryRVAdapter(mInflater, categories);
 

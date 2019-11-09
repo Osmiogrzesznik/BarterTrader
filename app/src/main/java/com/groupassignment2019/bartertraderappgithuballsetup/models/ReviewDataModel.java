@@ -1,18 +1,18 @@
 package com.groupassignment2019.bartertraderappgithuballsetup.models;
 
-class ReviewDataModel {
+public class ReviewDataModel {
 
     private String authorUID;
     private String receiverUID;//? Redundant
     private String title;
     private String body;
-    private String rating;
+    private int rating;
 
     public ReviewDataModel() {
     }
 
 
-    public ReviewDataModel(String authorUID, String receiverUID, String title, String body, String rating) {
+    public ReviewDataModel(String authorUID, String receiverUID, String title, String body, int rating) {
         this.authorUID = authorUID;
         this.receiverUID = receiverUID;
         this.title = title;
@@ -52,11 +52,11 @@ class ReviewDataModel {
         this.body = body;
     }
 
-    public String getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 

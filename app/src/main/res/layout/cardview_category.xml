@@ -15,19 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#00000000"
-        android:fadingEdge="vertical">
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Button"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:fadingEdge="vertical"
+        tools:background="#666666">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/item_cardview_imageView"
@@ -40,52 +29,25 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_menu_black_24dp" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/categoryCardImageView"
-            android:layout_width="37dp"
-            android:layout_height="40dp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_delete_black_24dp" />
-
         <TextView
             android:id="@+id/textViewCategoryTitle"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:fontFamily="@font/alegreya_sans"
-            android:gravity="left|center_vertical"
             android:text=" MENU"
-            android:textAlignment="gravity"
-            android:textColor="@color/textGentleWhite"
-            android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/textViewCategoryDescription"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/categoryCardImageView"
+            app:layout_constraintStart_toEndOf="@+id/item_cardview_imageView"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintVertical_chainStyle="packed"
+            style="@style/AnyTitleStyle" />
 
         <TextView
             android:id="@+id/textViewCategoryDescription"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:fontFamily="@font/alegreya_sans"
-            android:gravity="left|center_vertical"
             android:text=" Select one of categories below"
-            android:textAlignment="gravity"
-            android:textColor="@color/textGentleWhite"
-            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/categoryCardImageView"
+            app:layout_constraintStart_toEndOf="@+id/item_cardview_imageView"
             app:layout_constraintTop_toBottomOf="@+id/textViewCategoryTitle"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintVertical_chainStyle="packed"
+            style="@style/AnyMultilineText" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

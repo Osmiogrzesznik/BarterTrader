@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back_design_light"
+    android:background="@drawable/back_design"
     tools:context=".CategoriesActivity">
 
     <androidx.cardview.widget.CardView
@@ -63,8 +63,6 @@
                 android:id="@+id/textViewCategoryTitle"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:fontFamily="@font/alegreya_sans"
                 android:gravity="left|center_vertical"
                 android:text=" MENU"
@@ -73,8 +71,7 @@
                 android:textSize="24sp"
                 app:layout_constraintBottom_toTopOf="@+id/textViewCategoryDescription"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/categoryCardImageView"
+                app:layout_constraintStart_toEndOf="@+id/item_cardview_imageView"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed" />
 
@@ -82,8 +79,6 @@
                 android:id="@+id/textViewCategoryDescription"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:fontFamily="@font/alegreya_sans"
                 android:gravity="left|center_vertical"
                 android:text=" Select one of categories below"
@@ -92,8 +87,7 @@
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/categoryCardImageView"
+                app:layout_constraintStart_toEndOf="@+id/item_cardview_imageView"
                 app:layout_constraintTop_toBottomOf="@+id/textViewCategoryTitle"
                 app:layout_constraintVertical_chainStyle="packed" />
 
@@ -108,14 +102,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Categories"
-        app:layout_constraintBottom_toTopOf="@+id/reviewsRecyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/categoriesRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/reviewsRecyclerView"
+        android:id="@+id/categoriesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="5dp"
