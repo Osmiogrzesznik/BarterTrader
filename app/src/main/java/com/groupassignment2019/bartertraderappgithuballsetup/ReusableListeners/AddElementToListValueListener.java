@@ -10,31 +10,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-import com.groupassignment2019.bartertraderappgithuballsetup.ItemsByCategoryActivity;
-import com.groupassignment2019.bartertraderappgithuballsetup.models.ItemData;
+import com.groupassignment2019.bartertraderappgithuballsetup.adapters.Addable;
 
 import java.util.List;
 
-public class AddElementToListValueListener<T> implements ValueEventListener {
+public class AddElementToListValueListener<T> implements ValueEventListener{
 
     private Context ctx;
-    private final List<T> tList;
-    private final RecyclerView.Adapter adapter;
+    private final Addable<T> addable;
     private Class<T> tClass;
 
-    public AddElementToListValueListener(Context ctx, List<T>tList, RecyclerView.Adapter adapter, Class<T> tClass) {
+    public AddElementToListValueListener(Context ctx, Addable<T> addable, Class<T> tClass) {
         this.ctx = ctx;
-        this.tList = tList;
-        this.adapter = adapter;
+        this.addable = addable;
         this.tClass = tClass;
     }
 
     @Override
     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         T item = dataSnapshot.getValue(tClass);
-        tList.add(item);
-        adapter.notifyDataSetChanged();
-        //here somthing should happen to inform adapter that something has changed
+        addable.add(item);
+        //here somthing should happen to inform addable that something has changed
         Log.d("BOLO", item.toString());
     }
 

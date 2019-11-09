@@ -1,12 +1,19 @@
 package com.groupassignment2019.bartertraderappgithuballsetup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.StringListUpdater;
@@ -16,15 +23,14 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-TextView tv = findViewById(R.id.textView);
+        TextView tv = findViewById(R.id.textView);
         ArrayList<String> as = new ArrayList<>();
         as.add("kupa");
-        StringListUpdater stringListUpdater = new StringListUpdater(this,as,tv);
+        StringListUpdater stringListUpdater = new StringListUpdater(this, as, tv);
         stringListUpdater.update();
         FirebaseDatabase fb = FirebaseDatabase.getInstance();
         DatabaseReference ref = fb.getReference();
@@ -48,8 +54,8 @@ TextView tv = findViewById(R.id.textView);
     }
 
     public void GO_TO_activity_Register(View view) {
-            Intent intent = new Intent(this, RegisterActivity.class);
-            startActivity(intent);
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
     }
 
     public void GO_TO_activity_Dashboard(View view) {
@@ -103,23 +109,48 @@ TextView tv = findViewById(R.id.textView);
     }
 
     public void GO_TO_activity_ItemsByMe(View view) {
-        Intent intent = new Intent(this, ItemsByCategoryActivity.class);
-        intent.putExtra("by", "uuid");
-        intent.putExtra("uuid", "me");
+        final FirebaseAuth fa = FirebaseAuth.getInstance();
+        fa.signInWithEmailAndPassword("test@test.com", "password").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                FirebaseUser user = fa.getCurrentUser();
+                if (task.isSuccessful() && user != null) {
+                    Intent intent = new Intent(MainActivity.this, ItemsListActivity.class);
+                    intent.putExtra("by", "uuid");
+                    intent.putExtra("uuid", user.getUid());
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "unsuccesful login", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
-        startActivity(intent);
+
     }
 
     public void GO_TO_activity_ItemsByCategory(View view) {
-        Intent intent = new Intent(this, ItemsByCategoryActivity.class);
+        Intent intent = new Intent(this, ItemsListActivity.class);
         intent.putExtra("by", "category");
         intent.putExtra("category", "gadgets");
         startActivity(intent);
     }
 
     public void GO_TO_activity_ItemsBySeller(View view) {
-//        Intent intent = new Intent(this, ItemsBySellerActivity.class);
-//        startActivity(intent);
+        final FirebaseAuth fa = FirebaseAuth.getInstance();
+        fa.signInWithEmailAndPassword("test@test.com", "password").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                FirebaseUser user = fa.getCurrentUser();
+                if (task.isSuccessful() && user != null) {
+                    Intent intent = new Intent(MainActivity.this, ItemsListActivity.class);
+                    intent.putExtra("by", "uuid");
+                    intent.putExtra("uuid", "0uuub5A248c530044dbCB24ADDa7"); //onni kivela
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "unsuccesful login", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     public void GOT_TO_WatchItemVideoActivity(View view) {

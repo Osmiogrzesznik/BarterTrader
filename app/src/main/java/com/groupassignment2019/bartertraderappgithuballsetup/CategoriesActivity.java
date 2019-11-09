@@ -55,7 +55,7 @@ public class CategoriesActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.categories_menu, menu);
+        menuInflater.inflate(R.menu.search_toolbar_menu, menu);
         MenuItem searchCategoryItem = menu.findItem(R.id.action_search);
         SearchView searchView = (androidx.appcompat.widget.SearchView) searchCategoryItem.getActionView();
 
@@ -102,7 +102,7 @@ public class CategoriesActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Category clickedCategory) {
                 Toast.makeText(CategoriesActivity.this, "you clicked" + clickedCategory.getCategoryTitle(), Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(CategoriesActivity.this, ItemsByCategoryActivity.class);
+                Intent intent = new Intent(CategoriesActivity.this, ItemsListActivity.class);
                 intent.putExtra("by","category");
                 intent.putExtra("category",clickedCategory.getCategoryTitle());//sends the name of the selected category to ItemsByAnythingActivity
                 startActivity(intent);

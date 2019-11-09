@@ -17,13 +17,13 @@
         android:background="@drawable/back_darkest">
 
         <Button
-            android:id="@+id/edititembutton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/Button_EditOwnedItem_In_ItemListElementCardView"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:text="EditItem"
+            android:background="@drawable/ic_edit_black_24dp"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -49,14 +49,7 @@
             app:srcCompat="@drawable/gadgets_example_pic"
             tools:srcCompat="@drawable/gadgets_example_pic" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imageView"
-            android:layout_width="37dp"
-            android:layout_height="40dp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_delete_black_24dp" />
+
 
         <TextView
             android:id="@+id/textViewItemTitle"

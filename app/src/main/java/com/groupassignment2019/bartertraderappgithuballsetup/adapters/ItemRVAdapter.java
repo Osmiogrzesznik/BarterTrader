@@ -1,13 +1,14 @@
 package com.groupassignment2019.bartertraderappgithuballsetup.adapters;
 
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,13 +24,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.ItemDataViewHolder> implements Filterable {
+public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.ItemDataViewHolder> implements Filterable , Addable<ItemData> {
     private OnItemClickListener onItemClickListener;
 //    private Context mContext;
     private List<ItemData> items;
     private List<ItemData> itemsFull;
     //private Random rnd;
     private LayoutInflater mInflater;
+    private boolean isViewerTheOwner;
 
     public interface OnItemClickListener {
         void onItemClick(ItemData clickedItemData);
@@ -45,12 +47,23 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.ItemDataVi
         this.itemsFull = new ArrayList<>(items);
         this.mInflater = mInflater;
         //this.rnd = new Random();
-
+        this.isViewerTheOwner = false;
     }
 
     public void updateItems(List<ItemData> newList){
         this.items = newList;
+        this.itemsFull = new ArrayList<>(items);
         notifyDataSetChanged();
+    }
+
+    public void add(ItemData itemData){
+        this.itemsFull.add(itemData);
+        this.items.add(itemData);
+        notifyDataSetChanged();
+    }
+
+    public void setIsViewerTheOwner(boolean b){
+        this.isViewerTheOwner = b;
     }
 
 
@@ -60,7 +73,7 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.ItemDataVi
 
         View cardview = mInflater
                 .inflate(R.layout.cardview_item_in_item_list, parent, false);
-        return new ItemDataViewHolder(cardview);
+        return new ItemDataViewHolder(cardview, isViewerTheOwner);
     }
 
 
@@ -68,6 +81,9 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.ItemDataVi
     public void onBindViewHolder(@NonNull ItemDataViewHolder holder, int position) {
         ItemData item = items.get(position);
 holder.textViewItemDataTitle.setText(item.getTitle());
+if (isViewerTheOwner){
+holder.Button_EditOwnedItem_In_ItemListElementCardView.setVisibility(View.VISIBLE);
+}
 // TODO: 01/11/2019 should each category be colorcoded - so lists with toys have bright color, and those with tools dark
         Picasso.get()
                 .load(item.getPictureURI())
@@ -90,15 +106,24 @@ holder.textViewItemDataTitle.setText(item.getTitle());
      */
     public class ItemDataViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final AppCompatImageView imageViewItemDataCard;
+        private boolean isOwner;
         private TextView textViewItemDataTitle;
         private ConstraintLayout categoryCardParentWrapper;
+        private Button Button_EditOwnedItem_In_ItemListElementCardView;
 
-        public ItemDataViewHolder(@NonNull View itemView) {
+        public ItemDataViewHolder(@NonNull View itemView,boolean isOwner) {
             super(itemView);
+            this.isOwner = isOwner;
             categoryCardParentWrapper = itemView.findViewById(R.id.item_CardParentWrapper);
             textViewItemDataTitle = itemView.findViewById(R.id.textViewItemTitle);
             imageViewItemDataCard = itemView.findViewById(R.id.item_cardview_imageView);
+            Button_EditOwnedItem_In_ItemListElementCardView = itemView.findViewById(R.id.Button_EditOwnedItem_In_ItemListElementCardView);
 
+            if(isOwner){
+
+                Button_EditOwnedItem_In_ItemListElementCardView.setVisibility(View.VISIBLE);
+
+            }
             itemView.setOnClickListener(this);
         }
 

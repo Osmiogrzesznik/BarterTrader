@@ -33,14 +33,16 @@ import com.groupassignment2019.bartertraderappgithuballsetup.models.UserDataMode
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemsByCategoryActivity extends AppCompatActivity {
+public class ItemsListActivity extends AppCompatActivity {
     //Listeners
     final ItemRVAdapter.OnItemClickListener clickListener = new ItemRVAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(ItemData clickedItemData) {
-            Toast.makeText(ItemsByCategoryActivity.this, "you clicked" + clickedItemData.getTitle(), Toast.LENGTH_LONG).show();
+            Toast.makeText(ItemsListActivity.this, "you clicked" + clickedItemData.getTitle(), Toast.LENGTH_LONG).show();
         }
     };
+
+
 
     public static final String BOLO = "BOLO";
     private LinearLayoutManager linearLayoutManager;
@@ -49,19 +51,20 @@ public class ItemsByCategoryActivity extends AppCompatActivity {
     private List<ItemData> itemsArrayList;
     private LayoutInflater mInflater;
     private ItemRVAdapter adapter;
-    private DatabaseReference mRootReference;
-    private DatabaseReference mDBCategoryNameRef;
+    private DatabaseReference DB_mRootReference;
+    private DatabaseReference mDBListOfItemIdsInCategoryNameRef;
     private TextView textViewDEBUG_FIREBASE;
     private DatabaseReference DB_Items_reference;
     private ValueEventListener addItemToListOnValueEvent;
     private String byWhat_UserOrCategory;
     private Intent intentThatStartedMe;
     private String userIdOrCategoryName;
+    private ValueEventListener grabListOfIdsAndFindActualItems;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.categories_menu, menu);
+        menuInflater.inflate(R.menu.search_toolbar_menu, menu);
         MenuItem searchItemDataItem = menu.findItem(R.id.action_search);
         SearchView searchView = (androidx.appcompat.widget.SearchView) searchItemDataItem.getActionView();
 
@@ -85,18 +88,17 @@ public class ItemsByCategoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_items_by_category);
+        setContentView(R.layout.activity_items_list);
         setTitle("Choose one of items");
 
         //Views Set Up
-        textViewDEBUG_FIREBASE = findViewById(R.id.textViewDEBUG_FIREBASE);
         textViewItem_list_NarrowDownTitle = findViewById(R.id.Item_list_NarrowDownTitle);
         recyclerView = findViewById(R.id.itemsRecyclerView);
 
 
         //FIREBASE VARIABLES SET UP
-        mRootReference = FirebaseDatabase.getInstance().getReference();
-        DB_Items_reference = mRootReference.child("items");
+        DB_mRootReference = FirebaseDatabase.getInstance().getReference();
+        DB_Items_reference = DB_mRootReference.child("items");
 
 
         itemsArrayList = new ArrayList<>();
@@ -117,13 +119,39 @@ public class ItemsByCategoryActivity extends AppCompatActivity {
         checkWhatTypeOfListUserShouldSee();
 
         //this will happen for every itemID
-        addItemToListOnValueEvent = new AddElementToListValueListener<ItemData>(this,itemsArrayList,adapter,ItemData.class);
+        addItemToListOnValueEvent = new AddElementToListValueListener<ItemData>(this,adapter,ItemData.class);
+
+        //this will make above happen for every itemID
+        grabListOfIdsAndFindActualItems = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                itemsArrayList.clear();
+                for (DataSnapshot itemID : dataSnapshot.getChildren()) {
+                    String itemIDKey = itemID.getKey();
+                    Log.d(BOLO, itemIDKey);
+                    //for each of ids sent request for adding actual item
+                    DB_Items_reference.child(itemIDKey).addValueEventListener(addItemToListOnValueEvent);
+                }
+
+                // either itemsArray should be observable (and adapter should know about it or something else should happen
+                // see adapterListItemAdder
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e(BOLO, databaseError.getMessage());
+                Toast.makeText(getBaseContext(), databaseError.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        };
 
 
         if (userShouldSeeItemsInCategory()) {
             setUpAdapterToBeFilledWithItemsFromCategory();
         } else if (userShouldSeeItemsByOtherUser()) {
-            // setUpAdapterToBeFilledWithItemsByOtherUser();
+             setUpAdapterToBeFilledWithItemsByOtherUser();
         }
 
 
@@ -131,69 +159,50 @@ public class ItemsByCategoryActivity extends AppCompatActivity {
 
     private void setUpAdapterToBeFilledWithItemsByOtherUser() {
         String UUID = null;
+        boolean isOwner;
         FirebaseUser firebaseUser;
         UserDataModel user;
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser == null ){
+            Toast.makeText(this, "user is null", Toast.LENGTH_SHORT).show();
+            FirebaseAuth.getInstance().signInWithEmailAndPassword("test@test.com","password") ;
+            firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        }
         String filterValue = intentThatStartedMe.getExtras().getString(byWhat_UserOrCategory);//if filter Type was user it will get UUID
 
 
         if (filterValue.contentEquals(firebaseUser.getUid())) {
 
-            boolean isOwner = true;
+            isOwner = true;
             textViewItem_list_NarrowDownTitle.setText("Items By Me");
-            recyclerView.setHasFixedSize(false);
+            //recyclerView.setHasFixedSize(false);
             // mRootReference.child("items_by_user")
+            UUID = firebaseUser.getUid();
         } else {
-            boolean isOwner = false;
+            isOwner = false;
             textViewItem_list_NarrowDownTitle.setText("Items By User");
-            recyclerView.setHasFixedSize(true);
+            //recyclerView.setHasFixedSize(true);
+                UUID = filterValue;
             //user = mRootReference.child("users").child(UUID).addListenerForSingleValueEvent();
         }
-        UUID = firebaseUser.getUid();
-        textViewItem_list_NarrowDownTitle.setText("Other Items by user :" + filterValue.toUpperCase());
-        Toast.makeText(ItemsByCategoryActivity.this, filterValue, Toast.LENGTH_LONG).show();
+
+        adapter.setIsViewerTheOwner(isOwner);
+        DatabaseReference DB_itemIDsofItemsByUser_ref = DB_mRootReference.child("items_by_user").child(UUID);
+        DB_itemIDsofItemsByUser_ref.addValueEventListener(grabListOfIdsAndFindActualItems);
+
+        Toast.makeText(ItemsListActivity.this, filterValue, Toast.LENGTH_LONG).show();
     }
 
     private void setUpAdapterToBeFilledWithItemsFromCategory() {
         //if filter Type was category it will get category title
         userIdOrCategoryName = intentThatStartedMe.getExtras().getString(byWhat_UserOrCategory);
         textViewItem_list_NarrowDownTitle.setText("Items by " + byWhat_UserOrCategory + " :" + userIdOrCategoryName.toUpperCase());
-        Toast.makeText(ItemsByCategoryActivity.this, userIdOrCategoryName, Toast.LENGTH_LONG).show();
+        Toast.makeText(ItemsListActivity.this, userIdOrCategoryName, Toast.LENGTH_LONG).show();
         // items = new ArrayList<>();
         Log.d(BOLO, "starting" + byWhat_UserOrCategory + " " + userIdOrCategoryName.toLowerCase());
-        mDBCategoryNameRef = FirebaseDatabase.getInstance().getReference("categories").child(userIdOrCategoryName.toLowerCase());
-
-
-
-
+        mDBListOfItemIdsInCategoryNameRef = FirebaseDatabase.getInstance().getReference("categories").child(userIdOrCategoryName.toLowerCase());
         //this gets a list of itemIds under the selected category
-        mDBCategoryNameRef.addValueEventListener(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        itemsArrayList.clear();
-                        for (DataSnapshot itemID : dataSnapshot.getChildren()) {
-                            String itemIDKey = itemID.getKey();
-                            Log.d(BOLO, itemIDKey);
-                            //for each of ids sent request for adding actual item
-                            DB_Items_reference.child(itemIDKey).addValueEventListener(addItemToListOnValueEvent);
-                        }
-
-                        // either itemsArray should be observable (and adapter should know about it or something else should happen
-                        // see adapterListItemAdder
-
-
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Log.e(BOLO, databaseError.getMessage());
-                        Toast.makeText(getBaseContext(), databaseError.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                }
-
-        );
+        mDBListOfItemIdsInCategoryNameRef.addValueEventListener(grabListOfIdsAndFindActualItems);
     }
 
     private void checkWhatTypeOfListUserShouldSee() {
@@ -217,7 +226,7 @@ public class ItemsByCategoryActivity extends AppCompatActivity {
     }
 
     private void fetchByitemId(String itemIDAsString) {
-        mRootReference.child("items").child(itemIDAsString)
+        DB_mRootReference.child("items").child(itemIDAsString)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -229,17 +238,17 @@ public class ItemsByCategoryActivity extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(ItemsByCategoryActivity.this, databaseError.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(ItemsListActivity.this, databaseError.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }
 
     private void DB(String UUID) {
 
-        mRootReference.child("items_by_user").child(UUID).addListenerForSingleValueEvent(new ValueEventListener() {
+        DB_mRootReference.child("items_by_user").child(UUID).addListenerForSingleValueEvent(new ValueEventListener() {
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot itemID : snapshot.getChildren()) {
-                    mRootReference.child("items").child(itemID.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    DB_mRootReference.child("items").child(itemID.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
                         public void onDataChange(DataSnapshot ids) {
                             // System.out.println(lectureSnapshot.child("title").getValue());
                             ItemData itda = ids.getValue(ItemData.class);
@@ -254,7 +263,7 @@ public class ItemsByCategoryActivity extends AppCompatActivity {
                         }
 
                         public void onCancelled(FirebaseError firebaseError) {
-                            Toast.makeText(ItemsByCategoryActivity.this, "", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ItemsListActivity.this, "", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

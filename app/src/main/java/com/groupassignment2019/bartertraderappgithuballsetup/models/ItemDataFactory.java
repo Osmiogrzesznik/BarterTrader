@@ -10,7 +10,7 @@ public class ItemDataFactory {
     public List<ItemData> listOfItemDatas(){
         ArrayList<ItemData> l= new ArrayList<>();
         for(int i=0;i<=10;i++){
-            ItemData id = new ItemData("title"+i,"description"+i, Uri.parse("http://lorempixel.com/400/200/"), "usudisid123");
+            ItemData id = new ItemData("title"+i,"description"+i, Uri.parse("http://lorempixel.com/400/200/"),"categoryTEST","usudisid123");
 
             l.add(id);
         }

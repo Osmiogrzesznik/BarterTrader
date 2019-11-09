@@ -11,7 +11,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-import static com.groupassignment2019.bartertraderappgithuballsetup.ItemsByCategoryActivity.BOLO;
+import static com.groupassignment2019.bartertraderappgithuballsetup.ItemsListActivity.BOLO;
 
 public class ListOfIdsValueEventListener implements ValueEventListener {
 
