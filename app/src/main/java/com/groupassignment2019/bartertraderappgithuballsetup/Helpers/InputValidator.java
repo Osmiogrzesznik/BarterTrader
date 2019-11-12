@@ -5,6 +5,7 @@ import android.util.Patterns;
 import android.widget.EditText;
 
 public class InputValidator {
+    // TODO: 12/11/2019 displays only Required Field ? On registerActivity
     public static final String REQUIRED_FIELD = "Required field";
 
 

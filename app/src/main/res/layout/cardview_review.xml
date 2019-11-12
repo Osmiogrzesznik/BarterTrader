@@ -3,12 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/reviewCardParentWrapper"
-    android:layout_marginTop="5dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp"
-    android:background="#22000000"
-    tools:background="#666666">
+    style="@style/semiTransparentRoundedCard">
 
     <TextView
         android:id="@+id/textViewReviewTitle"
@@ -32,14 +29,13 @@
         tools:text="@tools:sample/lorem/random" />
 
     <RatingBar
+        android:id="@+id/reviewCard_RatingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/reviewCard_RatingBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewReviewTitle"
         android:numStars="5"
-        android:rating="3"
         android:progressTint="#eeFAC403"
-        />
+        android:rating="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewReviewTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.groupassignment2019.bartertraderappgithuballsetup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +22,7 @@ import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.S
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
+// TODO: 11/11/2019 registerView xml is broken
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +95,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void GO_TO_activity_Inbox(View view) {
-//        Intent intent = new Intent(this, InboxActivity.class);
-//        startActivity(intent);
+        final FirebaseAuth fa = FirebaseAuth.getInstance();
+        fa.signInWithEmailAndPassword("test@test.com", "password").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                FirebaseUser user = fa.getCurrentUser();
+                if (task.isSuccessful() && user != null) {
+                    Intent intent = new Intent(MainActivity.this, InboxActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "unsuccesful login", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     public void GO_TO_activity_SellerReviews(View view) {

@@ -11,7 +11,7 @@
     tools:context=".RegisterActivity">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageView_inboxElement_UserInterlocutor"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginLeft="20dp"
@@ -40,10 +40,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView_inboxElement_UserInterlocutor" />
 
     <EditText
         android:id="@+id/first_reg"
+        style="@style/EditTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -53,8 +54,6 @@
         android:hint="First name"
         android:inputType="text"
         android:padding="10dp"
-        android:textColor="@android:color/white"
-        android:textColorHint="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/last_reg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -63,6 +62,7 @@
 
     <EditText
         android:id="@+id/last_reg"
+        style="@style/EditTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -72,16 +72,15 @@
         android:hint="Last name"
         android:inputType="text"
         android:padding="10dp"
-        android:textColor="@android:color/white"
-        android:textColorHint="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/email_reg"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/first_reg" />
 
     <EditText
         android:id="@+id/email_reg"
+        style="@style/EditTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -91,8 +90,6 @@
         android:hint="E-mail address"
         android:inputType="textEmailAddress"
         android:padding="10dp"
-        android:textColor="@android:color/white"
-        android:textColorHint="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/phone_reg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -101,6 +98,7 @@
 
     <EditText
         android:id="@+id/phone_reg"
+        style="@style/EditTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -110,8 +108,6 @@
         android:hint="Phone number "
         android:inputType="phone"
         android:padding="10dp"
-        android:textColor="@android:color/white"
-        android:textColorHint="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/password_reg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -120,6 +116,7 @@
 
     <EditText
         android:id="@+id/password_reg"
+        style="@style/EditTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -129,8 +126,6 @@
         android:hint="Password"
         android:inputType="textPassword"
         android:padding="10dp"
-        android:textColor="@android:color/white"
-        android:textColorHint="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/registrationPageProgressBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -152,8 +147,7 @@
 
     <Button
         android:id="@+id/btn_reg"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/AnyTextButton"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/button_states_selector"

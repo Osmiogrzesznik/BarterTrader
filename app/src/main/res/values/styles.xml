@@ -10,12 +10,13 @@
         <item name="android:textCursorDrawable">@null</item>
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="android:itemBackground">@drawable/action_bar_bg_gradient</item>
+        <item name="android:fontFamily">@font/alegreya_sans</item>
     </style>
 
     <!-- ActionBar styles -->
     <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@drawable/action_bar_bg_gradient</item>
-
+        <item name="android:fontFamily">@font/alegreya_sans</item>
         <!-- Support library compatibility -->
         <item name="background">@drawable/action_bar_bg_gradient</item>
     </style>
@@ -29,6 +30,7 @@
             <item name="colorAccent">@color/colorAccent</item>
             <item name="android:textColorHint">@color/colorHintText</item>
             <item name="android:textCursorDrawable">@null</item>
+            <item name="android:fontFamily">@font/alegreya_sans</item>
         </style>
 
     <style name="look_of_a_button_when_activity_is_work_in_progress">
@@ -90,6 +92,47 @@
         <item name="android:colorControlActivated">#ffffff</item>
         <item name="android:colorControlNormal">#ffffff</item>
 
+    </style>
+
+    <style name="EditTextStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:fontFamily">@font/alegreya_sans</item>
+        <item name="android:background">@drawable/edittext_states_selector</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorHint">@color/colorHintText</item>
+    </style>
+
+    <style name="AnyTextButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/button_states_selector</item>
+        <item name="android:fontFamily">@font/alegreya_sans</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:paddingEnd">24dp</item>
+        <item name="android:paddingRight">24dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="semiTransparentRoundedCard">
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:background">@drawable/semi_transparent_rounded</item>
+        <item name="android:padding">15dp</item>
+    </style>
+
+    <style name="spinnerStyle" parent="EditTextStyle">
+        <item name="android:layout_width">351dp</item>
+        <item name="android:layout_height">52dp</item>
+        <item name="android:background">@drawable/edittext_states_selector</item>
+        <item name="android:prompt">@string/selectCategory</item>
+        <item name="android:spinnerMode">dropdown</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
 

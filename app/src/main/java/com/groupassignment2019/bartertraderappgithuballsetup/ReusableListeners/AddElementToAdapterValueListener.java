@@ -14,21 +14,33 @@ import com.groupassignment2019.bartertraderappgithuballsetup.adapters.Addable;
 
 import java.util.List;
 
-public class AddElementToListValueListener<T> implements ValueEventListener{
+public class AddElementToAdapterValueListener<T> implements ValueEventListener{
 
     private Context ctx;
     private final Addable<T> addable;
     private Class<T> tClass;
+    private OnBeforeAddedListener<T> onBeforeAddedListener;
 
-    public AddElementToListValueListener(Context ctx, Addable<T> addable, Class<T> tClass) {
+    public AddElementToAdapterValueListener(Context ctx, Addable<T> addable, Class<T> tClass) {
         this.ctx = ctx;
         this.addable = addable;
         this.tClass = tClass;
     }
 
+    public AddElementToAdapterValueListener copy(){
+        return new AddElementToAdapterValueListener(ctx,addable,tClass);
+    }
+
+    public void setOnBeforeAddedListener(OnBeforeAddedListener<T> onBeforeAddedListener){
+        this.onBeforeAddedListener = onBeforeAddedListener;
+    }
+
     @Override
     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         T item = dataSnapshot.getValue(tClass);
+        if (this.onBeforeAddedListener != null){
+            item = onBeforeAddedListener.OnBeforeAdded(item); // transform item before adding to adapter if user specified
+        }
         addable.add(item);
         //here somthing should happen to inform addable that something has changed
         Log.d("BOLO", item.toString());
@@ -37,5 +49,13 @@ public class AddElementToListValueListener<T> implements ValueEventListener{
     @Override
     public void onCancelled(@NonNull DatabaseError databaseError) {
         Toast.makeText(ctx, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Transforms Added Item before adding to addable
+     * @param <T>
+     */
+    public interface OnBeforeAddedListener<T> {
+        public T OnBeforeAdded(T element);
     }
 }

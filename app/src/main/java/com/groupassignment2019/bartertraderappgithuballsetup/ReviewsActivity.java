@@ -15,7 +15,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.AddElementToListValueListener;
+import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.AddElementToAdapterValueListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.adapters.ReviewRVAdapter;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.ReviewDataModel;
 
@@ -41,7 +41,7 @@ public class ReviewsActivity extends AppCompatActivity {
     private LinearLayoutManager linearLayoutManager;
     private ReviewRVAdapter reviewRVAdapter;
     private Intent intentThatStartedMe;
-    private AddElementToListValueListener<ReviewDataModel> addItemToListOnValueEvent;
+    private AddElementToAdapterValueListener<ReviewDataModel> addItemToListOnValueEvent;
     private String UserId_WhoseReviewsWeSee;
 
     @Override
@@ -71,7 +71,7 @@ public class ReviewsActivity extends AppCompatActivity {
 
         //this will happen for every review
         // TODO: 09/11/2019 this can be used rather for every userId in review to get some Pictures
-        addItemToListOnValueEvent = new AddElementToListValueListener<ReviewDataModel>(this, reviewRVAdapter,ReviewDataModel.class);
+        addItemToListOnValueEvent = new AddElementToAdapterValueListener<ReviewDataModel>(this, reviewRVAdapter,ReviewDataModel.class);
             setUpAdapterToBeFilledWithReviewsOfUser();
     }
 

@@ -13,7 +13,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.AddElementToListValueListener;
+import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.AddElementToAdapterValueListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.adapters.ItemRVAdapter;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.ItemData;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.UserDataModel;
@@ -104,10 +103,9 @@ public class ItemsListActivity extends AppCompatActivity {
         itemsArrayList = new ArrayList<>();
 
         //prepare RecyclerView
+        linearLayoutManager = new LinearLayoutManager(this);
         mInflater = LayoutInflater.from(this.getBaseContext());
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false));
-//        recyclerView.setAdapter(adapter);
-//        adapter.setOnItemClickListener(clickListener);
+        recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new ItemRVAdapter(mInflater, itemsArrayList);
         //recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
@@ -119,7 +117,7 @@ public class ItemsListActivity extends AppCompatActivity {
         checkWhatTypeOfListUserShouldSee();
 
         //this will happen for every itemID
-        addItemToListOnValueEvent = new AddElementToListValueListener<ItemData>(this,adapter,ItemData.class);
+        addItemToListOnValueEvent = new AddElementToAdapterValueListener<ItemData>(this,adapter,ItemData.class);
 
         //this will make above happen for every itemID
         grabListOfIdsAndFindActualItems = new ValueEventListener() {

@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
 private InputValidator inputValidator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // TODO: 12/11/2019 crashes on empty fields
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 

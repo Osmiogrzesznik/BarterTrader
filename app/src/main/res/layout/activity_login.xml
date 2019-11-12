@@ -36,39 +36,25 @@
     <EditText
         android:layout_marginBottom="2dp"
         android:id="@+id/email_login"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/edittext_states_selector"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:padding="10dp"
-        android:textColor="@android:color/white"
-        android:textColorHint="@color/colorHintText"
         app:layout_constraintBottom_toTopOf="@+id/password_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        style="@style/EditTextStyle" />
 
     <EditText
         android:id="@+id/password_login"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/edittext_states_selector"
         android:hint="Password"
         android:inputType="textPassword"
-        android:padding="10dp"
-        android:textColor="@android:color/white"
-        android:textColorHint="@color/colorHintText"
         app:layout_constraintBottom_toTopOf="@+id/progressBar_on_login_screen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_login" />
+        app:layout_constraintTop_toBottomOf="@+id/email_login"
+        style="@style/EditTextStyle" />
 
     <ProgressBar
         android:id="@+id/progressBar_on_login_screen"
@@ -84,18 +70,13 @@
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_states_selector"
-        android:padding="6dp"
         android:text="Log In"
-        android:textAppearance="@android:style/TextAppearance.Medium"
-        android:textColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/signup_txt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar_on_login_screen" />
+        app:layout_constraintTop_toBottomOf="@+id/progressBar_on_login_screen"
+        style="@style/AnyTextButton" />
 
     <TextView
         android:id="@+id/signup_txt"
