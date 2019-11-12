@@ -91,8 +91,9 @@ public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAd
             Picasso.get()
                     .load(inboxElement.getUserInterlocutor_image())
 //                .centerCrop()
-                    .fit()
-                    .centerInside()
+                    //.fit()
+                    .noFade()
+                    //.centerInside()
                     .into(holder.UserInterlocutor_image);
         } else {
             // if other user image is not present request user object and store his data here (think about storing whole user , when inbox element is clicked then it is easy to
@@ -105,7 +106,10 @@ public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAd
         holder.lastMessageTime.setText(inboxElement.getLastMessageTimeAsString());
 
         if (inboxElement.isRead()) {
-            holder.lastMessageBody.setBackgroundColor(0xFFFF0000);//red opaque
+            holder.inboxElement_unreadIndicator.setVisibility(View.INVISIBLE);
+        }
+        else{
+            holder.inboxElement_unreadIndicator.setVisibility(View.VISIBLE);
         }
 
     }
@@ -116,6 +120,7 @@ public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAd
     }
 
     // TODO: 11/11/2019 should be extracted and just simply added to each datamodel that requires some users data for displaying its contents
+
     /**
      * Event Listener completing the inboxElement with the corresponding user information
      * todo should be extracted and just simply added to each datamodel that requires some users data for displaying its contents
@@ -156,6 +161,7 @@ public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAd
         private TextView UserInterlocutor_firstLastName;
         private TextView lastMessageBody;
         private TextView lastMessageTime;
+        private TextView inboxElement_unreadIndicator;
         private ProgressBar progressBar_inboxElement_incompleteYet;
 
         public InboxElementHolder(@NonNull View itemView) {
@@ -164,6 +170,7 @@ public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAd
             UserInterlocutor_firstLastName = itemView.findViewById(R.id.textView_inboxElement_UserInterlocutor_firstLastName);
             lastMessageBody = itemView.findViewById(R.id.textView_inboxElement_lastMessageBody);
             lastMessageTime = itemView.findViewById(R.id.textView_inboxElement_lastMessageTime);
+            inboxElement_unreadIndicator = itemView.findViewById(R.id.inboxElement_unreadIndicator);
             progressBar_inboxElement_incompleteYet = itemView.findViewById(R.id.progressBar_inboxElement_incompleteYet);
             itemView.setOnClickListener(this);
         }

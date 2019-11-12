@@ -143,6 +143,7 @@
 
     <Button
         android:id="@+id/MainNavTestBtn8"
+        style="@style/look_of_a_button_when_activity_is_work_in_progress"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:onClick="GO_TO_activity_Inbox"
