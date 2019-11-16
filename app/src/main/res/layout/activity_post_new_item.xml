@@ -8,41 +8,40 @@
     tools:context=".PostNewItemActivity">
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imageViewNewItemImage"
         android:layout_width="392dp"
         android:layout_height="251dp"
 android:background="#00000000"
         android:src="@drawable/untitled"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/addVideoButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.842"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/untitled" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/addVideoButton"
         style="@style/AnyTextButton"
         android:background="@drawable/button_states_selector"
         android:text="Add Video"
+        android:onClick="openVideoFileSelection"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/editText2"
+        app:layout_constraintBottom_toTopOf="@+id/editTextNewItemTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewNewItemImage" />
 
     <Spinner
         android:id="@+id/spinner"
         style="@style/spinnerStyle"
-        app:layout_constraintBottom_toTopOf="@+id/editText"
+        tools:listitem="@layout/spinnerstyle"
+        app:layout_constraintBottom_toTopOf="@+id/editTextVideoDescription"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextNewItemTitle" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editTextVideoDescription"
         style="@style/EditTextStyle"
         android:layout_width="354dp"
         android:layout_height="148dp"
@@ -52,14 +51,13 @@ android:background="#00000000"
         android:hint=" PLEASE ADD DESCRIPTION"
         android:inputType="date|textShortMessage|textLongMessage|textWebEmailAddress|text|phone|textEmailSubject"
         android:padding="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toTopOf="@+id/PostItemButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/editTextNewItemTitle"
         style="@style/EditTextStyle"
         android:layout_width="344dp"
         android:layout_height="53dp"
@@ -70,19 +68,18 @@ android:background="#00000000"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/spinner"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/addVideoButton" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/PostItemButton"
         style="@style/AnyTextButton"
         android:background="@drawable/button_states_selector"
         android:text="Create Post"
+        android:onClick="validateAndSubmitItem"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextVideoDescription" />
 </androidx.constraintlayout.widget.ConstraintLayout>

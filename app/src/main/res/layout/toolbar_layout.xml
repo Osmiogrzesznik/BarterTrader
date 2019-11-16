@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/action_bar_bg_gradient"
+    android:elevation="5dp"
+    >
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="54dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_profilepic_toolbar"
+        android:layout_width="64dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:src="@drawable/avvy"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
+
+    <ImageView
+        android:id="@+id/iv_inbox_icon"
+        android:layout_width="64dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_email_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/iv_profilepic_toolbar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tv_unreadThreadsAmount_circle"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:background="@drawable/new_msg_circle_number"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="99"
+        android:textColor="#ffffffff"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/iv_inbox_icon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.appcompat.widget.Toolbar>

@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
 import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.AddElementToAdapterValueListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.adapters.ReviewRVAdapter;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.ReviewDataModel;
@@ -35,7 +36,6 @@ public class ReviewsActivity extends AppCompatActivity {
     };
 
     private RecyclerView recyclerView;
-    private DatabaseReference DB_mRootReference;
     private ArrayList<ReviewDataModel> reviewsArrayList;
     private LayoutInflater mInflater;
     private LinearLayoutManager linearLayoutManager;
@@ -50,10 +50,6 @@ public class ReviewsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reviews);
 
         recyclerView = findViewById(R.id.reviewsRecyclerView);
-
-        //FIREBASE VARIABLES SET UP
-        DB_mRootReference = FirebaseDatabase.getInstance().getReference();
-
 
         reviewsArrayList = new ArrayList<>();
 
@@ -77,7 +73,7 @@ public class ReviewsActivity extends AppCompatActivity {
 
 
     private void setUpAdapterToBeFilledWithReviewsOfUser() {
-        DB_mRootReference.child("users").child(UserId_WhoseReviewsWeSee).child("reviews").addValueEventListener(new ValueEventListener() {
+        DB.user_reviews.child(UserId_WhoseReviewsWeSee).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot reviewSnapshot: dataSnapshot.getChildren()){

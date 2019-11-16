@@ -9,39 +9,105 @@
 
 
     <TextView
-        android:id="@+id/welcome_txt"
+        android:id="@+id/tv_dashboard_welcome_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="96dp"
         android:gravity="center"
         android:padding="30dp"
         android:text="Welcome!You are logged in"
         android:textAppearance="@android:style/TextAppearance.Small"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/logout"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_BigProfilePic_dashboard" />
 
     <Button
         android:id="@+id/logout"
-        android:layout_width="385dp"
-        android:layout_height="0dp"
+        style="@style/AnyTextButton"
+        android:layout_width="match_parent"
         android:layout_gravity="center"
-        android:layout_marginBottom="406dp"
+
         android:background="@drawable/edittext_states_selector"
         android:padding="6dp"
-
         android:text="Log out"
         android:textAppearance="@android:style/TextAppearance.Medium"
         android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button3" />
+
+    <Button
+        android:id="@+id/button2"
+        style="@style/AnyTextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="My Profile"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_dashboard_welcome_txt" />
+
+    <Button
+        android:id="@+id/button3"
+        style="@style/AnyTextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search Categories"
+        app:layout_constraintBottom_toTopOf="@+id/logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
+
+    <Button
+        android:id="@+id/button4"
+        style="@style/AnyTextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Post new Item"
+        app:layout_constraintBottom_toTopOf="@+id/button5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logout" />
+
+    <Button
+        android:id="@+id/button5"
+        style="@style/AnyTextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Inbox"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcome_txt" />
+        app:layout_constraintTop_toBottomOf="@+id/button4" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_BigProfilePic_dashboard"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_dashboard_welcome_txt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BarterBar"
+        tools:src="@drawable/avvy"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <include
+        android:id="@+id/BarterBar"
+        layout="@layout/toolbar_layout"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

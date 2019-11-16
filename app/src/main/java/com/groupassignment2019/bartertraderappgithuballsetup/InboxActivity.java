@@ -17,15 +17,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
 import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.AddElementToAdapterValueListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.adapters.InboxElementRVAdapter;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.InboxElement;
-import com.groupassignment2019.bartertraderappgithuballsetup.models.UserDataModel;
 
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
 
 public class InboxActivity extends AppCompatActivity {
     //Listeners
@@ -43,9 +43,6 @@ public class InboxActivity extends AppCompatActivity {
     private List<InboxElement> inboxElementList;
     private LayoutInflater mInflater;
     private InboxElementRVAdapter adapter;
-    private DatabaseReference DB_mRootReference;
-    private DatabaseReference DB_messageThreads_Reference;
-    private DatabaseReference DB_usersRef;
     private AddElementToAdapterValueListener<InboxElement> addInboxElementToAdapterWhenSentFromDB;
     private ValueEventListener grabListOfMTIDsandprepareneededdata;
     private FirebaseUser firebaseUser;
@@ -67,10 +64,7 @@ public class InboxActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.inbox_recyclerView);
 
         //FIREBASE VARIABLES SET UP
-        DB_mRootReference = FirebaseDatabase.getInstance().getReference();
-        DB_messageThreads_Reference = DB_mRootReference.child("messageThreads");
-        DB_usersRef = DB_mRootReference.child("users");
-        DB_listOfThreadsInbox = DB_usersRef.child(firebaseUser.getUid()).child("inbox");
+        DB_listOfThreadsInbox = DB.users.child(firebaseUser.getUid()).child("inbox");
 
         inboxElementList = new ArrayList<>();
 
@@ -79,7 +73,7 @@ public class InboxActivity extends AppCompatActivity {
         mInflater = LayoutInflater.from(this.getBaseContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        adapter = new InboxElementRVAdapter(mInflater, inboxElementList, DB_usersRef);
+        adapter = new InboxElementRVAdapter(mInflater, inboxElementList, DB.users);
         //recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(clickListener);
@@ -112,7 +106,7 @@ public class InboxActivity extends AppCompatActivity {
                     //get fresh local copy to avoid using all new onbeforeAddedListeners on one Object, therefore loosing msgThrdIDKey and otherUserId
                     AddElementToAdapterValueListener adder = addInboxElementToAdapterWhenSentFromDB.copy();
                     adder.setOnBeforeAddedListener(onBeforeAddedListener);
-                    DB_messageThreads_Reference.child(msgThrIDKey).addValueEventListener(adder);
+                    DB.messageThreads.child(msgThrIDKey).addValueEventListener(adder);
                 }
 
                 // either itemsArray should be observable (and adapter should know about it or something else should happen

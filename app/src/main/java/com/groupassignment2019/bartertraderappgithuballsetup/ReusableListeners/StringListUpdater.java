@@ -12,6 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
+// TODO: 16/11/2019 REDUNDANT !!! this is just another ListOfIdsListener
 public class StringListUpdater implements ValueEventListener {
 List<String> list;
 TextView tv;

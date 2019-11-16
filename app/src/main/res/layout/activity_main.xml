@@ -269,7 +269,7 @@
         android:id="@+id/MainNavTestBtn20"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:onClick="GOT_TO_WatchItemVideoActivity"
+        android:onClick="GO_TO_WatchItemVideoActivity"
         android:text="Bonus:WatchItemVideoActivity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -4,32 +4,76 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
+import com.groupassignment2019.bartertraderappgithuballsetup.models.UserDataModel;
+import com.squareup.picasso.Picasso;
 
-public class DashboardActivity extends AppCompatActivity {
+import java.util.Collection;
 
+public class DashboardActivity extends AppCompatActivity implements UserObserver {
     Button btnLogout;
-    FirebaseAuth mFirebaseAuth;
+    FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+    private TextView tv_dashboard_welcome_txt;
+    private UserDataModel user;
+    private Toolbar barterBar;
+    private TextView tv_unreadThreadsAmount_circle;
+    private ImageView iv_profilepic_toolbar;
+    private ImageView iv_BigProfilePic_dashboard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        barterBar = findViewById(R.id.BarterBar);
+        btnLogout = findViewById(R.id.logout);
+        tv_dashboard_welcome_txt = findViewById(R.id.tv_dashboard_welcome_txt);
+        tv_unreadThreadsAmount_circle = barterBar.findViewById(R.id.tv_unreadThreadsAmount_circle);
+        tv_unreadThreadsAmount_circle.setVisibility(View.GONE);
+        iv_profilepic_toolbar = barterBar.findViewById(R.id.iv_profilepic_toolbar);
+        iv_BigProfilePic_dashboard = findViewById(R.id.iv_BigProfilePic_dashboard);
 
-        btnLogout=findViewById(R.id.logout);
+        DB.Auth.addAuthStateListener(new UserDataLoader(this));
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                Intent intToMain=new Intent(DashboardActivity.this, LoginActivity.class);
+                Intent intToMain = new Intent(DashboardActivity.this, LoginActivity.class);
                 startActivity(intToMain);
             }
         });
+
+    }
+
+    @Override
+    public void updateUI(UserDataModel userDataModel) {
+        if (userDataModel == null) {
+            finish();
+        }
+        user = userDataModel;
+        tv_dashboard_welcome_txt.setText("Welcome " + user.getFirstName() + "!");
+
+        int unreadThreadsAmount = user.calculateUnreadThreadAmount();
+        if (unreadThreadsAmount > 0) {
+            tv_unreadThreadsAmount_circle.setVisibility(View.VISIBLE);
+            tv_unreadThreadsAmount_circle.setText(String.valueOf(unreadThreadsAmount));
+        } else {
+            tv_unreadThreadsAmount_circle.setVisibility(View.GONE);
+        }
+        String picURl = user.getPicture();
+        if (picURl != null) {
+            Picasso.get().load(picURl).placeholder(R.drawable.avvy).into(iv_BigProfilePic_dashboard);
+            Picasso.get().load(picURl).placeholder(R.drawable.avvy).into(iv_profilepic_toolbar);
+        }
+
 
     }
 }

@@ -8,10 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.InputValidator;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.Category;
 
 import java.util.ArrayList;
@@ -19,15 +25,28 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PostNewItemActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    private ImageView imageViewNewItemImage;
+    private Button addVideoButton;
+    private EditText editTextVideoDescription;
+    private EditText editTextNewItemTitle;
+    private Button PostItemButton;
+
+
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        imageViewNewItemImage = (ImageView) findViewById(R.id.imageViewNewItemImage);
+        addVideoButton = (Button) findViewById(R.id.addVideoButton);
+        editTextVideoDescription = (EditText) findViewById(R.id.editTextVideoDescription);
+        editTextNewItemTitle = (EditText) findViewById(R.id.editTextNewItemTitle);
+        PostItemButton = (Button) findViewById(R.id.PostItemButton);
+
         setContentView(R.layout.activity_post_new_item);
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         Spinner spinner = findViewById(R.id.spinner);
-
-
 
         final List<String> categoriesList = new ArrayList<>();
         categoriesList.add("Please select Category");
@@ -60,7 +79,7 @@ public class PostNewItemActivity extends AppCompatActivity implements AdapterVie
                     tv.setTextColor(Color.GRAY);
                 }
                 else {
-                    tv.setTextColor(Color.BLACK);
+                    tv.setTextColor(Color.WHITE);
                 }
                 return view;
             }
@@ -84,4 +103,17 @@ public class PostNewItemActivity extends AppCompatActivity implements AdapterVie
     }
 
 
+    public void validateAndSubmitItem(View view) {
+       String imageViewNewItemImageValue;
+        InputValidator iv = new InputValidator(this);
+        boolean   ok = iv.notEmpty(editTextNewItemTitle) && iv.notEmpty(editTextVideoDescription);
+
+       String addVideoButtonValue =          addVideoButton.getText().toString();
+       String editTextVideoDescriptionValue =  editTextVideoDescription.getText().toString();
+       String editTextNewItemTitleValue =          editTextNewItemTitle.getText().toString();
+       //String PostItemButtonValue =  PostItemButton.getText().toString();
+    }
+
+    public void openVideoFileSelection(View view) {
+    }
 }

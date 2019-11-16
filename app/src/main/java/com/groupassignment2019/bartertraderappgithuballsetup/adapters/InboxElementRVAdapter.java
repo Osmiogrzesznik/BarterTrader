@@ -97,7 +97,8 @@ public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAd
                     .into(holder.UserInterlocutor_image);
         } else {
             // if other user image is not present request user object and store his data here (think about storing whole user , when inbox element is clicked then it is easy to
-            DB_users.child(inboxElement.getOtherUserID()).addListenerForSingleValueEvent(new OnUserDataModelLoaded(this, inboxElement, position));
+            DB_users.child(inboxElement.getOtherUserID())
+                    .addListenerForSingleValueEvent(new OnUserDataModelLoaded(this, inboxElement, position));
             holder.progressBar_inboxElement_incompleteYet.setVisibility(View.VISIBLE);
         }
 
@@ -138,6 +139,7 @@ public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAd
 
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            Log.d("BOLO","received snapshot position:" + position);
             UserDataModel user = dataSnapshot.getValue(UserDataModel.class); // todo this could be just a field on InboxElement - it would save a lot of hassle and offer other possibilities later (for example is user active and so on)
             inboxElement.setUserInterlocutor_image(user.getPicture());
             inboxElement.setUserInterlocutor_firstLastName(user.getFirstName() + " " + user.getLastName());

@@ -3,7 +3,6 @@ package com.groupassignment2019.bartertraderappgithuballsetup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,13 +16,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
 import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.StringListUpdater;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-// TODO: 11/11/2019 registerView xml is broken
-
+    // TODO: 11/11/2019 registerView xml is broken
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,12 +32,10 @@ public class MainActivity extends AppCompatActivity {
         as.add("kupa");
         StringListUpdater stringListUpdater = new StringListUpdater(this, as, tv);
         stringListUpdater.update();
-        FirebaseDatabase fb = FirebaseDatabase.getInstance();
-        DatabaseReference ref = fb.getReference();
-        ref.child("categories").addListenerForSingleValueEvent(stringListUpdater);
+        DB.categories.addListenerForSingleValueEvent(stringListUpdater);
         View v = new View(this);
-
-        //GO_TO_activity_Register(new View(this));
+        GO_TO_activity_Dashboard(v);
+//        GO_TO_activity_Register(v);
         //when you create your activity uncomment the appropriate code that redirects to it,
         // if your activity has different name, rename it by pressing CTRL + F6 on the file name(recommended)
         // , or rename class inside functions below (not recommended for clarity)
@@ -60,8 +57,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void GO_TO_activity_Dashboard(View view) {
-        Intent intent = new Intent(this, DashboardActivity.class);
-        startActivity(intent);
+        final FirebaseAuth fa = FirebaseAuth.getInstance();
+        fa.signInWithEmailAndPassword("test@test.com", "password").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                FirebaseUser user = fa.getCurrentUser();
+                if (task.isSuccessful() && user != null) {
+//                    Intent intent = new Intent(MainActivity.this, ReviewsActivity.class);
+//                    intent.putExtra("uuid", "0uuub5A248c530044dbCB24ADDa7");
+                    Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
+                    startActivity(intent);
+//                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "unsuccesful login", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     public void GO_TO_activity_MyProfile(View view) {
@@ -70,8 +81,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void GO_TO_activity_PostNewItem(View view) {
-        Intent intent = new Intent(this, PostNewItemActivity.class);
-        startActivity(intent);
+        final FirebaseAuth fa = FirebaseAuth.getInstance();
+        fa.signInWithEmailAndPassword("test@test.com", "password").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                FirebaseUser user = fa.getCurrentUser();
+                if (task.isSuccessful() && user != null) {
+                    Intent intent = new Intent(MainActivity.this, PostNewItemActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "unsuccesful login", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     public void GO_TO_activity_Categories(View view) {
@@ -191,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void GOT_TO_WatchItemVideoActivity(View view) {
+    public void GO_TO_WatchItemVideoActivity(View view) {
 //        Intent intent = new Intent(this, WatchItemVideoActivity.class);
 //        startActivity(intent);
     }

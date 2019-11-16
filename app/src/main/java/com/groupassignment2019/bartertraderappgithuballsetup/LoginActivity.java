@@ -38,7 +38,7 @@ private InputValidator inputValidator;
         setContentView(R.layout.activity_login);
 
         mAuth= FirebaseAuth.getInstance();
-inputValidator = new InputValidator();
+inputValidator = new InputValidator(LoginActivity.this);
 
         //mDialog=new ProgressDialog(this);
         progressBar_on_login_screen = findViewById(R.id.progressBar_on_login_screen);
@@ -60,32 +60,25 @@ inputValidator = new InputValidator();
 
                 EditText[] allFields = {et_email, et_pass};
 
-                if (
-                        inputValidator.notEmptyAll(allFields)) {
 
-
-//
-//                mDialog.setMessage("Processing..");
-//                mDialog.show();
+                if (inputValidator.notEmptyAll(allFields)) {
 
                     mAuth.signInWithEmailAndPassword(mEmail, mPass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-
                             progressBar_on_login_screen.setVisibility(View.VISIBLE);
                             if (task.isSuccessful()) {
                                 startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
                                 Toast.makeText(getApplicationContext(), "Successful", Toast.LENGTH_SHORT).show();
-//                            mDialog.dismiss();
-
                             } else {
-
-                                Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
-                                //                          mDialog.dismiss();
+                               Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
                             }
                             progressBar_on_login_screen.setVisibility(View.GONE);
                         }
                     });
+                }
+                else{
+                    Toast.makeText(LoginActivity.this, "You have some error", Toast.LENGTH_SHORT).show();
                 }
             }
         });

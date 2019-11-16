@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 @RunWith(RobolectricTestRunner.class)
 public class InputValidatorTest {
 
-    private InputValidator iv = new InputValidator();
+    private InputValidator iv = new InputValidator(null);
 
     @Test
     public void notEmpty() {
@@ -28,9 +28,13 @@ public class InputValidatorTest {
         String[] OneEmpty = {"f", " ", "x x"};
         String[] AllEmpty = {"", " ", "\n"};
         String[] EmptyAtEnd = {"rr", "rere", ""};
+        String[] AllEmpty2 = {"",""};
+        String[] AllNull = {null,null};
         assertTrue(iv.notEmptyAll(AllOk));
         assertFalse(iv.notEmptyAll(OneEmpty));
         assertFalse(iv.notEmptyAll(AllEmpty));
+        assertFalse(iv.notEmptyAll(AllEmpty2));
+        assertFalse(iv.notEmptyAll(AllNull));
         assertFalse(iv.notEmptyAll(EmptyAtEnd));
     }
 

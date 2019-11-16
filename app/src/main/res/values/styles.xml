@@ -127,9 +127,7 @@
     </style>
 
     <style name="spinnerStyle" parent="EditTextStyle">
-        <item name="android:layout_width">351dp</item>
-        <item name="android:layout_height">52dp</item>
-        <item name="android:background">@drawable/edittext_states_selector</item>
+        <item name="android:background">@drawable/spinner_enabled</item>
         <item name="android:prompt">@string/selectCategory</item>
         <item name="android:spinnerMode">dropdown</item>
         <item name="android:textColor">@android:color/white</item>

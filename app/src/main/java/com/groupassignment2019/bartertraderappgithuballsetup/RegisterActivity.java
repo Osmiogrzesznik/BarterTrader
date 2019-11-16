@@ -16,8 +16,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.InputValidator;
 import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.ShowPasswordOnTouchListener;
+import com.groupassignment2019.bartertraderappgithuballsetup.models.UserDataModel;
 
 import java.util.Random;
 
@@ -30,20 +33,22 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText et_pass;
     private Button btn_Reg;
     private ImageView showRegisterPasswordIcon;
-
+    private DatabaseReference DB_users;
     private FirebaseAuth mAuth;
-    private ProgressBar progressBar;
+    private ProgressBar progressCircle;
     private Random rnd;
     private InputValidator inputValidator;
+    boolean isUserCreationInProgress = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_register);
-        inputValidator = new InputValidator();
+        inputValidator = new InputValidator(this);
         mAuth = FirebaseAuth.getInstance();
-        progressBar = findViewById(R.id.registrationPageProgressBar);
-        progressBar.setVisibility(View.INVISIBLE);
+        DB_users = FirebaseDatabase.getInstance().getReference("users");
+        progressCircle = findViewById(R.id.registrationPageProgressBar);
         et_firstname = findViewById(R.id.first_reg);
         et_lastname = findViewById(R.id.last_reg);
         et_email = findViewById(R.id.email_reg);
@@ -53,17 +58,26 @@ public class RegisterActivity extends AppCompatActivity {
         showRegisterPasswordIcon = findViewById(R.id.showRegisterPasswordIcon);
         showRegisterPasswordIcon.setOnTouchListener(new ShowPasswordOnTouchListener(et_pass));
 
+        progressCircle.setVisibility(View.INVISIBLE);
+        isUserCreationInProgress = false;
+
+
         //TEST
         rnd = new Random();
         if (rnd == null) throw new NullPointerException("random is still null");
 
+        int randSuffix = rnd.nextInt() & Integer.MAX_VALUE; // zero out the sign bit;
+        et_firstname.setText("Testeusz"+randSuffix);
+        et_lastname.setText("Testowski"+randSuffix);
+        et_email.setText("test"+randSuffix+"@test.com");
+        et_phone.setText("0123456789"+randSuffix);
+        et_pass.setText("password");
 
         btn_Reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String email = et_email.getText().toString().trim();
-                String password = et_pass.getText().toString().trim();
+
                 String firstname = et_firstname.getText().toString().trim();
                 String lastname = et_lastname.getText().toString().trim();
                 String phone = et_phone.getText().toString().trim();
@@ -75,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
                         && inputValidator.isValidEmail(et_email)
                         && inputValidator.isValidPhone(et_phone)
                 ){
-                    registerUserAndCreateDatabaseEntry(et_firstname,et_lastname,et_email,et_pass,et_phone);
+                    registerUserAndCreateDatabaseEntry();
                 }
                 else {
                     return;
@@ -90,8 +104,48 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void registerUserAndCreateDatabaseEntry(EditText et_firstname, EditText et_lastname, EditText et_email, EditText et_pass, EditText et_phone) {
+    private void registerUserAndCreateDatabaseEntry() {
+        String email = et_email.getText().toString().trim();
+        String password = et_pass.getText().toString().trim();
+        progressCircle.setVisibility(View.INVISIBLE);
+        mAuth.createUserWithEmailAndPassword(email,password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    String uid = mAuth.getCurrentUser().getUid();
+                    CreateUserInDatabase(uid);
+                }
+                else{
+                    Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
 
+    private void CreateUserInDatabase(String uid) {
+        String firstname = et_firstname.getText().toString().trim();
+        String lastname = et_lastname.getText().toString().trim();
+        String phone = et_phone.getText().toString().trim();
+        final UserDataModel newUser = new UserDataModel(firstname,lastname,phone,uid);
+        DB_users.child(uid).setValue(newUser).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    UserWasAdded_NowShowNextActivity(newUser);
+                }
+                else{
+                    Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    private void UserWasAdded_NowShowNextActivity(UserDataModel newUser) {
+        progressCircle.setVisibility(View.INVISIBLE);
+        Toast.makeText(this, "Welcome " + newUser.getFullName() + " ! ", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this,DashboardActivity.class);
+        startActivity(intent);
     }
 
 
