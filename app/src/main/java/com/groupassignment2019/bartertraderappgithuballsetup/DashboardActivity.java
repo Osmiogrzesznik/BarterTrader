@@ -37,8 +37,7 @@ public class DashboardActivity extends AppCompatActivity implements UserObserver
     private View.OnClickListener openInboxActivity = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(DashboardActivity.this, InboxActivity.class);
-            startActivity(intent);
+           GO_TO_inbox(v);
         }
     };
 
@@ -113,5 +112,25 @@ public class DashboardActivity extends AppCompatActivity implements UserObserver
             Picasso.get().load(picURl).placeholder(R.drawable.avvy).into(iv_profilepic_toolbar);
         }
 
+    }
+
+    public void GO_TO_inbox(View view) {
+        Intent intent = new Intent(this, InboxActivity.class);
+        startActivity(intent);
+    }
+
+    public void logOut(View view) {
+        mAuth.signOut();
+        finish();
+    }
+
+    public void GO_TO_searchCategories(View view) {
+        Intent intent = new Intent(this, CategoriesActivity.class);
+        startActivity(intent);
+    }
+
+    public void GO_TO_PostNewItem(View view) {
+        Intent intent = new Intent(this, PostNewItemActivity.class);
+        startActivity(intent);
     }
 }
