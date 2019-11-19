@@ -55,30 +55,27 @@ public class PostNewItemActivity extends AppCompatActivity implements AdapterVie
 
         //ArrayAdapter adapter=ArrayAdapter.createFromResource(this, R.array.Cathegories,android.R.layout.simple_spinner_item );
         final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                this, R.layout.spinnerstyle,categoriesList){
+                this, R.layout.spinnerstyle, categoriesList) {
             @Override
-            public boolean isEnabled(int position){
-                if(position == 0)
-                {
+            public boolean isEnabled(int position) {
+                if (position == 0) {
                     // Disable the first item from Spinner
                     // First item will be use for hint
                     return false;
-                }
-                else
-                {
+                } else {
                     return true;
                 }
             }
+
             @Override
             public View getDropDownView(int position, View convertView,
                                         ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
-                if(position == 0){
+                if (position == 0) {
                     // Set the hint text color gray
                     tv.setTextColor(Color.GRAY);
-                }
-                else {
+                } else {
                     tv.setTextColor(Color.WHITE);
                 }
                 return view;
@@ -93,8 +90,8 @@ public class PostNewItemActivity extends AppCompatActivity implements AdapterVie
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-         String text= parent.getItemAtPosition(position).toString();
-        Toast.makeText(parent.getContext(),text, Toast.LENGTH_SHORT).show();
+        String text = parent.getItemAtPosition(position).toString();
+        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -104,14 +101,14 @@ public class PostNewItemActivity extends AppCompatActivity implements AdapterVie
 
 
     public void validateAndSubmitItem(View view) {
-       String imageViewNewItemImageValue;
+        String imageViewNewItemImageValue;
         InputValidator iv = new InputValidator(this);
-        boolean   ok = iv.notEmpty(editTextNewItemTitle) && iv.notEmpty(editTextVideoDescription);
+        boolean ok = iv.notEmpty(editTextNewItemTitle) && iv.notEmpty(editTextVideoDescription);
 
-       String addVideoButtonValue =          addVideoButton.getText().toString();
-       String editTextVideoDescriptionValue =  editTextVideoDescription.getText().toString();
-       String editTextNewItemTitleValue =          editTextNewItemTitle.getText().toString();
-       //String PostItemButtonValue =  PostItemButton.getText().toString();
+        String addVideoButtonValue = addVideoButton.getText().toString();
+        String editTextVideoDescriptionValue = editTextVideoDescription.getText().toString();
+        String editTextNewItemTitleValue = editTextNewItemTitle.getText().toString();
+        //String PostItemButtonValue =  PostItemButton.getText().toString();
     }
 
     public void openVideoFileSelection(View view) {

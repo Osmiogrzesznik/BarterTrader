@@ -281,4 +281,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void GO_TO_WriteNewReviewActivity(View view) {
+        final FirebaseAuth fa = FirebaseAuth.getInstance();
+        fa.signInWithEmailAndPassword("test@test.com", "password").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                FirebaseUser user = fa.getCurrentUser();
+                if (task.isSuccessful() && user != null) {
+                    Intent intent = new Intent(MainActivity.this, WriteNewReviewActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "unsuccesful login", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
 }

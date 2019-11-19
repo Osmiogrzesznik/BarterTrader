@@ -293,4 +293,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MainNavTestBtn16" />
 
+    <Button
+        android:id="@+id/mainNavTestBtn2"
+        style="@style/look_of_a_button_when_activity_is_work_in_progress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:onClick="GO_TO_WriteNewReviewActivity"
+        android:text="writeNewReview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/MainNavTestBtn20" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
