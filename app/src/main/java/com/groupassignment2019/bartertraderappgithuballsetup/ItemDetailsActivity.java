@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -83,7 +84,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
         btnMsgSellerItemDetail = findViewById(R.id.btn_msgSeller_itemDetail);
 
         //if user sees his own item, hide buttons disallowing him to trade with himself
-        if (item.getSeller_user_UUID().equals(DB.currentUser.getUid())) {
+        if (item.getSeller_user_UUID().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
             btnMakeOfferToSellerItemDetail.setVisibility(View.GONE);
             btnMsgSellerItemDetail.setVisibility(View.GONE);
         }

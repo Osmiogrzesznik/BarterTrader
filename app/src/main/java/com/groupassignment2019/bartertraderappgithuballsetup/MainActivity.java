@@ -113,21 +113,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void GO_TO_activity_ItemDetails(View view) {
-        int itemId = rnd.nextInt(337);
-        DB.items.child(String.valueOf(itemId)).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ItemData itemData = dataSnapshot.getValue(ItemData.class);
-                Intent intent = new Intent(MainActivity.this, ItemDetailsActivity.class);
-                intent.putExtra("item", itemData);
-                startActivity(intent);
-            }
+        final int itemId = rnd.nextInt(337);
+        if (DB.currentUser == null){
+            final FirebaseAuth fa = FirebaseAuth.getInstance();
+            fa.signInWithEmailAndPassword("test@test.com", "password").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    FirebaseUser user = fa.getCurrentUser();
+                    if (task.isSuccessful() && user != null) {
+                        DB.items.child(String.valueOf(itemId)).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                ItemData itemData = dataSnapshot.getValue(ItemData.class);
+                                Intent intent = new Intent(MainActivity.this, ItemDetailsActivity.class);
+                                intent.putExtra("item", itemData);
+                                startActivity(intent);
+                            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                            }
+                        });
+                    } else {
+                        Toast.makeText(MainActivity.this, "unsuccesful login", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        }
+
 
     }
 
