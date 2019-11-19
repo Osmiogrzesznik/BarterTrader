@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/tv_dashboard_welcome_txt"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
@@ -18,16 +18,16 @@
         android:text="Welcome!You are logged in"
         android:textAppearance="@android:style/TextAppearance.Small"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/btn_searchCategories_dashboard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_BigProfilePic_dashboard" />
 
     <Button
-        android:id="@+id/logout"
+        android:id="@+id/btn_logout_dashboard"
         style="@style/AnyTextButton"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_gravity="center"
 
         android:background="@drawable/edittext_states_selector"
@@ -35,67 +35,66 @@
         android:text="Log out"
         android:textAppearance="@android:style/TextAppearance.Medium"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintBottom_toTopOf="@+id/btn_postNewItem_dashboard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_searchCategories_dashboard" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_myProfile_dashboard"
         style="@style/AnyTextButton"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="My Profile"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_BigProfilePic_dashboard"
+        app:layout_constraintEnd_toEndOf="@+id/iv_BigProfilePic_dashboard"
+        app:layout_constraintStart_toEndOf="@+id/iv_BigProfilePic_dashboard"
+        app:layout_constraintTop_toBottomOf="@+id/iv_BigProfilePic_dashboard" />
+
+    <Button
+        android:id="@+id/btn_searchCategories_dashboard"
+        style="@style/AnyTextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search Categories"
+        app:layout_constraintBottom_toTopOf="@+id/btn_logout_dashboard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_dashboard_welcome_txt" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn_postNewItem_dashboard"
         style="@style/AnyTextButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Search Categories"
-        app:layout_constraintBottom_toTopOf="@+id/logout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
-
-    <Button
-        android:id="@+id/button4"
-        style="@style/AnyTextButton"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Post new Item"
-        app:layout_constraintBottom_toTopOf="@+id/button5"
+        app:layout_constraintBottom_toTopOf="@+id/btn_inbox_dashboard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logout" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_logout_dashboard" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/btn_inbox_dashboard"
         style="@style/AnyTextButton"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Inbox"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_postNewItem_dashboard" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_BigProfilePic_dashboard"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="200dp"
+        android:src="@drawable/avvy"
         app:layout_constraintBottom_toTopOf="@+id/tv_dashboard_welcome_txt"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/BarterBar"
         tools:src="@drawable/avvy"
@@ -107,7 +106,7 @@
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

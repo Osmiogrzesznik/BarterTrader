@@ -14,27 +14,38 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
 import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.StringListUpdater;
+import com.groupassignment2019.bartertraderappgithuballsetup.models.ItemData;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int PICK_ITEM_FOR_OFFER = 2;
+    private Random rnd= new Random();
+    private TextView tv;
+
     // TODO: 11/11/2019 registerView xml is broken
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TextView tv = findViewById(R.id.textView);
+        tv = findViewById(R.id.textView);
         ArrayList<String> as = new ArrayList<>();
         as.add("kupa");
         StringListUpdater stringListUpdater = new StringListUpdater(this, as, tv);
         stringListUpdater.update();
         DB.categories.addListenerForSingleValueEvent(stringListUpdater);
         View v = new View(this);
-        GO_TO_activity_Dashboard(v);
+        GO_TO_activity_ItemDetails(v);
+//        GO_TO_activity_ItemsByCategory(v);
+       // GO_TO_activity_Dashboard(v);
 //        GO_TO_activity_Register(v);
         //when you create your activity uncomment the appropriate code that redirects to it,
         // if your activity has different name, rename it by pressing CTRL + F6 on the file name(recommended)
@@ -102,8 +113,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void GO_TO_activity_ItemDetails(View view) {
-//        Intent intent = new Intent(this, ItemDetailsActivity.class);
-//        startActivity(intent);
+        int itemId = rnd.nextInt(337);
+        DB.items.child(String.valueOf(itemId)).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ItemData itemData = dataSnapshot.getValue(ItemData.class);
+                Intent intent = new Intent(MainActivity.this, ItemDetailsActivity.class);
+                intent.putExtra("item", itemData);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     public void GO_TO_activity_SellerProfile(View view) {
@@ -176,22 +201,18 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser user = fa.getCurrentUser();
                 if (task.isSuccessful() && user != null) {
                     Intent intent = new Intent(MainActivity.this, ItemsListActivity.class);
-                    intent.putExtra("by", "uuid");
-                    intent.putExtra("uuid", user.getUid());
+                    ItemsListActivity.BY_ME(intent);
                     startActivity(intent);
                 } else {
                     Toast.makeText(MainActivity.this, "unsuccesful login", Toast.LENGTH_LONG).show();
                 }
             }
         });
-
-
     }
 
     public void GO_TO_activity_ItemsByCategory(View view) {
         Intent intent = new Intent(this, ItemsListActivity.class);
-        intent.putExtra("by", "category");
-        intent.putExtra("category", "gadgets");
+        ItemsListActivity.BY_CATEGORY(intent, "gadgets");
         startActivity(intent);
     }
 
@@ -203,9 +224,24 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser user = fa.getCurrentUser();
                 if (task.isSuccessful() && user != null) {
                     Intent intent = new Intent(MainActivity.this, ItemsListActivity.class);
-                    intent.putExtra("by", "uuid");
-                    intent.putExtra("uuid", "0uuub5A248c530044dbCB24ADDa7"); //onni kivela
+                    ItemsListActivity.BY_USER(intent, "0uuub5A248c530044dbCB24ADDa7"); //onni kivela
                     startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "unsuccesful login", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+    public void GO_TO_activity_MakeOffer(View view) {
+        final FirebaseAuth fa = FirebaseAuth.getInstance();
+        fa.signInWithEmailAndPassword("test@test.com", "password").addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                FirebaseUser user = fa.getCurrentUser();
+                if (task.isSuccessful() && user != null) {
+                    Intent intent = new Intent(MainActivity.this, ItemsListActivity.class);
+                    ItemsListActivity.BY_ME(intent);
+                    startActivityForResult(intent,PICK_ITEM_FOR_OFFER);
                 } else {
                     Toast.makeText(MainActivity.this, "unsuccesful login", Toast.LENGTH_LONG).show();
                 }
@@ -217,4 +253,18 @@ public class MainActivity extends AppCompatActivity {
 //        Intent intent = new Intent(this, WatchItemVideoActivity.class);
 //        startActivity(intent);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        // check if the request code is same as what is passed  here it is 2
+        if(requestCode==PICK_ITEM_FOR_OFFER)
+        {
+            //do the things u wanted
+            ItemData item = (ItemData) data.getSerializableExtra("item");
+            tv.setText(item.getTitle());
+        }
+    }
+
 }

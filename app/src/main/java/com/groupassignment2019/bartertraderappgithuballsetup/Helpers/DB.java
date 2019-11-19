@@ -27,4 +27,20 @@ public class DB {
     public static DatabaseReference getCurrentUserDataReference(){
         return users.child(currentUser.getUid());
     }
+
+    /**
+     * Generates/calculates firebase-fashion unique messagethreadID by appending lexicographically bigger uid to the smaller uid. It represents one_to_one unique relationship
+     * and can be used to store unique Data object into firebase facilitating its retrieval by enforcing consistent protocol
+     * @param uid1 user id
+     * @param uid2 user id
+     * @return always unique combination of two param id's
+     */
+    public static String calculateMessageThreadID(String uid1, String uid2) {
+            // compare user ids lexicographically , we always want smaller uid at start
+         if (uid1.compareTo(uid2) < 0) { // should be equivalent to uid1 < uid2
+                return uid1 + uid2;
+            } else {
+                return uid2 + uid1;
+            }
+    }
 }

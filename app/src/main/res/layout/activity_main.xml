@@ -136,6 +136,7 @@
         android:onClick="GO_TO_activity_ItemDetails"
         android:padding="0dp"
         android:text="ItemDetails"
+        style="@style/look_of_a_button_when_activity_is_work_in_progress"
         app:layout_constraintEnd_toStartOf="@+id/MainNavTestBtn18"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -170,6 +171,7 @@
 
     <Button
         android:id="@+id/MainNavTestBtn4"
+        style="@style/look_of_a_button_when_activity_is_work_in_progress"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:onClick="GO_TO_activity_Dashboard"
@@ -225,6 +227,22 @@
         app:layout_constraintStart_toEndOf="@+id/MainNavTestBtn5" />
 
     <Button
+        android:id="@+id/mainNavTestBtn"
+        style="@style/look_of_a_button_when_activity_is_work_in_progress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:background="#D5D3C2C2"
+        android:includeFontPadding="false"
+        android:onClick="GO_TO_activity_MakeOffer"
+        android:padding="0dp"
+        android:text="Make An Offer"
+        app:layout_constraintBottom_toTopOf="@+id/MainNavTestBtn7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/MainNavTestBtn5" />
+
+    <Button
         android:id="@+id/MainNavTestBtn3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -249,7 +267,7 @@
         android:includeFontPadding="false"
         android:padding="0dp"
         android:text="these may be one"
-        app:layout_constraintBottom_toTopOf="@+id/MainNavTestBtn7"
+        app:layout_constraintBottom_toTopOf="@+id/mainNavTestBtn"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView

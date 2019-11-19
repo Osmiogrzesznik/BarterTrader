@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ItemDetailsActivity"
+    android:background="@drawable/back_design"
+    style="@style/AppTheme.NoActionBar">
+
+    <ImageView
+        android:id="@+id/iv_Image_itemDetail"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/backgrounds/scenic[10]" />
+
+    <TextView
+        android:id="@+id/tv_itemTitle_itemDetail"
+        style="@style/AnyTitleStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="15dp"
+        android:paddingEnd="15dp"
+        android:text="Item Title Item TitleItem TitleItem TitleItem TitleItem Title"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_Image_itemDetail" />
+
+    <RatingBar
+        android:id="@+id/ratingBar_itemDetail"
+        style="@style/Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:onClick="GO_TO_activity_SellerReviews"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="12dp"
+        android:isIndicator="true"
+        app:layout_constraintStart_toStartOf="@+id/iv_sellerPic_itemDetail"
+        app:layout_constraintTop_toBottomOf="@+id/tv_itemTitle_itemDetail" />
+
+    <TextView
+        style="@style/AnyTitleStyle"
+        android:id="@+id/tv_sellerFullName_itemDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text="User FullName"
+        android:textSize="18dp"
+        android:onClick="GO_TO_activity_SellerProfile"
+        app:layout_constraintStart_toEndOf="@+id/iv_sellerPic_itemDetail"
+        app:layout_constraintTop_toTopOf="@+id/iv_sellerPic_itemDetail" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_sellerPic_itemDetail"
+        android:layout_width="58dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:onClick="GO_TO_activity_SellerProfile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar_itemDetail"
+        tools:src="@tools:sample/avatars"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tv_seller_hasBeenFlaggedIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="Has been flagged indicator"
+        android:textColor="#FD8585"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_sellerFullName_itemDetail"
+        app:layout_constraintStart_toEndOf="@+id/tv_sellerFullName_itemDetail"
+        app:layout_constraintTop_toTopOf="@+id/tv_sellerFullName_itemDetail" />
+
+    <TextView
+        android:id="@+id/tv_otherUserItemsLink_itemDetail"
+        android:layout_width="220dp"
+        android:layout_height="17dp"
+        android:layout_marginLeft="15dp"
+        android:onClick="GO_TO_activity_ItemsBySeller"
+        android:text="@string/see_other_items_from_this_user"
+        android:textStyle="italic"
+        android:textColor="@color/brightestStart"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_sellerPic_itemDetail"
+        app:layout_constraintStart_toEndOf="@+id/iv_sellerPic_itemDetail"
+        app:layout_constraintTop_toBottomOf="@+id/tv_sellerFullName_itemDetail" />
+
+    <TextView
+        android:id="@+id/tv_amountOfReviews_itemDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/White"
+        android:onClick="GO_TO_activity_SellerReviews"
+        android:text="12"
+        app:layout_constraintBottom_toBottomOf="@+id/ratingBar_itemDetail"
+        app:layout_constraintStart_toEndOf="@+id/ratingBar_itemDetail"
+        app:layout_constraintTop_toTopOf="@+id/ratingBar_itemDetail" />
+
+    <TextView
+        android:id="@+id/tv_sellerReviews_Link_itemDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="reviews"
+        android:onClick="GO_TO_activity_SellerReviews"
+        android:textColor="@color/White"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_amountOfReviews_itemDetails"
+        app:layout_constraintStart_toEndOf="@+id/tv_amountOfReviews_itemDetails"
+        app:layout_constraintTop_toTopOf="@+id/tv_amountOfReviews_itemDetails" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="15dp"
+        android:padding="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_makeOfferToSeller_itemDetail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_sellerPic_itemDetail">
+
+        <TextView
+            android:id="@+id/tv_itemDescription_itemDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Item Description"
+            style="@style/AnyMultilineText"
+            tools:text="@tools:sample/lorem/random" />
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_seeItemVideo_opt_itemDetail"
+        style="@style/AnyTextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="GO_TO_WatchItemVideoActivity"
+        android:text="video opt*"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_Image_itemDetail"
+        app:layout_constraintEnd_toEndOf="@+id/iv_Image_itemDetail" />
+
+    <Button
+        android:id="@+id/btn_makeOfferToSeller_itemDetail"
+        style="@style/AnyTextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:onClick="makeOfferToSeller"
+        android:text="Make Offer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_msgSeller_itemDetail"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_msgSeller_itemDetail"
+        style="@style/AnyTextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:onClick="GO_TO_activity_ChatSendMessageToSeller"
+        android:text="msg Seller"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_makeOfferToSeller_itemDetail" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

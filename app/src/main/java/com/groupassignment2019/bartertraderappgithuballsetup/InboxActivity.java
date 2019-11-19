@@ -3,6 +3,7 @@ package com.groupassignment2019.bartertraderappgithuballsetup;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -47,6 +48,7 @@ public class InboxActivity extends AppCompatActivity {
     private ValueEventListener grabListOfMTIDsandprepareneededdata;
     private FirebaseUser firebaseUser;
     private DatabaseReference DB_listOfThreadsInbox;
+
 
 
     //

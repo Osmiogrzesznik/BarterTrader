@@ -18,9 +18,12 @@ public class UserDataModel {
     private String phoneNumber;
     private String uid;
     private int avgRev;
+
+    private int amtRev;
     private Map<String, Boolean> inbox;
     private String password;
     private Map<String, Boolean> tradedWith;
+    private boolean flagged;
 
     public UserDataModel() {
     }
@@ -119,6 +122,24 @@ public class UserDataModel {
         this.phoneNumber = phoneNumber;
     }
 
+    public boolean isFlagged() {
+        // TODO: 17/11/2019 cannot check if flagged boolean equals null? how to check it?
+        return flagged;
+    }
+
+    public void setFlagged(boolean flagged) {
+        this.flagged = flagged;
+    }
+
+    public int getAmtRev() {
+        return amtRev;
+    }
+
+    public void setAmtRev(int amtRev) {
+        this.amtRev = amtRev;
+    }
+
+
     @Exclude
     @NonNull
     public int calculateUnreadThreadAmount() {
@@ -131,4 +152,6 @@ public class UserDataModel {
         }
         return unreadThreadsAmount;
     }
+
+
 }

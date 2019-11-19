@@ -16,7 +16,6 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.FirebaseError;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -24,6 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
 import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.AddElementToAdapterValueListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.adapters.ItemRVAdapter;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.ItemData;
@@ -34,16 +34,67 @@ import java.util.List;
 
 public class ItemsListActivity extends AppCompatActivity {
     //Listeners
-    final ItemRVAdapter.OnItemClickListener clickListener = new ItemRVAdapter.OnItemClickListener() {
+    final ItemRVAdapter.OnItemClickListener itemClickListener = new ItemRVAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(ItemData clickedItemData) {
-            Toast.makeText(ItemsListActivity.this, "you clicked" + clickedItemData.getTitle(), Toast.LENGTH_LONG).show();
+            Toast.makeText(ItemsListActivity.this, "mode:"+ mode + " \nyou clicked" + clickedItemData.getTitle(), Toast.LENGTH_LONG).show();
+            Toast.makeText(ItemsListActivity.this, ((Boolean)(mode==OFFER)).toString() , Toast.LENGTH_LONG).show();
+            Toast.makeText(ItemsListActivity.this, mode+OFFER , Toast.LENGTH_LONG).show();
+
+            //if mode is offer it means that this activity was started for result so do not start any other activity just finish
+            if (/*mode.equalsIgnoreCase(OFFER) */ getCallingActivity() != null){//if was called for result
+               Intent intent = new Intent();
+                intent.putExtra("item", clickedItemData);
+                setResult(RESULT_OK, intent);
+                finish();
+            }else{
+                Intent intent = new Intent(ItemsListActivity.this, ItemDetailsActivity.class);
+                intent.putExtra("item",clickedItemData);
+                startActivity(intent);
+            }
         }
     };
 
-
-
     public static final String BOLO = "BOLO";
+    public static final String CATEGORY = "category";
+    public static final String OFFER = "offer";
+    public static final String BY = "by";
+    public static final String USER_ID = "uuid";
+
+
+    /**
+     * sets the intent extras to start ItemsListActivity with valid input extras adhering to the contract
+     * @param intent intent that will be used to start ItemsListActivity
+     */
+    public static final void BY_ME(Intent intent){
+        BY_USER(intent,DB.currentUser.getUid());
+    }
+
+    /**
+     * sets the intent extras to start ItemsListActivity with valid input extras adhering to the contract
+     * @param intent intent that will be used to start ItemsListActivity
+     * @param uuid uid of user whose items will be displayed
+     */
+    public static final void BY_USER(Intent intent,String uuid){
+        intent.putExtra(BY, USER_ID);
+        intent.putExtra(USER_ID,uuid);
+    }
+
+    /**
+     * sets the intent extras to start ItemsListActivity with valid input extras adhering to the contract
+     * @param intent intent that will be used to start ItemsListActivity
+     * @param category uid of category whose items will be displayed
+     */
+    public static final void BY_CATEGORY(Intent intent,String category){
+        intent.putExtra(BY,CATEGORY);
+        intent.putExtra(USER_ID,category);
+    }
+
+    /**
+     * sets the intent extras to start ItemsListActivity with valid input extras adhering to the contract
+     * @param intent intent that will be used to start ItemsListActivity
+     */
+
     private LinearLayoutManager linearLayoutManager;
     private RecyclerView recyclerView;
     private TextView textViewItem_list_NarrowDownTitle;
@@ -52,13 +103,13 @@ public class ItemsListActivity extends AppCompatActivity {
     private ItemRVAdapter adapter;
     private DatabaseReference DB_mRootReference;
     private DatabaseReference mDBListOfItemIdsInCategoryNameRef;
-    private TextView textViewDEBUG_FIREBASE;
     private DatabaseReference DB_Items_reference;
     private ValueEventListener addItemToListOnValueEvent;
     private String byWhat_UserOrCategory;
     private Intent intentThatStartedMe;
     private String userIdOrCategoryName;
     private ValueEventListener grabListOfIdsAndFindActualItems;
+    private String mode;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -109,12 +160,12 @@ public class ItemsListActivity extends AppCompatActivity {
         adapter = new ItemRVAdapter(mInflater, itemsArrayList);
         //recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(clickListener);
 
         //Recover info sent from previous activity
         intentThatStartedMe = getIntent();
-
         checkWhatTypeOfListUserShouldSee();
+        adapter.setOnItemClickListener(itemClickListener);
+
 
         //this will happen for every itemID
         addItemToListOnValueEvent = new AddElementToAdapterValueListener<ItemData>(this,adapter,ItemData.class);
@@ -160,35 +211,40 @@ public class ItemsListActivity extends AppCompatActivity {
         boolean isOwner;
         FirebaseUser firebaseUser;
         UserDataModel user;
+
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser == null ){
-            Toast.makeText(this, "user is null", Toast.LENGTH_SHORT).show();
-            FirebaseAuth.getInstance().signInWithEmailAndPassword("test@test.com","password") ;
-            firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            // TODO: 18/11/2019 !!??? what the fuck?
+//            Toast.makeText(this, "user is null", Toast.LENGTH_SHORT).show();
+//            FirebaseAuth.getInstance().signInWithEmailAndPassword("test@test.com","password") ;
+//            firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            throw new NullPointerException("BT: BOLO : NO USER LOGGED IN FOR VIEWING ITEMS. This activity requires user to be logged in but not really");
         }
-        String filterValue = intentThatStartedMe.getExtras().getString(byWhat_UserOrCategory);//if filter Type was user it will get UUID
+        String user_id_from_intent = intentThatStartedMe.getExtras().getString(USER_ID);//if filter Type was user it will get UUID
 
 
-        if (filterValue.contentEquals(firebaseUser.getUid())) {
+        if (user_id_from_intent.contentEquals(firebaseUser.getUid())) {
+            // BY_ME scenario
 
             isOwner = true;
             textViewItem_list_NarrowDownTitle.setText("Items By Me");
-            //recyclerView.setHasFixedSize(false);
-            // mRootReference.child("items_by_user")
             UUID = firebaseUser.getUid();
         } else {
+            // BY ANY OTHER USER scenario
+
             isOwner = false;
             textViewItem_list_NarrowDownTitle.setText("Items By User");
-            //recyclerView.setHasFixedSize(true);
-                UUID = filterValue;
-            //user = mRootReference.child("users").child(UUID).addListenerForSingleValueEvent();
+                UUID = user_id_from_intent;
         }
-
-        adapter.setIsViewerTheOwner(isOwner);
+        if (mode == OFFER){
+            adapter.setIsViewerTheOwner(false);// do not allow user to edit items before picking an offer
+        }else{
+            adapter.setIsViewerTheOwner(isOwner);
+        }
         DatabaseReference DB_itemIDsofItemsByUser_ref = DB_mRootReference.child("items_by_user").child(UUID);
         DB_itemIDsofItemsByUser_ref.addValueEventListener(grabListOfIdsAndFindActualItems);
 
-        Toast.makeText(ItemsListActivity.this, filterValue, Toast.LENGTH_LONG).show();
+        Toast.makeText(ItemsListActivity.this, user_id_from_intent, Toast.LENGTH_LONG).show();
     }
 
     private void setUpAdapterToBeFilledWithItemsFromCategory() {
@@ -203,8 +259,9 @@ public class ItemsListActivity extends AppCompatActivity {
         mDBListOfItemIdsInCategoryNameRef.addValueEventListener(grabListOfIdsAndFindActualItems);
     }
 
+
     private void checkWhatTypeOfListUserShouldSee() {
-        byWhat_UserOrCategory = intentThatStartedMe.getExtras().getString("by");
+        byWhat_UserOrCategory = intentThatStartedMe.getExtras().getString(BY);
         if (byWhat_UserOrCategory == null)
             throw new NullPointerException("BT: user should be redirected here with data- there is no data passed in the intent");
     }
@@ -213,15 +270,17 @@ public class ItemsListActivity extends AppCompatActivity {
         if (byWhat_UserOrCategory == null) {
             checkWhatTypeOfListUserShouldSee();
         }
-        return byWhat_UserOrCategory.equalsIgnoreCase("category");
+        return byWhat_UserOrCategory.equalsIgnoreCase(CATEGORY);
     }
 
     private boolean userShouldSeeItemsByOtherUser() {
         if (byWhat_UserOrCategory == null) {
             checkWhatTypeOfListUserShouldSee();
         }
-        return byWhat_UserOrCategory.equalsIgnoreCase("uuid");
+        return byWhat_UserOrCategory.equalsIgnoreCase(USER_ID);
     }
+
+
 
     private void fetchByitemId(String itemIDAsString) {
         DB_mRootReference.child("items").child(itemIDAsString)
@@ -231,7 +290,6 @@ public class ItemsListActivity extends AppCompatActivity {
                         ItemData itemData = dataSnapshot.getValue(ItemData.class);
                         itemsArrayList.add(itemData);
                         Log.d("BOLO", itemData.toString());
-//
                     }
 
                     @Override
@@ -241,43 +299,5 @@ public class ItemsListActivity extends AppCompatActivity {
                 });
     }
 
-    private void DB(String UUID) {
 
-        DB_mRootReference.child("items_by_user").child(UUID).addListenerForSingleValueEvent(new ValueEventListener() {
-            public void onDataChange(DataSnapshot snapshot) {
-                for (DataSnapshot itemID : snapshot.getChildren()) {
-                    DB_mRootReference.child("items").child(itemID.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
-                        public void onDataChange(DataSnapshot ids) {
-                            // System.out.println(lectureSnapshot.child("title").getValue());
-                            ItemData itda = ids.getValue(ItemData.class);
-                            itemsArrayList.add(itda);
-
-                            Log.d(BOLO, itda.toString());
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-
-                        public void onCancelled(FirebaseError firebaseError) {
-                            Toast.makeText(ItemsListActivity.this, "", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-
-                adapter = new ItemRVAdapter(mInflater, itemsArrayList);
-                recyclerView.setAdapter(adapter);
-                adapter.setOnItemClickListener(clickListener);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-
-            public void onCancelled(FirebaseError firebaseError) {
-            }
-        });
-    }
 }

@@ -4,9 +4,10 @@ import android.net.Uri;
 
 import com.google.firebase.database.Exclude;
 
-import java.net.URI;
+import java.io.Serializable;
 
-public class ItemData {
+public class ItemData implements Serializable {
+
     @Exclude
     public static final ItemData EMPTY_TEST() {
         return EMPTY_TEST("testTitle");
@@ -14,18 +15,29 @@ public class ItemData {
 
     @Exclude
     public static final ItemData EMPTY_TEST(String title){
-    return new ItemData(title, "testDesc", Uri.parse("http://lorempixel.com/160/90"),"testCategory", "testUUID");
+    return new ItemData("99999999", title, "testDesc", "http://lorempixel.com/160/90","testCategory", "testUUID");
     }
     private String title;
     private String description;
-    private Uri pictureURI;
+    private String pictureURI;
     private String category;
     private String seller_user_UUID;
+    private String videoURI;
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public ItemData() {
     }
 
-    public ItemData(String title, String description, Uri pictureURI, String category, String seller_user_UUID) {
+    public ItemData(String id,String title, String description, String pictureURI, String category, String seller_user_UUID) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.pictureURI = pictureURI;
@@ -49,12 +61,12 @@ public class ItemData {
         this.description = description;
     }
 
-    public Uri getPictureURI() {
+    public String getPictureURI() {
         return pictureURI;
     }
 
     public void setPictureURI(String pictureURI) {
-        this.pictureURI = Uri.parse(pictureURI);
+        this.pictureURI = pictureURI;
     }
 
     public String getSeller_user_UUID() {
@@ -82,5 +94,23 @@ public class ItemData {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    public void setVideoURI(String videoURI) {
+        this.videoURI = videoURI;
+    }
+    public String getVideoURI() {
+        return videoURI;
+    }
+
+    @Exclude
+    public boolean hasVideo() {
+        if (videoURI == null){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
 }
 

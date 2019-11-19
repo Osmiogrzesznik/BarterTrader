@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#000000">
+
+    <ImageView
+        android:id="@+id/iv_logoSwapArrows"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_app" />
+
+    <ImageView
+        android:id="@+id/iv_yourItem_popup_old"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/back_brightest"
+        android:cropToPadding="true"
+        android:padding="20dp"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/divider2"
+        app:layout_constraintEnd_toEndOf="@+id/iv_logoSwapArrows"
+        app:layout_constraintStart_toEndOf="@+id/divider"
+        app:layout_constraintTop_toTopOf="@+id/iv_logoSwapArrows"
+        app:srcCompat="@drawable/gadgets_example_pic" />
+
+    <ImageView
+        android:id="@+id/iv_myItem_popup_old"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/back_darkest"
+        android:cropToPadding="true"
+        android:padding="20dp"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_logoSwapArrows"
+        app:layout_constraintEnd_toStartOf="@+id/divider"
+        app:layout_constraintStart_toStartOf="@+id/iv_logoSwapArrows"
+        app:layout_constraintTop_toBottomOf="@+id/divider2"
+        app:srcCompat="@drawable/gadgets" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_yourItem_popup"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:cropToPadding="true"
+        android:padding="0dp"
+        android:scaleType="centerCrop"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/divider2"
+        app:layout_constraintEnd_toEndOf="@+id/iv_logoSwapArrows"
+        app:layout_constraintStart_toEndOf="@+id/divider"
+        app:layout_constraintTop_toTopOf="@+id/iv_logoSwapArrows"
+        app:srcCompat="@drawable/gadgets_example_pic"
+        android:src="@drawable/gadgets_example_pic"
+        app:civ_border_overlay="false"
+        app:civ_border_color="@color/brightestStart"
+        app:civ_border_width="10dp"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_myItem_popup"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:cropToPadding="true"
+        android:padding="0dp"
+        android:scaleType="centerCrop"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_logoSwapArrows"
+        app:layout_constraintEnd_toStartOf="@+id/divider"
+        app:layout_constraintStart_toStartOf="@+id/iv_logoSwapArrows"
+        app:layout_constraintTop_toBottomOf="@+id/divider2"
+        app:srcCompat="@drawable/gadgets"
+        android:src="@drawable/gadgets"
+        app:civ_border_overlay="false"
+        app:civ_border_color="@color/darkestEnd"
+        app:civ_border_width="10dp"/>
+
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_logoSwapArrows"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_logoSwapArrows"
+        app:layout_constraintTop_toTopOf="@+id/iv_logoSwapArrows" />
+
+    <ImageView
+        android:id="@+id/iv_popup_OK_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/back_bright"
+        android:paddingBottom="40dp"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toStartOf="@+id/divider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_logoSwapArrows"
+        app:srcCompat="@drawable/ic_ok" />
+
+    <ImageView
+        android:id="@+id/iv_popup_CANCEL_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/back_darkest"
+        android:paddingBottom="40dp"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/divider"
+        app:layout_constraintTop_toBottomOf="@+id/iv_logoSwapArrows"
+        app:srcCompat="@drawable/ic_cancel" />
+
+    <TextView
+        android:id="@+id/textView6"
+        style="@style/AnyTitleStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:text="@android:string/ok"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_popup_OK_btn"
+        app:layout_constraintEnd_toEndOf="@+id/iv_popup_OK_btn"
+        app:layout_constraintStart_toStartOf="@+id/iv_popup_OK_btn" />
+
+    <TextView
+        android:id="@+id/textView7"
+        style="@style/AnyTitleStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:text="@android:string/cancel"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_popup_CANCEL_btn"
+        app:layout_constraintEnd_toEndOf="@+id/iv_popup_CANCEL_btn"
+        app:layout_constraintStart_toStartOf="@+id/iv_popup_CANCEL_btn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

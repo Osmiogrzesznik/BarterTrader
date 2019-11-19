@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">BarterTraderAppGithubAllSetUp</string>
     <string name="selectCategory">Select Category</string>
+    <string name="see_other_items_from_this_user"><u><i>See other items from this user</i></u></string>
 
     <string-array name="Cathegories">
         <item>Clothes</item>

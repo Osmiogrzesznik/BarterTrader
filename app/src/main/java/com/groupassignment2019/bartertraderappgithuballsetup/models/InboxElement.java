@@ -84,7 +84,7 @@ public class InboxElement {
     @Exclude
     public String getLastMessageTimeAsString() {
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
-        cal.setTimeInMillis(getLastMessageTime() * 1000);
+        cal.setTimeInMillis(getLastMessageTime());
         String date = DateFormat.format("dd-MM-yyyy kk:mm:ss", cal).toString();
         return date;
     }
