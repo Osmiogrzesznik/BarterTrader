@@ -8,7 +8,6 @@ import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.ItemDataViewHolder> implements Filterable , Addable<ItemData> {
+public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.ItemDataViewHolder> implements Filterable , Consumer<ItemData> {
     private OnItemClickListener onItemClickListener;
 //    private Context mContext;
     private List<ItemData> items;
@@ -56,7 +55,7 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.ItemDataVi
         notifyDataSetChanged();
     }
 
-    public void add(ItemData itemData){
+    public void consume(ItemData itemData){
         this.itemsFull.add(itemData);
         this.items.add(itemData);
         notifyDataSetChanged();

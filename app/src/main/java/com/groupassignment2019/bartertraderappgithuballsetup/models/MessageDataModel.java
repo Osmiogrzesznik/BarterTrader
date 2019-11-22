@@ -6,9 +6,9 @@ import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
 
 public class MessageDataModel {
     @Exclude
-    public final static String MESSAGE_TYPE = "message";
+    public final static String TYPE_MESSAGE = "message";
     @Exclude
-    public final static String OFFER_TYPE = "offer";
+    public final static String TYPE_OFFER = "offer";
     @Exclude
     public final static String OFFER_BODY = "Offers Barter Trade";
 
@@ -25,14 +25,14 @@ public class MessageDataModel {
     }
 
     public MessageDataModel(String to, String body) {
-        this.type = MESSAGE_TYPE;
+        this.type = TYPE_MESSAGE;
         this.from = DB.currentUser.getUid();
         this.body = body;
         this.to = to;
     }
 
     public MessageDataModel(String to, String offeredItemId, String wantedItemId) {
-        this.type = OFFER_TYPE;
+        this.type = TYPE_OFFER;
         this.from = DB.currentUser.getUid();
         this.body = OFFER_BODY;
         this.to = to;

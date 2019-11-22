@@ -1,9 +1,9 @@
 package com.groupassignment2019.bartertraderappgithuballsetup;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,10 +16,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
-import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.AddElementToAdapterValueListener;
+import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.FirebaseObjectListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.adapters.InboxElementRVAdapter;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.InboxElement;
 
@@ -33,8 +32,13 @@ public class InboxActivity extends AppCompatActivity {
     final InboxElementRVAdapter.OnItemClickListener clickListener = new InboxElementRVAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(InboxElement clickedinboxElement) {
-            Toast.makeText(InboxActivity.this, "you clicked" + clickedinboxElement.toString(), Toast.LENGTH_LONG).show();
+            if (clickedinboxElement.isComplete()){ //only if inboxElement had finished loading form fb
+                Toast.makeText(InboxActivity.this, "you clicked" + clickedinboxElement.toString(), Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(InboxActivity.this, ChatActivity.class);
+            intent.putExtra("otherUser", clickedinboxElement.getUserInterlocutor());
+            startActivity(intent);
         }
+        };
     };
 
 
@@ -44,7 +48,7 @@ public class InboxActivity extends AppCompatActivity {
     private List<InboxElement> inboxElementList;
     private LayoutInflater mInflater;
     private InboxElementRVAdapter adapter;
-    private AddElementToAdapterValueListener<InboxElement> addInboxElementToAdapterWhenSentFromDB;
+    private FirebaseObjectListener<InboxElement> addInboxElementToAdapterWhenSentFromDB;
     private ValueEventListener grabListOfMTIDsandprepareneededdata;
     private FirebaseUser firebaseUser;
     private DatabaseReference DB_listOfThreadsInbox;
@@ -81,7 +85,7 @@ public class InboxActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(clickListener);
 
         //Recover info sent from previous activity
-        addInboxElementToAdapterWhenSentFromDB = new AddElementToAdapterValueListener<InboxElement>(this,adapter, InboxElement.class);
+        addInboxElementToAdapterWhenSentFromDB = new FirebaseObjectListener<InboxElement>(this,adapter, InboxElement.class);
 
 
         // TODO: 11/11/2019 in adapter oncreateviuew holder load urls
@@ -97,7 +101,7 @@ public class InboxActivity extends AppCompatActivity {
                     Log.d(BOLO, msgThrIDKey);
                     //for each of ids send request for adding actual item
                     //Before adding the inboxElement to Adapter we set fields required to grab other user picture and so on
-                    AddElementToAdapterValueListener.OnBeforeAddedListener<InboxElement> onBeforeAddedListener = new AddElementToAdapterValueListener.OnBeforeAddedListener<InboxElement>(){
+                    FirebaseObjectListener.OnBeforeAddedListener<InboxElement> onBeforeAddedListener = new FirebaseObjectListener.OnBeforeAddedListener<InboxElement>(){
                         @Override
                         public InboxElement OnBeforeAdded(InboxElement element) {
                             element.setMessageThreadId(msgThrIDKey);
@@ -106,7 +110,7 @@ public class InboxActivity extends AppCompatActivity {
                         }
                     };
                     //get fresh local copy to avoid using all new onbeforeAddedListeners on one Object, therefore loosing msgThrdIDKey and otherUserId
-                    AddElementToAdapterValueListener adder = addInboxElementToAdapterWhenSentFromDB.copy();
+                    FirebaseObjectListener adder = addInboxElementToAdapterWhenSentFromDB.copy();
                     adder.setOnBeforeAddedListener(onBeforeAddedListener);
                     DB.messageThreads.child(msgThrIDKey).addValueEventListener(adder);
                 }

@@ -12,11 +12,9 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
-import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.AddElementToAdapterValueListener;
+import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.FirebaseObjectListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.adapters.ReviewRVAdapter;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.ReviewDataModel;
 
@@ -41,7 +39,7 @@ public class ReviewsActivity extends AppCompatActivity {
     private LinearLayoutManager linearLayoutManager;
     private ReviewRVAdapter reviewRVAdapter;
     private Intent intentThatStartedMe;
-    private AddElementToAdapterValueListener<ReviewDataModel> addItemToListOnValueEvent;
+    private FirebaseObjectListener<ReviewDataModel> addItemToListOnValueEvent;
     private String UserId_WhoseReviewsWeSee;
 
     @Override
@@ -67,7 +65,7 @@ public class ReviewsActivity extends AppCompatActivity {
 
         //this will happen for every review
         // TODO: 09/11/2019 this can be used rather for every userId in review to get some Pictures
-        addItemToListOnValueEvent = new AddElementToAdapterValueListener<ReviewDataModel>(this, reviewRVAdapter,ReviewDataModel.class);
+        addItemToListOnValueEvent = new FirebaseObjectListener<ReviewDataModel>(this, reviewRVAdapter,ReviewDataModel.class);
             setUpAdapterToBeFilledWithReviewsOfUser();
     }
 
@@ -78,7 +76,7 @@ public class ReviewsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot reviewSnapshot: dataSnapshot.getChildren()){
                     ReviewDataModel reviewData = reviewSnapshot.getValue(ReviewDataModel.class);
-                    reviewRVAdapter.add(reviewData);
+                    reviewRVAdapter.consume(reviewData);
                 }
             }
 

@@ -1,5 +1,7 @@
 package com.groupassignment2019.bartertraderappgithuballsetup.Helpers;
 
+import android.text.format.DateFormat;
+
 import androidx.annotation.Nullable;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -8,6 +10,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.UserDataModel;
 
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Objects;
 
 public class DB {
@@ -42,5 +46,18 @@ public class DB {
             } else {
                 return uid2 + uid1;
             }
+    }
+
+    /**
+     * "dd-MM-yyyy kk:mm:ss" format or any other provided combination, calculated from timestamp
+     * @param s "dd-MM-yyyy kk:mm:ss"
+     * @param timestamp
+     * @return
+     */
+    public static String calcDateStringFromTimestamp(String s, long timestamp) {
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(timestamp);
+        String date = DateFormat.format(s, cal).toString();
+        return date;
     }
 }

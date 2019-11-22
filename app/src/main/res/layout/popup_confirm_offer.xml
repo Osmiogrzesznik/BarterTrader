@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingBottom="10dp"
     android:background="#000000">
 
     <ImageView
@@ -12,42 +13,10 @@
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo_app" />
-
-    <ImageView
-        android:id="@+id/iv_yourItem_popup_old"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="20dp"
-        android:background="@drawable/back_brightest"
-        android:cropToPadding="true"
-        android:padding="20dp"
-        android:scaleType="centerCrop"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/divider2"
-        app:layout_constraintEnd_toEndOf="@+id/iv_logoSwapArrows"
-        app:layout_constraintStart_toEndOf="@+id/divider"
-        app:layout_constraintTop_toTopOf="@+id/iv_logoSwapArrows"
-        app:srcCompat="@drawable/gadgets_example_pic" />
-
-    <ImageView
-        android:id="@+id/iv_myItem_popup_old"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="20dp"
-        android:background="@drawable/back_darkest"
-        android:cropToPadding="true"
-        android:padding="20dp"
-        android:scaleType="centerCrop"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_logoSwapArrows"
-        app:layout_constraintEnd_toStartOf="@+id/divider"
-        app:layout_constraintStart_toStartOf="@+id/iv_logoSwapArrows"
-        app:layout_constraintTop_toBottomOf="@+id/divider2"
-        app:srcCompat="@drawable/gadgets" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_yourItem_popup"
@@ -91,7 +60,7 @@
     <View
         android:id="@+id/divider"
         android:layout_width="1dp"
-        android:layout_height="wrap_content"
+        android:layout_height="1dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintBottom_toBottomOf="@+id/iv_logoSwapArrows"
         app:layout_constraintEnd_toEndOf="parent"
@@ -155,5 +124,23 @@
         app:layout_constraintBottom_toBottomOf="@+id/iv_popup_CANCEL_btn"
         app:layout_constraintEnd_toEndOf="@+id/iv_popup_CANCEL_btn"
         app:layout_constraintStart_toStartOf="@+id/iv_popup_CANCEL_btn" />
+
+    <TextView
+        android:id="@+id/tv_yourItem_title_popup"
+        style="@style/AnyMultilineText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Item Title"
+        app:layout_constraintEnd_toStartOf="@+id/iv_yourItem_popup"
+        app:layout_constraintTop_toTopOf="@+id/iv_yourItem_popup" />
+
+    <TextView
+        android:id="@+id/tv_myItem_title_popup"
+        style="@style/AnyMultilineText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Item Title"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_myItem_popup"
+        app:layout_constraintStart_toEndOf="@+id/iv_myItem_popup" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

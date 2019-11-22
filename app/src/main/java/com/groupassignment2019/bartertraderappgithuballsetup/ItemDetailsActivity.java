@@ -167,7 +167,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(ItemDetailsActivity.this, "no thread we have to create one before messaging " + databaseError.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(ItemDetailsActivity.this, databaseError.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -200,13 +200,20 @@ public class ItemDetailsActivity extends AppCompatActivity {
             dialog.setContentView(R.layout.popup_confirm_offer);
             dialog.setTitle("Send Offer to Swap these Items?");
 
-            // set the custom dialog components - text, image and button
+            // bind the custom dialog components - textviews, images and buttons
+
+            TextView tvYourItemTitlePopup = dialog.findViewById(R.id.tv_yourItem_title_popup);
+            TextView tvMyItemTitlePopup = dialog.findViewById(R.id.tv_myItem_title_popup);
 
             CircleImageView ivYourItemPopup = dialog.findViewById(R.id.iv_yourItem_popup);
             CircleImageView ivMyItemPopup = dialog.findViewById(R.id.iv_myItem_popup);
             ImageView ivPopupOKBtn = dialog.findViewById(R.id.iv_popup_OK_btn);
             ImageView ivPopupCANCELBtn = dialog.findViewById(R.id.iv_popup_CANCEL_btn);
 
+            // set the components to display the data
+            tvYourItemTitlePopup.setText(item.getTitle());
+            tvMyItemTitlePopup.setText(pickedItem.getTitle());
+            // set images
             Picasso.get().load(item.getPictureURI()).into(ivYourItemPopup);
             Picasso.get().load(pickedItem.getPictureURI()).into(ivMyItemPopup);
             // if button is clicked, close the custom dialog
@@ -248,7 +255,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
                                                    DB.users.child(yourID).child("inbox").child(messageThreadId).setValue(true);
                                                    DB.users.child(myID).child("inbox").child(messageThreadId).setValue(false);// i send the message so it is not unread
                                                    String msgID = DB.messageThreads_messages.child(messageThreadId).push().getKey();
-                                                   MessageDataModel msgDM = new MessageDataModel(yourID,myItem.getId(),yourItem.getId());
+                                                   MessageDataModel msgDM = new MessageDataModel(yourID,myItem.getId(),yourItem.getId()); //offer
                                                    DB.messageThreads_messages.child(messageThreadId).child(msgID).setValue(msgDM).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                        @Override
                                                        public void onComplete(@NonNull Task<Void> task) {

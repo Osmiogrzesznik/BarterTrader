@@ -24,7 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
-import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.AddElementToAdapterValueListener;
+import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.FirebaseObjectListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.adapters.ItemRVAdapter;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.ItemData;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.UserDataModel;
@@ -79,7 +79,7 @@ public class ItemsListActivity extends AppCompatActivity {
         intent.putExtra(BY, USER_ID);
         intent.putExtra(USER_ID,uuid);
     }
-
+// TODO: 20/11/2019 remove actionbar and use custom one as in DashboardActivity
     /**
      * sets the intent extras to start ItemsListActivity with valid input extras adhering to the contract
      * @param intent intent that will be used to start ItemsListActivity
@@ -168,7 +168,7 @@ public class ItemsListActivity extends AppCompatActivity {
 
 
         //this will happen for every itemID
-        addItemToListOnValueEvent = new AddElementToAdapterValueListener<ItemData>(this,adapter,ItemData.class);
+        addItemToListOnValueEvent = new FirebaseObjectListener<ItemData>(this,adapter,ItemData.class);
 
         //this will make above happen for every itemID
         grabListOfIdsAndFindActualItems = new ValueEventListener() {

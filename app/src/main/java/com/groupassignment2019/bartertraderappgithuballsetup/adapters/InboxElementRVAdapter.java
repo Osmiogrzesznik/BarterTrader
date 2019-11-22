@@ -19,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
 import com.groupassignment2019.bartertraderappgithuballsetup.R;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.InboxElement;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.UserDataModel;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAdapter.InboxElementHolder> implements Filterable, Addable<InboxElement> {
+public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAdapter.InboxElementHolder> implements Filterable, Consumer<InboxElement> {
     private OnItemClickListener onItemClickListener;
     //    private Context mContext;
     private List<InboxElement> items;
@@ -59,7 +60,7 @@ public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAd
         notifyDataSetChanged();
     }
 
-    public void add(InboxElement inboxElement) {
+    public void consume(InboxElement inboxElement) {
         this.itemsFull.add(inboxElement);
         this.items.add(inboxElement);
         notifyDataSetChanged();
@@ -87,9 +88,9 @@ public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAd
         // view, and worrying how to update user names in all nodes when user changes his details
         if (inboxElement.isComplete()) { // if all data are present during binding just display them
             holder.progressBar_inboxElement_incompleteYet.setVisibility(View.GONE);
-            holder.UserInterlocutor_firstLastName.setText(inboxElement.getUserInterlocutor_firstLastName());
+            holder.UserInterlocutor_firstLastName.setText(inboxElement.getUserInterlocutor().getFullName());
             Picasso.get()
-                    .load(inboxElement.getUserInterlocutor_image())
+                    .load(inboxElement.getUserInterlocutor().getPicture())
 //                .centerCrop()
                     //.fit()
                     .noFade()
@@ -97,7 +98,7 @@ public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAd
                     .into(holder.UserInterlocutor_image);
         } else {
             // if other user image is not present request user object and store his data here (think about storing whole user , when inbox element is clicked then it is easy to
-            DB_users.child(inboxElement.getOtherUserID())
+            DB.users.child(inboxElement.getOtherUserID())
                     .addListenerForSingleValueEvent(new OnUserDataModelLoaded(this, inboxElement, position));
             holder.progressBar_inboxElement_incompleteYet.setVisibility(View.VISIBLE);
         }
@@ -128,23 +129,24 @@ public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAd
      */
     public class OnUserDataModelLoaded implements ValueEventListener {
         private InboxElement inboxElement;
-        private RecyclerView.Adapter parentAdapter;
+        private RecyclerView.Adapter adapterToNotify;
         private int position;
 
-        public OnUserDataModelLoaded(RecyclerView.Adapter parentAdapter, InboxElement inboxElement, int position) {
+        public OnUserDataModelLoaded(RecyclerView.Adapter adapterToNotify, InboxElement inboxElement, int position) {
             this.inboxElement = inboxElement;
-            this.parentAdapter = parentAdapter;
+            this.adapterToNotify = adapterToNotify;
             this.position = position;
         }
 
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             Log.d("BOLO","received snapshot position:" + position);
-            UserDataModel user = dataSnapshot.getValue(UserDataModel.class); // todo this could be just a field on InboxElement - it would save a lot of hassle and offer other possibilities later (for example is user active and so on)
-            inboxElement.setUserInterlocutor_image(user.getPicture());
-            inboxElement.setUserInterlocutor_firstLastName(user.getFirstName() + " " + user.getLastName());
+            UserDataModel user = dataSnapshot.getValue(UserDataModel.class);// todo this could be just a field on InboxElement - it would save a lot of hassle and offer other possibilities later (for example is user active and so on)
+            //inboxElement.setUserInterlocutor_image(user.getPicture());
+            inboxElement.setUserInterlocutor(user);
+//            inboxElement.setUserInterlocutor_firstLastName(user.getFirstName() + " " + user.getLastName());
             inboxElement.setComplete(true);// now Views should get data from this element
-            parentAdapter.notifyItemChanged(position);// tell adapter to re-bind item
+            adapterToNotify.notifyItemChanged(position);// tell adapter to re-bind item
         }
 
         @Override
@@ -212,9 +214,9 @@ public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAd
             } else {
                 String searchQuery = constraint.toString().toLowerCase().trim();
 
-                for (InboxElement category : itemsFull) {
-                    if (category.getUserInterlocutor_firstLastName().toLowerCase().contains(searchQuery)) {
-                        filteredList.add(category);
+                for (InboxElement inbElem : itemsFull) {
+                    if (inbElem.getUserInterlocutor().getFullName().toLowerCase().contains(searchQuery)) {
+                        filteredList.add(inbElem);
                     }
                 }
 

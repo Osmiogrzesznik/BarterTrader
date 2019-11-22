@@ -69,6 +69,7 @@ inputValidator = new InputValidator(LoginActivity.this);
                             progressBar_on_login_screen.setVisibility(View.VISIBLE);
                             if (task.isSuccessful()) {
                                 startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
+                                // TODO: 20/11/2019 mark login flag it to be destroyed?
                                 Toast.makeText(getApplicationContext(), "Successful", Toast.LENGTH_SHORT).show();
                             } else {
                                Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();

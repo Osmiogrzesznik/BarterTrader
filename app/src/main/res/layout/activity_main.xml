@@ -259,7 +259,7 @@
         app:layout_constraintStart_toEndOf="@+id/MainNavTestBtn5" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/msg_body"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"

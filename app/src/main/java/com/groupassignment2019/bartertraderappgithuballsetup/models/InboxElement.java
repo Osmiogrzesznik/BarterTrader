@@ -3,12 +3,15 @@ package com.groupassignment2019.bartertraderappgithuballsetup.models;
 import android.text.format.DateFormat;
 
 import com.google.firebase.database.Exclude;
+import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class InboxElement {
+public class InboxElement implements Serializable {
     //todo instead of all these weird fiels could just use OtherUser object as a member albeit dynamically loaded;
+
     private String lastMessageBody;
     private long lastMessageTime;
     private String WhoWroteLast;
@@ -16,13 +19,26 @@ public class InboxElement {
     private boolean read;
 
     @Exclude
-    private String UserInterlocutor_image;
+    private UserDataModel userInterlocutor;
+
     @Exclude
-    private String UserInterlocutor_firstLastName;
+    public UserDataModel getUserInterlocutor() {
+        return userInterlocutor;
+    }
     @Exclude
+    public void setUserInterlocutor(UserDataModel userInterlocutor) {
+        this.userInterlocutor = userInterlocutor;
+    }
+
+//    @Exclude
+//    private String UserInterlocutor_image;
+//    @Exclude
+//    private String UserInterlocutor_firstLastName;
+//    @Exclude
     private String OtherUserID;
+
     @Exclude
-    private boolean complete;
+    private boolean complete;// boolean used to identify if asynchronous tasks finished updating this object data
 
     @Exclude
     public boolean isComplete() {
@@ -35,10 +51,10 @@ public class InboxElement {
     }
 
 
-    @Exclude
-    public String getUserInterlocutor_image() {
-        return UserInterlocutor_image;
-    }
+//    @Exclude
+//    public String getUserInterlocutor_image() {
+//        return UserInterlocutor_image;
+//    }
 
     @Exclude
     public String getOtherUserID() {
@@ -50,20 +66,20 @@ public class InboxElement {
         OtherUserID = otherUserID;
     }
 
-    @Exclude
-    public void setUserInterlocutor_image(String userInterlocutor_image) {
-        UserInterlocutor_image = userInterlocutor_image;
-    }
+//    @Exclude
+//    public void setUserInterlocutor_image(String userInterlocutor_image) {
+//        UserInterlocutor_image = userInterlocutor_image;
+//    }
 
-    @Exclude
-    public String getUserInterlocutor_firstLastName() {
-        return UserInterlocutor_firstLastName;
-    }
-
-    @Exclude
-    public void setUserInterlocutor_firstLastName(String userInterlocutor_firstLastame) {
-        UserInterlocutor_firstLastName = userInterlocutor_firstLastame;
-    }
+//    @Exclude
+//    public String getUserInterlocutor_firstLastName() {
+//        return UserInterlocutor_firstLastName;
+//    }
+//
+//    @Exclude
+//    public void setUserInterlocutor_firstLastName(String userInterlocutor_firstLastame) {
+//        UserInterlocutor_firstLastName = userInterlocutor_firstLastame;
+//    }
 
     public InboxElement() {
         this.complete = false;
@@ -83,10 +99,8 @@ public class InboxElement {
 
     @Exclude
     public String getLastMessageTimeAsString() {
-        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
-        cal.setTimeInMillis(getLastMessageTime());
-        String date = DateFormat.format("dd-MM-yyyy kk:mm:ss", cal).toString();
-        return date;
+
+        return DB.calcDateStringFromTimestamp("dd-MM-yyyy kk:mm:ss",getLastMessageTime());
     }
 
 
@@ -120,16 +134,22 @@ public class InboxElement {
 
     @Override
     public String toString() {
-        return "InboxElement{" +
+        String user;
+        if(userInterlocutor == null){
+            user = "NULL - Not loaded yet";
+        }else{
+            user = userInterlocutor.toString();
+        }
+        String output = "InboxElement{" +
                 "lastMessageBody='" + lastMessageBody + '\'' +
-                ", lastMessageTime='" + lastMessageTime + '\'' +
+                ", lastMessageTime=" + lastMessageTime +
                 ", WhoWroteLast='" + WhoWroteLast + '\'' +
                 ", MessageThreadId='" + MessageThreadId + '\'' +
                 ", read=" + read +
-                ", UserInterlocutor_image=" + UserInterlocutor_image +
-                ", UserInterlocutor_firstLastName='" + UserInterlocutor_firstLastName + '\'' +
                 ", OtherUserID='" + OtherUserID + '\'' +
                 ", complete=" + complete +
+                ", userInterlocutor=" + user +
                 '}';
+        return output;
     }
 }

@@ -12,6 +12,19 @@
     android:layout_height="54dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_leftMostImg_toolbar"
+        android:layout_width="64dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:src="@drawable/ic_menu_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintStart_toStartOf="parent"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_profilepic_toolbar"
         android:layout_width="64dp"
         android:layout_height="match_parent"
@@ -44,6 +57,17 @@
         android:textColor="#ffffffff"
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="@+id/iv_inbox_icon_toolbar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_mainText_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Main Text"
+        style="@style/AnyTitleStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/iv_inbox_icon_toolbar"
+        app:layout_constraintStart_toEndOf="@+id/iv_leftMostImg_toolbar"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

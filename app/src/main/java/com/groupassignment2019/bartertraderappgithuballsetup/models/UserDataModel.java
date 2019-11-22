@@ -1,16 +1,15 @@
 package com.groupassignment2019.bartertraderappgithuballsetup.models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.Exclude;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 
-public class UserDataModel {
+public class UserDataModel implements Serializable {
 
     private String firstName;
     private String lastName;
@@ -39,8 +38,8 @@ public class UserDataModel {
     @Override
     public String toString() {
         return "UserDataModel{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                "fullName:" + getFullName() + " ," +
+                "uid:" + uid + " " +
                 '}';
     }
 
@@ -49,11 +48,11 @@ public class UserDataModel {
      return firstName + " " + lastName;
     }
 
-    public String getUid() {
+    public String getUuid() {
         return uid;
     }
 
-    public void setUid(String uid) {
+    public void setUuid(String uid) {
         this.uid = uid;
     }
 

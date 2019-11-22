@@ -5,28 +5,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.Button;
-import android.widget.Filter;
-import android.widget.Filterable;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.groupassignment2019.bartertraderappgithuballsetup.R;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.ReviewDataModel;
-import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
-public class ReviewRVAdapter extends RecyclerView.Adapter<ReviewRVAdapter.ReviewDataViewHolder> implements Addable<ReviewDataModel> {
+public class ReviewRVAdapter extends RecyclerView.Adapter<ReviewRVAdapter.ReviewDataViewHolder> implements Consumer<ReviewDataModel> {
     private OnItemClickListener onItemClickListener;
     private List<ReviewDataModel> reviews;
     private LayoutInflater mInflater;
@@ -49,7 +40,7 @@ public class ReviewRVAdapter extends RecyclerView.Adapter<ReviewRVAdapter.Review
         notifyDataSetChanged();
     }
 
-    public void add(ReviewDataModel reviewData){
+    public void consume(ReviewDataModel reviewData){
         this.reviews.add(reviewData);
         Log.d("BOLO",reviewData.toString());
         notifyDataSetChanged();

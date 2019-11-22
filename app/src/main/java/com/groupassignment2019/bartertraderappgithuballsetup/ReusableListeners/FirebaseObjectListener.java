@@ -5,30 +5,27 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-import com.groupassignment2019.bartertraderappgithuballsetup.adapters.Addable;
+import com.groupassignment2019.bartertraderappgithuballsetup.adapters.Consumer;
 
-import java.util.List;
-
-public class AddElementToAdapterValueListener<T> implements ValueEventListener{
+public class FirebaseObjectListener<T> implements ValueEventListener{
 
     private Context ctx;
-    private final Addable<T> addable;
+    private final Consumer<T> consumer;
     private Class<T> tClass;
     private OnBeforeAddedListener<T> onBeforeAddedListener;
 
-    public AddElementToAdapterValueListener(Context ctx, Addable<T> addable, Class<T> tClass) {
+    public FirebaseObjectListener(Context ctx, Consumer<T> consumer, Class<T> tClass) {
         this.ctx = ctx;
-        this.addable = addable;
+        this.consumer = consumer;
         this.tClass = tClass;
     }
 
-    public AddElementToAdapterValueListener copy(){
-        return new AddElementToAdapterValueListener(ctx,addable,tClass);
+    public FirebaseObjectListener copy(){
+        return new FirebaseObjectListener(ctx,consumer,tClass);
     }
 
     public void setOnBeforeAddedListener(OnBeforeAddedListener<T> onBeforeAddedListener){
@@ -41,8 +38,8 @@ public class AddElementToAdapterValueListener<T> implements ValueEventListener{
         if (this.onBeforeAddedListener != null){
             item = onBeforeAddedListener.OnBeforeAdded(item); // transform item before adding to adapter if user specified
         }
-        addable.add(item);
-        //here somthing should happen to inform addable that something has changed
+        consumer.consume(item);
+        //here somthing should happen to inform consumer that something has changed
         Log.d("BOLO", item.toString());
     }
 
@@ -52,7 +49,7 @@ public class AddElementToAdapterValueListener<T> implements ValueEventListener{
     }
 
     /**
-     * Transforms Added Item before adding to addable
+     * Transforms Added Item before adding to consumer
      * @param <T>
      */
     public interface OnBeforeAddedListener<T> {
