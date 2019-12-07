@@ -58,6 +58,20 @@
         app:layout_constraintStart_toEndOf="@+id/iv_sellerPic_itemDetail"
         app:layout_constraintTop_toTopOf="@+id/iv_sellerPic_itemDetail" />
 
+
+    <TextView
+        android:id="@+id/tv_sellerReviews_Link_itemDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="reviews"
+        android:onClick="GO_TO_activity_SellerReviews"
+        android:textColor="@color/White"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_amountOfReviews_itemDetails"
+        app:layout_constraintStart_toEndOf="@+id/tv_amountOfReviews_itemDetails"
+        app:layout_constraintTop_toTopOf="@+id/tv_amountOfReviews_itemDetails" />
+
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_sellerPic_itemDetail"
         android:layout_width="58dp"
@@ -105,18 +119,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/ratingBar_itemDetail"
         app:layout_constraintStart_toEndOf="@+id/ratingBar_itemDetail"
         app:layout_constraintTop_toTopOf="@+id/ratingBar_itemDetail" />
-
-    <TextView
-        android:id="@+id/tv_sellerReviews_Link_itemDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="reviews"
-        android:onClick="GO_TO_activity_SellerReviews"
-        android:textColor="@color/White"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_amountOfReviews_itemDetails"
-        app:layout_constraintStart_toEndOf="@+id/tv_amountOfReviews_itemDetails"
-        app:layout_constraintTop_toTopOf="@+id/tv_amountOfReviews_itemDetails" />
 
     <ScrollView
         android:layout_width="match_parent"

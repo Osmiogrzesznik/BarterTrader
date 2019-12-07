@@ -2,17 +2,13 @@ package com.groupassignment2019.bartertraderappgithuballsetup.Helpers;
 
 import android.text.format.DateFormat;
 
-import androidx.annotation.Nullable;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.groupassignment2019.bartertraderappgithuballsetup.models.UserDataModel;
 
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.Objects;
 
 public class DB {
     public static FirebaseAuth Auth = FirebaseAuth.getInstance();
@@ -26,10 +22,10 @@ public class DB {
     public static DatabaseReference items = root.child("items");
     public static DatabaseReference user_reviews = root.child("user_reviews");
 
-    public static FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    public static FirebaseUser me = FirebaseAuth.getInstance().getCurrentUser();
 
-    public static DatabaseReference getCurrentUserDataReference(){
-        return users.child(currentUser.getUid());
+    public static DatabaseReference getMeReference(){
+        return users.child(myUid());
     }
 
     /**
@@ -40,6 +36,7 @@ public class DB {
      * @return always unique combination of two param id's
      */
     public static String calculateMessageThreadID(String uid1, String uid2) {
+        // TODO again no need for second id , this is always calculated for currently logged in user of application - me
             // compare user ids lexicographically , we always want smaller uid at start
          if (uid1.compareTo(uid2) < 0) { // should be equivalent to uid1 < uid2
                 return uid1 + uid2;
@@ -59,5 +56,16 @@ public class DB {
         cal.setTimeInMillis(timestamp);
         String date = DateFormat.format(s, cal).toString();
         return date;
+    }
+
+    public static boolean isMe(String userID) {
+        return DB.myUid().equals(userID);
+    }
+
+    public static String myUid() {
+        if (me != null) {
+            return me.getUid();
+        }
+        else return null;
     }
 }

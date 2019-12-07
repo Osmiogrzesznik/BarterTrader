@@ -18,7 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
-import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.FirebaseObjectListener;
+import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.IdentifiableValueEventListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.adapters.InboxElementRVAdapter;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.InboxElement;
 
@@ -48,7 +48,7 @@ public class InboxActivity extends AppCompatActivity {
     private List<InboxElement> inboxElementList;
     private LayoutInflater mInflater;
     private InboxElementRVAdapter adapter;
-    private FirebaseObjectListener<InboxElement> addInboxElementToAdapterWhenSentFromDB;
+    private IdentifiableValueEventListener<InboxElement> addInboxElementToAdapterWhenSentFromDB;
     private ValueEventListener grabListOfMTIDsandprepareneededdata;
     private FirebaseUser firebaseUser;
     private DatabaseReference DB_listOfThreadsInbox;
@@ -85,7 +85,7 @@ public class InboxActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(clickListener);
 
         //Recover info sent from previous activity
-        addInboxElementToAdapterWhenSentFromDB = new FirebaseObjectListener<InboxElement>(this,adapter, InboxElement.class);
+        addInboxElementToAdapterWhenSentFromDB = new IdentifiableValueEventListener<InboxElement>(this,adapter, InboxElement.class,0);
 
 
         // TODO: 11/11/2019 in adapter oncreateviuew holder load urls
@@ -101,16 +101,16 @@ public class InboxActivity extends AppCompatActivity {
                     Log.d(BOLO, msgThrIDKey);
                     //for each of ids send request for adding actual item
                     //Before adding the inboxElement to Adapter we set fields required to grab other user picture and so on
-                    FirebaseObjectListener.OnBeforeAddedListener<InboxElement> onBeforeAddedListener = new FirebaseObjectListener.OnBeforeAddedListener<InboxElement>(){
+                    IdentifiableValueEventListener.OnBeforeAddedListener<InboxElement> onBeforeAddedListener = new IdentifiableValueEventListener.OnBeforeAddedListener<InboxElement>(){
                         @Override
-                        public InboxElement OnBeforeAdded(InboxElement element) {
+                        public InboxElement OnBeforeAdded(InboxElement element,int identifier) {
                             element.setMessageThreadId(msgThrIDKey);
                             element.setOtherUserID(otheruserId);
                             return element;
                         }
                     };
                     //get fresh local copy to avoid using all new onbeforeAddedListeners on one Object, therefore loosing msgThrdIDKey and otherUserId
-                    FirebaseObjectListener adder = addInboxElementToAdapterWhenSentFromDB.copy();
+                    IdentifiableValueEventListener adder = addInboxElementToAdapterWhenSentFromDB.copy(0);
                     adder.setOnBeforeAddedListener(onBeforeAddedListener);
                     DB.messageThreads.child(msgThrIDKey).addValueEventListener(adder);
                 }

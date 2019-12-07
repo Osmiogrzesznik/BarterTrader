@@ -34,6 +34,7 @@ public class ItemData implements Serializable {
     }
 
     public ItemData() {
+        // empty constructor for Firebase retrieval
     }
 
     public ItemData(String id,String title, String description, String pictureURI, String category, String seller_user_UUID) {
@@ -78,7 +79,7 @@ public class ItemData implements Serializable {
         return "ItemData{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", pictureURI=" + pictureURI.toString() +
+                ", pictureURI=" + pictureURI +
                 ", seller_user_UUID='" + seller_user_UUID + '\'' +
                 '}';
     }
@@ -104,7 +105,7 @@ public class ItemData implements Serializable {
 
     @Exclude
     public boolean hasVideo() {
-        if (videoURI == null){
+        if (videoURI == null || videoURI == ""){
             return false;
         }
         else{

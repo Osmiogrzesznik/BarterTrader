@@ -1,4 +1,4 @@
-package com.groupassignment2019.bartertraderappgithuballsetup;
+package com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners;
 
 import android.util.Log;
 
@@ -11,7 +11,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.UserDataModel;
 
-class UserDataLoader implements FirebaseAuth.AuthStateListener {
+public class UserDataLoader implements FirebaseAuth.AuthStateListener {
     private UserObserver userObserver;
 
     /**
@@ -24,7 +24,10 @@ class UserDataLoader implements FirebaseAuth.AuthStateListener {
 
     @Override
     public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-        DB.getCurrentUserDataReference().addListenerForSingleValueEvent(
+        if (firebaseAuth.getCurrentUser() == null){
+            return;
+        }
+        DB.getMeReference().addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +14,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
+import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.UserDataLoader;
+import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.UserObserver;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.UserDataModel;
 import com.squareup.picasso.Picasso;
 
@@ -45,8 +48,8 @@ public class DashboardActivity extends AppCompatActivity implements UserObserver
         @Override
         public void onClick(View v) {
             Toast.makeText(DashboardActivity.this, "Not implemented yet", Toast.LENGTH_LONG).show();
-//            Intent intent = new Intent(DashboardActivity.this, InboxActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(DashboardActivity.this, MyProfileActivity.class);
+            startActivity(intent);
         }
     };
 
@@ -57,6 +60,9 @@ public class DashboardActivity extends AppCompatActivity implements UserObserver
             startActivity(intent);
         }
     };
+    private RatingBar ratingBar;
+    private TextView tvAmountOfReviews;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +79,9 @@ public class DashboardActivity extends AppCompatActivity implements UserObserver
         tv_unreadThreadsAmount_circle = barterBar.findViewById(R.id.tv_unreadThreadsAmount_circle);
         iv_profilepic_toolbar = barterBar.findViewById(R.id.iv_profilepic_toolbar);
         iv_inbox_icon_toolbar = barterBar.findViewById(R.id.iv_inbox_icon_toolbar);
+        ratingBar = findViewById(R.id.ratingBar_itemDetail);//clickable
+        tvAmountOfReviews = findViewById(R.id.tv_amountOfReviews_itemDetails);//clickable
+
 
         tv_unreadThreadsAmount_circle.setVisibility(View.GONE);
 
@@ -85,19 +94,27 @@ public class DashboardActivity extends AppCompatActivity implements UserObserver
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
                 Intent intToMain = new Intent(DashboardActivity.this, LoginActivity.class);
+                intToMain.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intToMain);
+                finish();
             }
         });
 
     }
 
     @Override
-    public void updateUI(UserDataModel userDataModel) {
-        if (userDataModel == null) {
+    public void updateUI(UserDataModel me) {
+        if (me == null) {
             finish();
         }
-        user = userDataModel;
+
+        user = me;
         tv_dashboard_welcome_txt.setText("Welcome " + user.getFirstName() + "!");
+        ratingBar.setRating(me.getAvgRev());
+        tvAmountOfReviews.setText(String.valueOf(me.getAmtRev()));
+        //tvSellerHasBeenFlaggedIndicator.setVisibility(me.isFlagged() ? View.VISIBLE : View.GONE);
+        //Picasso.get().load(me.getPicture()).into(ivSellerPicItemDetail);
+
 
         int unreadThreadsAmount = user.calculateUnreadThreadAmount();
         if (unreadThreadsAmount > 0) {
@@ -131,6 +148,17 @@ public class DashboardActivity extends AppCompatActivity implements UserObserver
 
     public void GO_TO_PostNewItem(View view) {
         Intent intent = new Intent(this, PostNewItemActivity.class);
+        startActivity(intent);
+    }
+
+    public void GO_TO_activity_MyProfile(View view) {
+        Intent intent = new Intent(this, MyProfileActivity.class);
+        startActivity(intent);
+    }
+
+    public void GO_TO_activity_reviews(View view) {
+        Intent intent = new Intent(this, ReviewsActivity.class);
+        intent.putExtra("uuid", DB.myUid());
         startActivity(intent);
     }
 }

@@ -24,7 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
-import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.FirebaseObjectListener;
+import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.IdentifiableValueEventListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.adapters.ItemRVAdapter;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.ItemData;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.UserDataModel;
@@ -67,7 +67,7 @@ public class ItemsListActivity extends AppCompatActivity {
      * @param intent intent that will be used to start ItemsListActivity
      */
     public static final void BY_ME(Intent intent){
-        BY_USER(intent,DB.currentUser.getUid());
+        BY_USER(intent,DB.me.getUid());
     }
 
     /**
@@ -168,7 +168,7 @@ public class ItemsListActivity extends AppCompatActivity {
 
 
         //this will happen for every itemID
-        addItemToListOnValueEvent = new FirebaseObjectListener<ItemData>(this,adapter,ItemData.class);
+        addItemToListOnValueEvent = new IdentifiableValueEventListener<ItemData>(this,adapter,ItemData.class,-1);
 
         //this will make above happen for every itemID
         grabListOfIdsAndFindActualItems = new ValueEventListener() {
@@ -227,7 +227,12 @@ public class ItemsListActivity extends AppCompatActivity {
             // BY_ME scenario
 
             isOwner = true;
-            textViewItem_list_NarrowDownTitle.setText("Items By Me");
+            if (activityWasStartedForResult()){
+                textViewItem_list_NarrowDownTitle.setText("My items");
+                setTitle("Select item you offer");
+            }
+            textViewItem_list_NarrowDownTitle.setText("My Items");
+            setTitle("My items");
             UUID = firebaseUser.getUid();
         } else {
             // BY ANY OTHER USER scenario
@@ -245,6 +250,14 @@ public class ItemsListActivity extends AppCompatActivity {
         DB_itemIDsofItemsByUser_ref.addValueEventListener(grabListOfIdsAndFindActualItems);
 
         Toast.makeText(ItemsListActivity.this, user_id_from_intent, Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * simple check if activity was started for result (like file selection)
+     * @return boolean
+     */
+    private boolean activityWasStartedForResult() {
+        return getCallingActivity() != null;// this is not null only in the case when activity was started for result
     }
 
     private void setUpAdapterToBeFilledWithItemsFromCategory() {

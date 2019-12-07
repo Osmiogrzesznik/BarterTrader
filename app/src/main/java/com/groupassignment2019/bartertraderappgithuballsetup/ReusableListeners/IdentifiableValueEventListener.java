@@ -11,21 +11,23 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.adapters.Consumer;
 
-public class FirebaseObjectListener<T> implements ValueEventListener{
+public class IdentifiableValueEventListener<T> implements ValueEventListener{
 
     private Context ctx;
+    private final int identifier;
     private final Consumer<T> consumer;
     private Class<T> tClass;
     private OnBeforeAddedListener<T> onBeforeAddedListener;
 
-    public FirebaseObjectListener(Context ctx, Consumer<T> consumer, Class<T> tClass) {
+    public IdentifiableValueEventListener(Context ctx, Consumer<T> consumer, Class<T> tClass, int identifier) {
         this.ctx = ctx;
+        this.identifier = identifier;
         this.consumer = consumer;
         this.tClass = tClass;
     }
 
-    public FirebaseObjectListener copy(){
-        return new FirebaseObjectListener(ctx,consumer,tClass);
+    public IdentifiableValueEventListener copy(int identifier){
+        return new IdentifiableValueEventListener(ctx,consumer,tClass,identifier);
     }
 
     public void setOnBeforeAddedListener(OnBeforeAddedListener<T> onBeforeAddedListener){
@@ -36,9 +38,9 @@ public class FirebaseObjectListener<T> implements ValueEventListener{
     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         T item = dataSnapshot.getValue(tClass);
         if (this.onBeforeAddedListener != null){
-            item = onBeforeAddedListener.OnBeforeAdded(item); // transform item before adding to adapter if user specified
+            item = onBeforeAddedListener.OnBeforeAdded(item,identifier); // transform item before adding to adapter if user specified
         }
-        consumer.consume(item);
+        consumer.consume(dataSnapshot.getKey(),item, identifier);
         //here somthing should happen to inform consumer that something has changed
         Log.d("BOLO", item.toString());
     }
@@ -53,6 +55,6 @@ public class FirebaseObjectListener<T> implements ValueEventListener{
      * @param <T>
      */
     public interface OnBeforeAddedListener<T> {
-        public T OnBeforeAdded(T element);
+        public T OnBeforeAdded(T element,int identifier);
     }
 }

@@ -7,15 +7,7 @@
     android:padding="0dp"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="0dp"
-        android:text="Rules:\n- do not delete this activity(this will be for quick testing)\n- add your own Activity (Basic Activity)\n- give meaningful id's to your views(MainNavTestBtns,edittexts,and so on) that are not likely to repeat\n    no &quot;Button3&quot; but  &quot;PostNewItem_UploadImageButton&quot; if your activity is PostNewItemActivity\n    no &quot;EditText3&quot; but &quot;Login_userEmail&quot; if your activity is LoginActivity\n    please, this will reduce name collision errors\n\n    Use MainNavTestBtns below to navigate to your activities\n"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <Button
         android:id="@+id/MainNavTestBtn19"
@@ -131,12 +123,12 @@
 
     <Button
         android:id="@+id/MainNavTestBtn16"
+        style="@style/look_of_a_button_when_activity_is_work_in_progress"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:onClick="GO_TO_activity_ItemDetails"
         android:padding="0dp"
         android:text="ItemDetails"
-        style="@style/look_of_a_button_when_activity_is_work_in_progress"
         app:layout_constraintEnd_toStartOf="@+id/MainNavTestBtn18"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -185,6 +177,7 @@
 
     <Button
         android:id="@+id/MainNavTestBtn9"
+        style="@style/look_of_a_button_when_activity_is_work_in_progress"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:onClick="GO_TO_activity_Categories"
@@ -192,8 +185,7 @@
         app:layout_constraintEnd_toStartOf="@+id/MainNavTestBtn8"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/MainNavTestBtn17"
-        app:layout_constraintTop_toBottomOf="@+id/MainNavTestBtn4"
-        style="@style/look_of_a_button_when_activity_is_work_in_progress" />
+        app:layout_constraintTop_toBottomOf="@+id/MainNavTestBtn4" />
 
     <Button
         android:id="@+id/MainNavTestBtn15"
@@ -244,6 +236,7 @@
 
     <Button
         android:id="@+id/MainNavTestBtn3"
+        style="@style/look_of_a_button_when_activity_is_work_in_progress"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
@@ -252,7 +245,6 @@
         android:onClick="GO_TO_activity_ItemsByCategory"
         android:padding="0dp"
         android:text="ItemsByCategory"
-        style="@style/look_of_a_button_when_activity_is_work_in_progress"
         app:layout_constraintBottom_toTopOf="@+id/MainNavTestBtn15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -304,5 +296,29 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MainNavTestBtn20" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="0dp"
+        android:text="initialised"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/userdetails"
+        app:layout_constraintEnd_toStartOf="@+id/userdetails"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/userdetails"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="0dp"
+        android:text="USER DETAILS"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

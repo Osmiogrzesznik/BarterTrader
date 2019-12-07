@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/back_design"
-    tools:context=".DashboardActivity">
+    tools:context=".MyProfileActivity">
 
 
     <TextView
@@ -15,82 +15,76 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Welcome!You are logged in"
+        android:text="Name_Surname"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/ratingBar_itemDetail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_BigProfilePic_dashboard" />
 
-    <Button
-        android:id="@+id/btn_logout_dashboard"
-        style="@style/AnyTextButton"
-        android:layout_width="wrap_content"
-        android:layout_gravity="center"
 
-        android:background="@drawable/edittext_states_selector"
-        android:onClick="logOut"
-        android:padding="6dp"
-        android:text="Log out"
-        android:textAppearance="@android:style/TextAppearance.Medium"
+    <TextView
+        android:id="@+id/barterLevelTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Dragon Level Barter Trader"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/btn_postNewItem_dashboard"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/bartAmount"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_searchCategories_dashboard" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_dashboard_welcome_txt" />
+
+    <TextView
+        android:id="@+id/bartAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="42"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/ratingBar_itemDetail"
+        app:layout_constraintEnd_toStartOf="@+id/textView2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/barterLevelTitle"
+        app:layout_constraintTop_toTopOf="@+id/barterLevelTitle" />
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Trades"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/bartAmount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/bartAmount"
+        app:layout_constraintTop_toTopOf="@+id/bartAmount" />
+
 
     <Button
         android:id="@+id/btn_myProfile_dashboard"
         style="@style/AnyTextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="GO_TO_activity_MyProfile"
-        android:text="My Profile"
+        android:onClick="changeprofilepic"
+        android:text="change"
+        android:visibility="visible"
+
         app:layout_constraintBottom_toBottomOf="@+id/iv_BigProfilePic_dashboard"
         app:layout_constraintEnd_toEndOf="@+id/iv_BigProfilePic_dashboard"
         app:layout_constraintStart_toEndOf="@+id/iv_BigProfilePic_dashboard"
         app:layout_constraintTop_toBottomOf="@+id/iv_BigProfilePic_dashboard" />
-
-    <Button
-        android:id="@+id/btn_searchCategories_dashboard"
-        style="@style/AnyTextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="GO_TO_searchCategories"
-        android:text="Search Categories"
-        app:layout_constraintBottom_toTopOf="@+id/btn_logout_dashboard"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar_itemDetail" />
-
-    <Button
-        android:id="@+id/btn_postNewItem_dashboard"
-        style="@style/AnyTextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="GO_TO_PostNewItem"
-        android:text="Post new Item"
-        app:layout_constraintBottom_toTopOf="@+id/btn_inbox_dashboard"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_logout_dashboard" />
-
-    <Button
-        android:id="@+id/btn_inbox_dashboard"
-        style="@style/AnyTextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="GO_TO_inbox"
-        android:text="Inbox"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_postNewItem_dashboard" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_BigProfilePic_dashboard"
@@ -118,23 +112,22 @@
         android:id="@+id/ratingBar_itemDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:isIndicator="true"
         android:onClick="GO_TO_activity_reviews"
-        app:layout_constraintBottom_toTopOf="@+id/btn_searchCategories_dashboard"
         app:layout_constraintEnd_toStartOf="@+id/tv_amountOfReviews_itemDetails"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_dashboard_welcome_txt" />
+        app:layout_constraintTop_toBottomOf="@+id/barterLevelTitle" />
 
     <TextView
         android:id="@+id/tv_amountOfReviews_itemDetails"
-        style="@style/TextLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:onClick="GO_TO_activity_reviews"
         android:text="12"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
         android:textColor="@color/White"
         app:layout_constraintBottom_toBottomOf="@+id/ratingBar_itemDetail"
         app:layout_constraintEnd_toStartOf="@+id/tv_sellerReviews_Link_itemDetail"
@@ -150,13 +143,25 @@
         android:layout_marginStart="5dp"
         android:onClick="GO_TO_activity_reviews"
         android:text="reviews"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
         android:textColor="@color/White"
-        style="@style/TextLarge"
         app:layout_constraintBottom_toBottomOf="@+id/tv_amountOfReviews_itemDetails"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tv_amountOfReviews_itemDetails"
         app:layout_constraintTop_toTopOf="@+id/tv_amountOfReviews_itemDetails" />
+
+    <Button
+        android:id="@+id/btn_flag_user"
+        style="@android:style/TextAppearance.DeviceDefault.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/WarningBG"
+        android:padding="20dp"
+        android:text="Flag This User"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

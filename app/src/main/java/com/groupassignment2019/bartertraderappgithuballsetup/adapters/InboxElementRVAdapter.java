@@ -60,12 +60,16 @@ public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAd
         notifyDataSetChanged();
     }
 
-    public void consume(InboxElement inboxElement) {
+    public void consume(String key, InboxElement inboxElement,int identifier) {
         this.itemsFull.add(inboxElement);
         this.items.add(inboxElement);
         notifyDataSetChanged();
-
         //now request for User
+    }
+
+    @Override
+    public void noObject(String key, int identifier) {
+        Log.e("BOLO", "nonexistent message thread id:"+key+" refferred within InboxActivity.Check Data Consistency. ");
     }
 
     @NonNull

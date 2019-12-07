@@ -3,16 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/back_design"
     android:layout_height="match_parent"
+    android:background="@drawable/back_design"
     tools:context=".PostNewItemActivity">
 
     <ImageView
         android:id="@+id/imageViewNewItemImage"
         android:layout_width="392dp"
         android:layout_height="251dp"
-android:background="#00000000"
+        android:background="#00000000"
         android:src="@drawable/untitled"
+        android:tint="@color/darkestStart"
+        android:tintMode="screen"
         app:layout_constraintBottom_toTopOf="@+id/addVideoButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,24 +26,36 @@ android:background="#00000000"
         style="@style/AnyTextButton"
         android:background="@drawable/button_states_selector"
         android:text="Add Video"
-        android:onClick="openVideoFileSelection"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/editTextNewItemTitle"
+        app:layout_constraintBottom_toTopOf="@+id/spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageViewNewItemImage" />
 
+    <Button
+        android:id="@+id/viewVideoButton"
+        style="@style/AnyTextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_states_selector"
+        android:text="View Video"
+        android:textColor="@android:color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewNewItemImage"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewNewItemImage" />
+
     <Spinner
         android:id="@+id/spinner"
         style="@style/spinnerStyle"
-        tools:listitem="@layout/spinnerstyle"
-        app:layout_constraintBottom_toTopOf="@+id/editTextVideoDescription"
+        android:background="#00000000"
+        app:layout_constraintBottom_toTopOf="@+id/editTextNewItemTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNewItemTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/addVideoButton"
+        tools:listitem="@layout/spinnerstyle" />
 
     <EditText
-        android:id="@+id/editTextVideoDescription"
+        android:id="@+id/editTextItemDescription"
         style="@style/EditTextStyle"
         android:layout_width="354dp"
         android:layout_height="148dp"
@@ -50,11 +64,11 @@ android:background="#00000000"
         android:gravity="start"
         android:hint=" PLEASE ADD DESCRIPTION"
         android:inputType="date|textShortMessage|textLongMessage|textWebEmailAddress|text|phone|textEmailSubject"
-        android:padding="5dp"
+        android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/PostItemButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextNewItemTitle" />
 
     <EditText
         android:id="@+id/editTextNewItemTitle"
@@ -66,20 +80,30 @@ android:background="#00000000"
         android:hint="Name of your Item"
         android:inputType="textShortMessage|text"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/spinner"
+        app:layout_constraintBottom_toTopOf="@+id/editTextItemDescription"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addVideoButton" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <Button
         android:id="@+id/PostItemButton"
         style="@style/AnyTextButton"
         android:background="@drawable/button_states_selector"
-        android:text="Create Post"
-        android:onClick="validateAndSubmitItem"
+        android:text="Post Item"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextVideoDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextItemDescription" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/PostItemButton"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewNewItemImage"
+        app:layout_constraintStart_toStartOf="@+id/imageViewNewItemImage"
+        app:layout_constraintTop_toBottomOf="@+id/editTextItemDescription" />
 </androidx.constraintlayout.widget.ConstraintLayout>

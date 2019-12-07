@@ -7,6 +7,10 @@
     android:background="@drawable/back_design"
     tools:context=".ReviewsActivity">
 
+    <include layout="@layout/toolbar_layout"
+        android:id="@+id/barterBar"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reviewsRecyclerView"
         android:layout_width="0dp"
@@ -16,6 +20,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:listitem="@layout/cardview_review"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/barterBar"
+        tools:listitem="@layout/cardview_review" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/btnAddReview"
+        android:onClick="addReview"
+        android:visibility="gone"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/reviewsRecyclerView"
+        app:civ_circle_background_color="@color/brightestStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_add_24dp"
+        tools:srcCompat="@tools:sample/avatars" />
 </androidx.constraintlayout.widget.ConstraintLayout>

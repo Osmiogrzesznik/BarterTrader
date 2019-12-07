@@ -7,9 +7,11 @@ import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
 public class MessageThreadDataModel {
 
     //if client instantiates Message Thread do not initialize timestamp, it will e done on the server
-    public MessageThreadDataModel(String lastMessageBody, String whoWroteLast) {
+    //this is only used on client side and alawys initialized by writing new message so getUID inside here
+
+    public MessageThreadDataModel(String lastMessageBody) {
         this.lastMessageBody = lastMessageBody;
-        this.whoWroteLast = whoWroteLast;
+        this.whoWroteLast = DB.myUid();
         this.read = false;
     }
 

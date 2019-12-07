@@ -21,12 +21,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.InputValidator;
 import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.ShowPasswordOnTouchListener;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener {
 
     private EditText et_email;
     private EditText et_pass;
     private Button btnLogin;
-    private TextView signUp;
+    private TextView signUplink;
     private ProgressBar progressBar_on_login_screen;
     private FirebaseAuth mAuth;
     private ImageView showPasswordIcon;
@@ -46,10 +46,12 @@ inputValidator = new InputValidator(LoginActivity.this);
         et_email =findViewById(R.id.email_login);
         et_pass =findViewById(R.id.password_login);
         btnLogin=findViewById(R.id.btn_login);
-        signUp=findViewById(R.id.signup_txt);
+        signUplink=findViewById(R.id.signup_txt);
         showPasswordIcon = findViewById(R.id.showLoginPasswordIcon);
         showPasswordIcon.setOnTouchListener(new ShowPasswordOnTouchListener(et_pass));
 
+
+        FirebaseAuth.getInstance().addAuthStateListener(this);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +70,6 @@ inputValidator = new InputValidator(LoginActivity.this);
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             progressBar_on_login_screen.setVisibility(View.VISIBLE);
                             if (task.isSuccessful()) {
-                                startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
                                 // TODO: 20/11/2019 mark login flag it to be destroyed?
                                 Toast.makeText(getApplicationContext(), "Successful", Toast.LENGTH_SHORT).show();
                             } else {
@@ -84,15 +85,27 @@ inputValidator = new InputValidator(LoginActivity.this);
             }
         });
 
-        signUp.setOnClickListener(new View.OnClickListener() {
+        signUplink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+                finish();
             }
         });
 
 
 
 
+    }
+
+    @Override
+    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+        if (firebaseAuth.getCurrentUser() != null){
+        startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
+        finish();
+        }
+        else {
+            Toast.makeText(this, "signed out", Toast.LENGTH_SHORT).show();
+        }
     }
 }

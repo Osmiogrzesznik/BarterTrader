@@ -3,7 +3,6 @@ package com.groupassignment2019.bartertraderappgithuballsetup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +34,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ItemDetailsActivity extends AppCompatActivity {
 
     private static final int PICK_ITEM_FOR_OFFER = 42;
+    public static final String EXTRA_ITEM_KEY = "item";
     private ImageView ivImageItemDetail;
     private TextView tvItemTitleItemDetail;
     private RatingBar ratingBarItemDetail;
@@ -57,13 +57,13 @@ public class ItemDetailsActivity extends AppCompatActivity {
         // TODO: 17/11/2019 this activity should display current user toolbar
         setContentView(R.layout.activity_item_details);
         Intent intentThatStartedThisActivity = getIntent();
-        if (!intentThatStartedThisActivity.hasExtra("item")) {
+        if (!intentThatStartedThisActivity.hasExtra(EXTRA_ITEM_KEY)) {
             String msg = "ItemDetailsActivity expects an ItemData item extra passed in intent";
             Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
             Log.e("BOLO", msg);
             finish();
         }
-        item = (ItemData) intentThatStartedThisActivity.getSerializableExtra("item");
+        item = (ItemData) intentThatStartedThisActivity.getSerializableExtra(EXTRA_ITEM_KEY);
 
         //item data display
         ivImageItemDetail = findViewById(R.id.iv_Image_itemDetail);
@@ -93,6 +93,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
         Picasso.get().load(item.getPictureURI()).into(ivImageItemDetail);
         tvItemTitleItemDetail.setText(item.getTitle());
         tvItemDescriptionItemDetail.setText(item.getDescription());
+        Log.d("BOLO", "videoURI:" + item.getVideoURI());
         btnSeeItemVideoOptItemDetail.setVisibility(item.hasVideo() ? View.VISIBLE : View.GONE);//don't show button if there is no video
 
 
@@ -127,9 +128,9 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
     public void GO_TO_WatchItemVideoActivity(View view) {
         // TODO: 17/11/2019  WatchItemVideoActivity
-//        Intent intent = new Intent(this, WatchItemVideoActivity.class);
-//        intent.putExtra("videoURI", item.getVideoURI());
-//        startActivity(intent);
+        Intent intent = new Intent(this, VideoActivity.class);
+        intent.putExtra("url", item.getVideoURI());
+        startActivity(intent);
     }
 
     public void GO_TO_activity_ItemsBySeller(View view) {
@@ -146,30 +147,14 @@ public class ItemDetailsActivity extends AppCompatActivity {
         startActivityForResult(intent, PICK_ITEM_FOR_OFFER);
     }
 
-    public void GO_TO_activity_ChatSendMessageToSeller(View view) {
-        String MyID = DB.currentUser.getUid();
-        String sellerID = item.getSeller_user_UUID();
-        // TODO: 19/11/2019 chck if messagethread exists and open it
-        // TODO: 17/11/2019 code chat activity
+    public void GO_TO_activity_ChatSendMessageToSeller(View v) {
+    GO_TO_activity_ChatSendMessageToSeller();
+    }
 
-        String mtid = DB.calculateMessageThreadID(MyID,sellerID);
-        DB.messageThreads.child(mtid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                Toast.makeText(ItemDetailsActivity.this, "thread exists hurray!", Toast.LENGTH_LONG).show();
-                }
-                // TODO: 19/11/2019 open thread in chat activity
-            else{
-                    Toast.makeText(ItemDetailsActivity.this, "no thread we have to create one before messaging ", Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(ItemDetailsActivity.this, databaseError.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+    public void GO_TO_activity_ChatSendMessageToSeller() {
+        Intent intent = new Intent(this,ChatActivity.class);
+        intent.putExtra("otherUser",seller);
+        startActivity(intent);
     }
 
     public void GO_TO_activity_SellerReviews(View view) {
@@ -192,45 +177,18 @@ public class ItemDetailsActivity extends AppCompatActivity {
         // check if the request code is same as what is passed  here it is 2
         if (requestCode == PICK_ITEM_FOR_OFFER) {
             //do the things u wanted
-            final ItemData pickedItem = (ItemData) data.getSerializableExtra("item");
-            pickedItem.getTitle();
+            final ItemData pickedItem = (ItemData) data.getSerializableExtra(EXTRA_ITEM_KEY);
+
             Toast.makeText(this, "YOU ARE ABOUT TO OFFER YOUR ITEM: " + pickedItem.getTitle() + "FOR this item :" + item.getTitle(), Toast.LENGTH_SHORT).show();
+            BarterTradeConfirmationDialog dialog = new BarterTradeConfirmationDialog(this, "Send Trade Offer ? " ,pickedItem, item);
 
-            final Dialog dialog = new Dialog(this);
-            dialog.setContentView(R.layout.popup_confirm_offer);
-            dialog.setTitle("Send Offer to Swap these Items?");
-
-            // bind the custom dialog components - textviews, images and buttons
-
-            TextView tvYourItemTitlePopup = dialog.findViewById(R.id.tv_yourItem_title_popup);
-            TextView tvMyItemTitlePopup = dialog.findViewById(R.id.tv_myItem_title_popup);
-
-            CircleImageView ivYourItemPopup = dialog.findViewById(R.id.iv_yourItem_popup);
-            CircleImageView ivMyItemPopup = dialog.findViewById(R.id.iv_myItem_popup);
-            ImageView ivPopupOKBtn = dialog.findViewById(R.id.iv_popup_OK_btn);
-            ImageView ivPopupCANCELBtn = dialog.findViewById(R.id.iv_popup_CANCEL_btn);
-
-            // set the components to display the data
-            tvYourItemTitlePopup.setText(item.getTitle());
-            tvMyItemTitlePopup.setText(pickedItem.getTitle());
-            // set images
-            Picasso.get().load(item.getPictureURI()).into(ivYourItemPopup);
-            Picasso.get().load(pickedItem.getPictureURI()).into(ivMyItemPopup);
-            // if button is clicked, close the custom dialog
-            ivPopupOKBtn.setOnClickListener(new View.OnClickListener() {
+            dialog.setOnOKClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    dialog.dismiss();
                     finalizeOfferToSeller(pickedItem);
                 }
             });
 
-            ivPopupCANCELBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
             dialog.show();
         }
     }
@@ -238,29 +196,36 @@ public class ItemDetailsActivity extends AppCompatActivity {
     private void finalizeOfferToSeller(final ItemData myItem) {
         //your prefix is for is currently viewed item and seller
         final ItemData yourItem = item;
-        final String myID = DB.currentUser.getUid();
+        final String myID = DB.me.getUid();
         final String yourID = item.getSeller_user_UUID();
 
 
         final String messageThreadId = DB.calculateMessageThreadID(myID, yourID);
         Toast.makeText(this, messageThreadId, Toast.LENGTH_LONG).show();
 
-        //new or refresh
-        MessageThreadDataModel msgThr = new MessageThreadDataModel(MessageDataModel.OFFER_BODY,myID);
+        //new or refresh message thread
+        MessageThreadDataModel msgThr = new MessageThreadDataModel(MessageDataModel.OFFER_BODY);// inbox of other user will say that the last message is "Offers Barter Trade"
         DB.messageThreads.child(messageThreadId).setValue(msgThr)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                            @Override
                                            public void onComplete(@NonNull Task<Void> task) {
                                                if(task.isSuccessful()){
-                                                   DB.users.child(yourID).child("inbox").child(messageThreadId).setValue(true);
+                                                   //update inboxes of me-user and you-seller
+                                                   DB.users.child(yourID).child("inbox").child(messageThreadId).setValue(true); // booleans used as unread state
                                                    DB.users.child(myID).child("inbox").child(messageThreadId).setValue(false);// i send the message so it is not unread
-                                                   String msgID = DB.messageThreads_messages.child(messageThreadId).push().getKey();
-                                                   MessageDataModel msgDM = new MessageDataModel(yourID,myItem.getId(),yourItem.getId()); //offer
+                                                   String msgID = DB.messageThreads_messages.child(messageThreadId).push().getKey();//generate node key
+
+                                                   MessageDataModel msgDM = MessageDataModel
+                                                           .makeOfferMessage(yourID,myItem.getId(),yourItem.getId()); //use static method to make it easier looking
+
+                                                   //finally add the offer-message to the thread
                                                    DB.messageThreads_messages.child(messageThreadId).child(msgID).setValue(msgDM).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                        @Override
                                                        public void onComplete(@NonNull Task<Void> task) {
                                                            if (task.isSuccessful()){
                                                                Toast.makeText(ItemDetailsActivity.this, "Message Send successfully", Toast.LENGTH_SHORT).show();
+                                                               //redirect user to enforce feedback - confirm sending
+                                                               GO_TO_activity_ChatSendMessageToSeller();
                                                            }
                                                        }
                                                    });

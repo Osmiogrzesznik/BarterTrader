@@ -17,10 +17,11 @@ import com.groupassignment2019.bartertraderappgithuballsetup.models.ReviewDataMo
 import java.util.List;
 
 
-public class ReviewRVAdapter extends RecyclerView.Adapter<ReviewRVAdapter.ReviewDataViewHolder> implements Consumer<ReviewDataModel> {
+public class ReviewRVAdapter extends RecyclerView.Adapter<ReviewRVAdapter.ReviewDataViewHolder> {
     private OnItemClickListener onItemClickListener;
     private List<ReviewDataModel> reviews;
     private LayoutInflater mInflater;
+
 
     public interface OnItemClickListener {
         void onItemClick(ReviewDataModel clickedReviewDataModel);
@@ -34,19 +35,6 @@ public class ReviewRVAdapter extends RecyclerView.Adapter<ReviewRVAdapter.Review
         this.reviews = reviews;
         this.mInflater = mInflater;
     }
-
-    public void updateItems(List<ReviewDataModel> newList){
-        this.reviews = newList;
-        notifyDataSetChanged();
-    }
-
-    public void consume(ReviewDataModel reviewData){
-        this.reviews.add(reviewData);
-        Log.d("BOLO",reviewData.toString());
-        notifyDataSetChanged();
-    }
-
-
 
     @NonNull
     @Override

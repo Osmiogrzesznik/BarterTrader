@@ -16,15 +16,16 @@
   <de.hdodenhof.circleimageview.CircleImageView
       android:id="@+id/iv_logoSwapArrows_OfferMsg"
       android:layout_width="wrap_content"
+
       android:layout_height="0dp"
       app:layout_constraintDimensionRatio="1"
-      android:src="@drawable/arrows_only_logo"
+      android:src="@drawable/arrows_only_logo2"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
 
   <de.hdodenhof.circleimageview.CircleImageView
-      android:id="@+id/iv_yourItem_OfferMsg"
+      android:id="@+id/iv_myItem_OfferMsg"
       android:layout_width="0dp"
       android:layout_height="0dp"
       android:layout_margin="10dp"
@@ -36,14 +37,16 @@
       app:layout_constraintEnd_toEndOf="@+id/iv_logoSwapArrows_OfferMsg"
       app:layout_constraintStart_toEndOf="@+id/divider"
       app:layout_constraintTop_toTopOf="@+id/iv_logoSwapArrows_OfferMsg"
-      app:srcCompat="@drawable/gadgets_example_pic"
-      android:src="@drawable/gadgets_example_pic"
+      app:srcCompat="@drawable/ic_cat_gadgets"
+      android:src="@drawable/ic_cat_gadgets"
+      app:civ_circle_background_color="@color/brightestStart"
       app:civ_border_overlay="false"
       app:civ_border_color="@color/brightestStart"
       app:civ_border_width="10dp"/>
 
   <de.hdodenhof.circleimageview.CircleImageView
-      android:id="@+id/iv_myItem_OfferMsg"
+      android:id="@+id/iv_yourItem_OfferMsg"
+
       android:layout_width="0dp"
       android:layout_height="0dp"
       android:layout_margin="10dp"
@@ -55,8 +58,9 @@
       app:layout_constraintEnd_toStartOf="@+id/divider"
       app:layout_constraintStart_toStartOf="@+id/iv_logoSwapArrows_OfferMsg"
       app:layout_constraintTop_toBottomOf="@+id/divider2"
-      app:srcCompat="@drawable/gadgets"
-      android:src="@drawable/gadgets"
+      app:srcCompat="@drawable/ic_cat_gadgets"
+      android:src="@drawable/ic_cat_gadgets"
+      app:civ_circle_background_color="@color/darkestEnd"
       app:civ_border_overlay="false"
       app:civ_border_color="@color/darkestEnd"
       app:civ_border_width="10dp"/>
@@ -79,6 +83,7 @@
 
   <TextView
       android:id="@+id/tv_time"
+      android:visibility="gone"
       style="@style/AnyMultilineText"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -87,20 +92,25 @@
       tools:text="10:00" />
 
   <TextView
-      android:id="@+id/tv_yourItem_title_OfferMsg"
-      style="@style/AnyMultilineText"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Your Item Title"
-      app:layout_constraintEnd_toStartOf="@+id/iv_yourItem_OfferMsg"
-      app:layout_constraintTop_toTopOf="@+id/iv_yourItem_OfferMsg" />
-
-  <TextView
       android:id="@+id/tv_myItem_title_OfferMsg"
       style="@style/AnyMultilineText"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
       android:layout_height="wrap_content"
+      android:maxLines="3"
+      android:gravity="end"
+      android:text="Your Item Tit ndndn nndkdn ndkdn ndkdn kdndkn kdndkdn kdndkdn kdndkd ndkdnd kdn kddndkle fddfoidwf ewoijdwojd dodfokc dckd"
+      app:layout_constraintEnd_toStartOf="@+id/iv_myItem_OfferMsg"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tv_time" />
+
+  <TextView
+      android:id="@+id/tv_yourItem_title_OfferMsg"
+      style="@style/AnyMultilineText"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:maxLines="3"
       android:text="My Item Title"
-      app:layout_constraintBottom_toBottomOf="@+id/iv_myItem_OfferMsg"
-      app:layout_constraintStart_toEndOf="@+id/iv_myItem_OfferMsg" />
+      app:layout_constraintBottom_toBottomOf="@+id/iv_yourItem_OfferMsg"
+      app:layout_constraintEnd_toEndOf="@+id/iv_logoSwapArrows_OfferMsg"
+      app:layout_constraintStart_toEndOf="@+id/iv_yourItem_OfferMsg" />
 </androidx.constraintlayout.widget.ConstraintLayout>

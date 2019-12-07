@@ -1,7 +1,7 @@
-package com.groupassignment2019.bartertraderappgithuballsetup;
+package com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners;
 
 import com.groupassignment2019.bartertraderappgithuballsetup.models.UserDataModel;
 
-interface UserObserver {
+public interface UserObserver {
     public void updateUI(UserDataModel userDataModel);
 }

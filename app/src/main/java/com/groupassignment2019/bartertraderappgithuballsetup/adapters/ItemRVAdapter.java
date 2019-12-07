@@ -1,6 +1,7 @@
 package com.groupassignment2019.bartertraderappgithuballsetup.adapters;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -36,6 +38,8 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.ItemDataVi
         void onItemClick(ItemData clickedItemData);
     }
 
+
+
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
@@ -49,17 +53,21 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.ItemDataVi
         this.isViewerTheOwner = false;
     }
 
-    public void updateItems(List<ItemData> newList){
-        this.items = newList;
-        this.itemsFull = new ArrayList<>(items);
-        notifyDataSetChanged();
-    }
 
-    public void consume(ItemData itemData){
+    public void consume(String key, ItemData itemData, int identifier){
         this.itemsFull.add(itemData);
         this.items.add(itemData);
         notifyDataSetChanged();
     }
+
+    @Override
+    public void noObject(String key, int identifier) {
+        String msg = "some item is missing in the list ";
+        Log.d("BOLO", msg);
+       // Toast.makeText(, "", Toast.LENGTH_SHORT).show();
+    }
+
+
 
     public void setIsViewerTheOwner(boolean b){
         this.isViewerTheOwner = b;

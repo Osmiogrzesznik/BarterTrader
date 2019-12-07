@@ -66,9 +66,9 @@
     <style name="AnyTitleStyle">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">40dp</item>
-        <item name="android:fontFamily">@font/alegreya_sans</item>
         <item name="android:gravity">left|center_vertical</item>
         <item name="android:textAlignment">gravity</item>
+        <item name="android:fontFamily">@font/alegreya_sans</item>
         <item name="android:textColor">@color/White</item>
         <item name="android:textSize">24sp</item>
     </style>
@@ -128,10 +128,15 @@
     </style>
 
     <style name="spinnerStyle" parent="EditTextStyle">
-        <item name="android:background">@drawable/spinner_enabled</item>
+        <item name="android:background">@drawable/spinner_states</item>
         <item name="android:prompt">@string/selectCategory</item>
         <item name="android:spinnerMode">dropdown</item>
         <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextLarge" parent="android:TextAppearance.DeviceDefault.Large">
+        <item name="android:fontFamily">@font/alegreya_sans</item>
+        <item name="android:textColor">@color/White</item>
     </style>
 
 
