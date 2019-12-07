@@ -7,6 +7,7 @@ import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 public class UserDataModel implements Serializable {
@@ -16,9 +17,9 @@ public class UserDataModel implements Serializable {
     private String picture;
     private String phoneNumber;
     private String uid;
-    private int avgRev;
+    private Integer avgRev;
 
-    private int amtRev;
+    private Integer amtRev;
     private Map<String, Boolean> inbox;
     private String password;
     private Map<String, Boolean> tradedWith;
@@ -31,6 +32,10 @@ public class UserDataModel implements Serializable {
         firstName = firstname;
         lastName = lastname;
         phoneNumber = phone;
+        amtRev = 0;
+        avgRev = 0;
+        flagged = false;
+
         this.uid = uid;
     }
 
@@ -56,16 +61,19 @@ public class UserDataModel implements Serializable {
         this.uid = uid;
     }
 
-    public int getAvgRev() {
+    public Integer getAvgRev() {
+        if ( avgRev == null){
+            return 0;
+        }
         return avgRev;
     }
 
-    public void setAvgRev(int avgRev) {
-        this.avgRev = avgRev;
+    public void setAvgRev(Integer avgRev) {
+        this.avgRev = avgRev == null? 0:avgRev;
     }
 
     public Map<String, Boolean> getInbox() {
-        return inbox;
+        return inbox == null ? new HashMap<String, Boolean>():inbox;
     }
 
     public void setInbox(Map<String, Boolean> inbox) {
@@ -81,7 +89,7 @@ public class UserDataModel implements Serializable {
     }
 
     public Map<String, Boolean> getTradedWith() {
-        return tradedWith;
+        return tradedWith == null ? new HashMap<String, Boolean>():tradedWith;
     }
 
     public void setTradedWith(Map<String, Boolean> tradedWith) {
@@ -130,19 +138,19 @@ public class UserDataModel implements Serializable {
         this.flagged = flagged;
     }
 
-    public int getAmtRev() {
-        return amtRev;
+    public Integer getAmtRev() {
+        return amtRev == null ? 0:amtRev;
     }
 
-    public void setAmtRev(int amtRev) {
+    public void setAmtRev(Integer amtRev) {
         this.amtRev = amtRev;
     }
 
 
     @Exclude
     @NonNull
-    public int calculateUnreadThreadAmount() {
-        int unreadThreadsAmount = 0; // if no inboxes or no new messages it always be non Null value
+    public Integer calculateUnreadThreadAmount() {
+        Integer unreadThreadsAmount = 0; // if no inboxes or no new messages it always be non Null value
         if (getInbox() == null){
             return 0;
         }

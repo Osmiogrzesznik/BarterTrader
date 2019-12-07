@@ -64,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:text="reviews"
+        android:text="@string/reviewsLink"
         android:onClick="GO_TO_activity_SellerReviews"
         android:textColor="@color/White"
         app:layout_constraintBottom_toBottomOf="@+id/tv_amountOfReviews_itemDetails"

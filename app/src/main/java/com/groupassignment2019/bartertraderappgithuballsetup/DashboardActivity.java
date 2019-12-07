@@ -2,6 +2,7 @@ package com.groupassignment2019.bartertraderappgithuballsetup;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -9,10 +10,14 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
 import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.UserDataLoader;
 import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.UserObserver;
@@ -87,7 +92,21 @@ public class DashboardActivity extends AppCompatActivity implements UserObserver
 
         iv_inbox_icon_toolbar.setOnClickListener(openInboxActivity);
 
-        DB.Auth.addAuthStateListener(new UserDataLoader(this));
+        DB.getMeReference().addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        UserDataModel user = dataSnapshot.getValue(UserDataModel.class);
+                        Log.d("BOLO", user.toString());
+                        updateUI(user);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(DashboardActivity.this, "could not load " , Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override

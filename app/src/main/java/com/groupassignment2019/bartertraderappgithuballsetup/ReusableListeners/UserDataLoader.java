@@ -1,6 +1,8 @@
 package com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -27,7 +29,7 @@ public class UserDataLoader implements FirebaseAuth.AuthStateListener {
         if (firebaseAuth.getCurrentUser() == null){
             return;
         }
-        DB.getMeReference().addListenerForSingleValueEvent(
+        DB.getMeReference().addValueEventListener(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -38,7 +40,7 @@ public class UserDataLoader implements FirebaseAuth.AuthStateListener {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        Toast.makeText((Context) userObserver, "could not load " , Toast.LENGTH_SHORT).show();
                     }
                 }
         );

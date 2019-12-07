@@ -2,7 +2,8 @@
     <string name="app_name">BarterTraderAppGithubAllSetUp</string>
     <string name="selectCategory">Select Category</string>
     <string name="see_other_items_from_this_user"><u><i>See other items from this user</i></u></string>
-    <string name="consent">By clicking register you consent to share your data and agree to our <font color='#01C6DB'><U>Terms of Use and Privacy</U></font>. Click here to read more. </string>
+    <string name="consent">By clicking register you consent to share your data and agree to our <font color='#01C6DB'><u>Terms of Use and Privacy</u></font>. Click here to read more. </string>
+    <string name="reviewsLink">reviews. <font color='#01C6DB'><i><u>See Reviews.</u></i></font></string>
 
     <string-array name="Cathegories">
         <item>Clothes</item>
