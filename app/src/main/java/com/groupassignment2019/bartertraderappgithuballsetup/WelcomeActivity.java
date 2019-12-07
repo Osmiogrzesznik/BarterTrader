@@ -1,4 +1,4 @@
-package com.groupassignment2019.bartertraderappgithuballsetup;
+ package com.groupassignment2019.bartertraderappgithuballsetup;
 
 import androidx.appcompat.app.AppCompatActivity;
 

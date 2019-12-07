@@ -170,4 +170,16 @@
         app:layout_constraintTop_toTopOf="@+id/password_reg"
         app:srcCompat="@drawable/icon_show_password_eye" />
 
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:text="@string/consent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_reg"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
