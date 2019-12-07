@@ -13,6 +13,7 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,6 +66,7 @@ public class MyProfileActivity extends AppCompatActivity implements UserObserver
     private TextView tvSellerReviewsLinkItemDetail;
     private Button btnFlagUser;
     private Uri imageLocalURI;
+    private ProgressBar progressBar2;
 
     private String newItemImageFirebaseFilename;
     private Uri uploadedImageURL;
@@ -92,6 +94,8 @@ public class MyProfileActivity extends AppCompatActivity implements UserObserver
                     }
                 }
         );
+
+        progressBar2 = (ProgressBar) findViewById(R.id.progressBar2);
         tvFullName = (TextView) findViewById(R.id.tv_dashboard_welcome_txt);
         barterLevelTitle = (TextView) findViewById(R.id.barterLevelTitle);
         bartAmount = (TextView) findViewById(R.id.bartAmount);
@@ -107,6 +111,8 @@ public class MyProfileActivity extends AppCompatActivity implements UserObserver
         tvAmountOfReviewsItemDetails = (TextView) findViewById(R.id.tv_amountOfReviews_itemDetails);
         tvSellerReviewsLinkItemDetail = (TextView) findViewById(R.id.tv_sellerReviews_Link_itemDetail);
         btnFlagUser = (Button) findViewById(R.id.btn_flag_user);
+
+
 
 //        btnLogout = findViewById(R.id.btn_logout_dashboard);
 //        btnMyProfileDashboard = findViewById(R.id.btn_myProfile_dashboard);
@@ -183,14 +189,10 @@ public class MyProfileActivity extends AppCompatActivity implements UserObserver
             Picasso.get().load(picURl).placeholder(R.drawable.avvy).into(ivBigProfilePicDashboard);
             Picasso.get().load(picURl).placeholder(R.drawable.avvy).into(iv_profilepic_toolbar);
         }
-
-        newItemImageFirebaseFilename = DB.myUid() + getFileExtension(imageLocalURI);
-
-        // filesToUpload = new ArrayList<>();
-        FileToUpload imageFile = new FileToUpload(imageLocalURI, newItemImageFirebaseFilename, "user_images");
     }
 
-    private void uploadImageFileAndCheckIfAllCompleted(final FileToUpload fileToUpload) {
+    private void uploadImageFileAndCheckIfAllCompleted() {
+        progressBar2.setVisibility(View.VISIBLE);
         final StorageReference uploadRef = FirebaseStorage.getInstance()
                 .getReference("user_images") // path contains appropriate folder
                 .child(newItemImageFirebaseFilename); // filename
@@ -211,6 +213,8 @@ public class MyProfileActivity extends AppCompatActivity implements UserObserver
                         //fileToUpload.setDownloadUri(uri);
                         uploadedImageURL = uri;
                         DB.getMeReference().child("picture").setValue(uploadedImageURL.toString());
+                        Picasso.get().load(imageLocalURI).into(ivBigProfilePicDashboard);
+                        progressBar2.setVisibility(View.GONE);
                     }
                 });
             }
@@ -256,7 +260,11 @@ public class MyProfileActivity extends AppCompatActivity implements UserObserver
                 return;
             }
             imageLocalURI = data.getData();
-            Picasso.get().load(imageLocalURI).into(ivBigProfilePicDashboard);
+            newItemImageFirebaseFilename = DB.myUid() + getFileExtension(imageLocalURI);
+
+            // filesToUpload = new ArrayList<>();
+            //FileToUpload imageFile = new FileToUpload(imageLocalURI, newItemImageFirebaseFilename, "user_images");
+            uploadImageFileAndCheckIfAllCompleted();
         }
     }
 

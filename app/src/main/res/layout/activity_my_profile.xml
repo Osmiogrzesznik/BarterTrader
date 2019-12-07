@@ -163,5 +163,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/tv_dashboard_welcome_txt"
+        app:layout_constraintEnd_toEndOf="@+id/iv_BigProfilePic_dashboard"
+        app:layout_constraintStart_toStartOf="@+id/iv_BigProfilePic_dashboard"
+        app:layout_constraintTop_toTopOf="@+id/iv_BigProfilePic_dashboard" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
