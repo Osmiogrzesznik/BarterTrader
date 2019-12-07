@@ -143,6 +143,9 @@ public class UserDataModel implements Serializable {
     @NonNull
     public int calculateUnreadThreadAmount() {
         int unreadThreadsAmount = 0; // if no inboxes or no new messages it always be non Null value
+        if (getInbox() == null){
+            return 0;
+        }
         Collection<Boolean> inbox = getInbox().values();
         if (inbox != null) {
             for (boolean b : inbox) {

@@ -224,11 +224,13 @@ public class PostNewItemActivity extends AppCompatActivity implements AdapterVie
     public void validate_prepareUploads_SaveItemToDB() {
         String imageViewNewItemImageValue;
         InputValidator iv = new InputValidator(this);
+
         boolean ok = iv.notEmpty(editTextNewItemTitle) && iv.notEmpty(editTextItemDescription) && imageLocalURI != null && categorySelected != null;
         if (!ok) {
             Toast.makeText(this, "complete the required data: image, description and title", Toast.LENGTH_LONG).show();
             return;
         }
+
         if (newItemIDkey == null) {
             newItemIDkey = DB.items.push().getKey();
         }
@@ -292,11 +294,13 @@ Log.d("BOLO","success uploading video file");
                         Log.d("BOLO","success getting url downlad video file");
                         // TODO: 04/12/2019 Picture is not saved ?!
                         // todo make it dead simple two separate
-                        if (uri == null){
-                            throw new NullPointerException("image added but firebase send null back ?!!!!");
-                        }
+
+//                        if (uri == null){
+//                            throw new NullPointerException("image added but firebase send null back ?!!!!");
+//                        }
+//
                         PostItemButton.setText("video ok");
-                        fileToUpload.setDownloadUri(uri);
+//                        fileToUpload.setDownloadUri(uri);
                         uploadedVideoURL = uri;
                         IfAllCompletedSaveToDB();
                     }

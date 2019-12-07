@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -52,6 +54,7 @@ public class InboxActivity extends AppCompatActivity {
     private ValueEventListener grabListOfMTIDsandprepareneededdata;
     private FirebaseUser firebaseUser;
     private DatabaseReference DB_listOfThreadsInbox;
+    private TextView tvIfEmpty;
 
 
 
@@ -93,6 +96,10 @@ public class InboxActivity extends AppCompatActivity {
         grabListOfMTIDsandprepareneededdata = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()){
+                    tvIfEmpty = (TextView) findViewById(R.id.tv_ifEmpty);
+                    tvIfEmpty.setVisibility(View.VISIBLE);
+                }
                 inboxElementList.clear();
 
                 for (DataSnapshot msgThrID : dataSnapshot.getChildren()) {
