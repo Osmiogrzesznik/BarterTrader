@@ -21,8 +21,6 @@ import com.groupassignment2019.bartertraderappgithuballsetup.models.Category;
 import java.util.List;
 
 public class CategoriesActivity extends AppCompatActivity {
-    private List<Category> categories;
-    private LayoutInflater mInflater;
     private CategoryRVAdapter adapter;
 
 
@@ -80,7 +78,7 @@ public class CategoriesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
         setTitle("Choose one of Categories");
-        categories = prepareCategoriesList();
+        List<Category> categories = prepareCategoriesList();
         prepareRecyclerView(categories);
 
         TextView tv = findViewById(R.id.ScreenTitle);
@@ -91,7 +89,7 @@ public class CategoriesActivity extends AppCompatActivity {
     }
 
     private void prepareRecyclerView(List<Category> categories) {
-        mInflater = LayoutInflater.from(this.getBaseContext());
+        LayoutInflater mInflater = LayoutInflater.from(this.getBaseContext());
         RecyclerView recyclerView = findViewById(R.id.categoriesRecyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false));
         adapter = new CategoryRVAdapter(mInflater, categories);

@@ -2,21 +2,13 @@
     <string name="app_name">BarterTraderAppGithubAllSetUp</string>
     <string name="selectCategory">Select Category</string>
     <string name="see_other_items_from_this_user"><u><i>See other items from this user</i></u></string>
-    <string name="consent">By clicking register you consent to share your data and agree to our <font color='#01C6DB'><u>Terms of Use and Privacy</u></font>. Click here to read more. </string>
-    <string name="reviewsLink">reviews. <font color='#01C6DB'><i><u>See Reviews.</u></i></font></string>
+    <string name="consent">By clicking register you consent to share your data and agree to our . Click here to read more. </string>
+    <string name="reviewsLink">reviews. </string>
     <string name="item_desc_hint">Description of your item   e. g beautiful second hand kettle with little scratch on one side.  Please include as much details as possible</string>
     <string name="item_name_hint">Name of your Item</string>
     <string name="add_video">Add Video</string>
     <string name="view_video">View Video</string>
     <string name="post_item">Post Item</string>
     <string name="item_image">item image</string>
-
-    <string-array name="Cathegories">
-        <item>Clothes</item>
-
-        <item>Gadgets</item>
-        <item>Tools</item>
-        <item>Toys</item>
-    </string-array>
 
 </resources>

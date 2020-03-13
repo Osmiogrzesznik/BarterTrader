@@ -14,20 +14,12 @@ import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class BarterTradeConfirmationDialog extends Dialog{
+class BarterTradeConfirmationDialog extends Dialog{
     private final String question;
     private ItemData myItem;
     private ItemData yourItem;
-    private ImageView ivPopupOKBtn;
-    private CircleImageView ivYourItemImage;
-    private CircleImageView ivMyItemImage;
-    private TextView tvYourItemTitle;
-    private TextView tvMyItemTitle;
-    private ImageView ivPopupCANCELBtn;
     private View.OnClickListener OnOkClickListener;
-    private TextView tvPopupQuestion;
     private int layoutResource = R.layout.popup_confirm_offer;
-    private boolean isJustFeedback;
 
     public BarterTradeConfirmationDialog(@NonNull Context context, String question , ItemData myItem, ItemData yourItem) {
         super(context);
@@ -42,13 +34,13 @@ public class BarterTradeConfirmationDialog extends Dialog{
         super.onCreate(savedInstanceState);
 
         //find views
-        tvPopupQuestion = findViewById(R.id.customTitlePopup);
-        tvMyItemTitle = findViewById(R.id.tv_MyItem_title_popup);
-        tvYourItemTitle = findViewById(R.id.tv_YourItem_title_popup);
-        ivMyItemImage = findViewById(R.id.iv_MyItem_popup);
-        ivYourItemImage = findViewById(R.id.iv_YourItem_popup);
-        ivPopupOKBtn = findViewById(R.id.iv_popup_OK_btn);
-        ivPopupCANCELBtn = findViewById(R.id.iv_popup_CANCEL_btn);
+        TextView tvPopupQuestion = findViewById(R.id.customTitlePopup);
+        TextView tvMyItemTitle = findViewById(R.id.tv_MyItem_title_popup);
+        TextView tvYourItemTitle = findViewById(R.id.tv_YourItem_title_popup);
+        CircleImageView ivMyItemImage = findViewById(R.id.iv_MyItem_popup);
+        CircleImageView ivYourItemImage = findViewById(R.id.iv_YourItem_popup);
+        ImageView ivPopupOKBtn = findViewById(R.id.iv_popup_OK_btn);
+        ImageView ivPopupCANCELBtn = findViewById(R.id.iv_popup_CANCEL_btn);
 
 
         // set images
@@ -91,7 +83,6 @@ public class BarterTradeConfirmationDialog extends Dialog{
     }
 
     public void isTradeFinalized(boolean b) {
-        this.isJustFeedback = b;
-        layoutResource = isJustFeedback ? R.layout.popup_confirm_trade_finalized_successfully :R.layout.popup_confirm_offer;
+        layoutResource = b ? R.layout.popup_confirm_trade_finalized_successfully :R.layout.popup_confirm_offer;
     }
 }

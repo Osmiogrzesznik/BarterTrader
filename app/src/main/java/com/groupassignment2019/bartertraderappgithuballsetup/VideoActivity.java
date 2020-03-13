@@ -10,8 +10,6 @@ import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import java.net.URI;
-
 /**expects url string in extras
  *
  */
@@ -23,14 +21,14 @@ public class VideoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
 
-        videoView = (VideoView) findViewById(R.id.videoView);
+        videoView = findViewById(R.id.videoView);
 
         Intent startingIntent = getIntent();
         if (!startingIntent.hasExtra("url") || startingIntent.getStringExtra("url") == null){
             Toast.makeText(this, "Sorry No Url Has been Provided", Toast.LENGTH_SHORT).show();
             Log.e("BOLO","Sorry no url has been provided ");
             finish();
-        };
+        }
 
         Uri uri = Uri.parse(startingIntent.getStringExtra("url"));
         MediaController mediaController = new MediaController(this);

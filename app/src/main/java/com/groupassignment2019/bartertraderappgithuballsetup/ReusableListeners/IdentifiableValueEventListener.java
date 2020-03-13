@@ -19,7 +19,7 @@ public class IdentifiableValueEventListener<T> implements ValueEventListener{
     private Class<T> tClass;
     private OnBeforeAddedListener<T> onBeforeAddedListener;
 
-    public IdentifiableValueEventListener(Context ctx, Consumer<T> consumer, Class<T> tClass, int identifier) {
+    private IdentifiableValueEventListener(Context ctx, Consumer<T> consumer, Class<T> tClass, int identifier) {
         this.ctx = ctx;
         this.identifier = identifier;
         this.consumer = consumer;
@@ -54,7 +54,7 @@ public class IdentifiableValueEventListener<T> implements ValueEventListener{
      * Transforms Added Item before adding to consumer
      * @param <T>
      */
-    public interface OnBeforeAddedListener<T> {
-        public T OnBeforeAdded(T element,int identifier);
+    interface OnBeforeAddedListener<T> {
+        T OnBeforeAdded(T element, int identifier);
     }
 }

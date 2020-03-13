@@ -1,7 +1,5 @@
 package com.groupassignment2019.bartertraderappgithuballsetup.models;
 
-import android.net.Uri;
-
 import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
@@ -9,12 +7,12 @@ import java.io.Serializable;
 public class ItemData implements Serializable {
 
     @Exclude
-    public static final ItemData EMPTY_TEST() {
+    public static ItemData EMPTY_TEST() {
         return EMPTY_TEST("testTitle");
     }
 
     @Exclude
-    public static final ItemData EMPTY_TEST(String title){
+    private static ItemData EMPTY_TEST(String title){
     return new ItemData("99999999", title, "testDesc", "http://lorempixel.com/160/90","testCategory", "testUUID");
     }
     private String title;
@@ -105,7 +103,7 @@ public class ItemData implements Serializable {
 
     @Exclude
     public boolean hasVideo() {
-        if (videoURI == null || videoURI == ""){
+        if (videoURI == null || videoURI.equals("")){
             return false;
         }
         else{

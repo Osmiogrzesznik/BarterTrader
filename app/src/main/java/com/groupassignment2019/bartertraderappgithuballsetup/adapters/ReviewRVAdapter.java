@@ -1,7 +1,6 @@
 package com.groupassignment2019.bartertraderappgithuballsetup.adapters;
 
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,14 +67,13 @@ public class ReviewRVAdapter extends RecyclerView.Adapter<ReviewRVAdapter.Review
      * View holder
      */
     public class ReviewDataViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private final View reviewCardParentWrapper;
         private final TextView textViewReviewTitle;
         private final TextView reviewBody;
         private final RatingBar reviewCard_RatingBar;
 
-        public ReviewDataViewHolder(@NonNull View cardview_reviewView) {
+        ReviewDataViewHolder(@NonNull View cardview_reviewView) {
             super(cardview_reviewView);
-            reviewCardParentWrapper = cardview_reviewView.findViewById(R.id.reviewCardParentWrapper);
+            View reviewCardParentWrapper = cardview_reviewView.findViewById(R.id.reviewCardParentWrapper);
             textViewReviewTitle = cardview_reviewView.findViewById(R.id.textViewReviewTitle);
             reviewBody = cardview_reviewView.findViewById(R.id.reviewBody);
             reviewCard_RatingBar = cardview_reviewView.findViewById(R.id.reviewCard_RatingBar);

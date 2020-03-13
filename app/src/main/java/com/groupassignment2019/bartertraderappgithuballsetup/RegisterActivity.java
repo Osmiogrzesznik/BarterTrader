@@ -31,14 +31,12 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText et_email;
     private EditText et_phone;
     private EditText et_pass;
-    private Button btn_Reg;
-    private ImageView showRegisterPasswordIcon;
     private DatabaseReference DB_users;
     private FirebaseAuth mAuth;
     private ProgressBar progressCircle;
     private Random rnd;
     private InputValidator inputValidator;
-    boolean isUserCreationInProgress = false;
+    private boolean isUserCreationInProgress = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +52,8 @@ public class RegisterActivity extends AppCompatActivity {
         et_email = findViewById(R.id.email_reg);
         et_phone = findViewById(R.id.phone_reg);
         et_pass = findViewById(R.id.password_reg);
-        btn_Reg = findViewById(R.id.btn_reg);
-        showRegisterPasswordIcon = findViewById(R.id.showRegisterPasswordIcon);
+        Button btn_Reg = findViewById(R.id.btn_reg);
+        ImageView showRegisterPasswordIcon = findViewById(R.id.showRegisterPasswordIcon);
         showRegisterPasswordIcon.setOnTouchListener(new ShowPasswordOnTouchListener(et_pass));
 
         progressCircle.setVisibility(View.INVISIBLE);
@@ -91,7 +89,6 @@ public class RegisterActivity extends AppCompatActivity {
                 ) {
                     registerUserAndCreateDatabaseEntry();
                 } else {
-                    return;
                 }
 
 

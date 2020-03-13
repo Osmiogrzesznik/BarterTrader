@@ -13,7 +13,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.UserDataModel;
 
-public class UserDataLoader implements FirebaseAuth.AuthStateListener {
+class UserDataLoader implements FirebaseAuth.AuthStateListener {
     private UserObserver userObserver;
 
     /**

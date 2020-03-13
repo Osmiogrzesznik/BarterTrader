@@ -72,7 +72,7 @@ public class UserDataModel implements Serializable {
         this.avgRev = avgRev == null? 0:avgRev;
     }
 
-    public Map<String, Boolean> getInbox() {
+    private Map<String, Boolean> getInbox() {
         return inbox == null ? new HashMap<String, Boolean>():inbox;
     }
 

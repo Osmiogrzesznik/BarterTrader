@@ -36,10 +36,10 @@ public class ItemsListActivity extends AppCompatActivity {
 
 
     public static final String BOLO = "BOLO";
-    public static final String CATEGORY = "category";
-    public static final String OFFER = "offer";
-    public static final String BY = "by";
-    public static final String USER_ID = "uuid";
+    private static final String CATEGORY = "category";
+    private static final String OFFER = "offer";
+    private static final String BY = "by";
+    private static final String USER_ID = "uuid";
     private ChildEventListener CELgrabListOfIdsAndFindActualItems;
     private DatabaseReference DB_Dynamic_ItemsIDListWeObserve_ref;
 
@@ -48,7 +48,7 @@ public class ItemsListActivity extends AppCompatActivity {
      * sets the intent extras to start ItemsListActivity with valid input extras adhering to the contract
      * @param intent intent that will be used to start ItemsListActivity
      */
-    public static final void BY_ME(Intent intent){
+    public static void BY_ME(Intent intent){
         BY_USER(intent,DB.me.getUid());
     }
 
@@ -57,7 +57,7 @@ public class ItemsListActivity extends AppCompatActivity {
      * @param intent intent that will be used to start ItemsListActivity
      * @param uuid uid of user whose items will be displayed
      */
-    public static final void BY_USER(Intent intent,String uuid){
+    public static void BY_USER(Intent intent, String uuid){
         intent.putExtra(BY, USER_ID);
         intent.putExtra(USER_ID,uuid);
     }
@@ -67,29 +67,19 @@ public class ItemsListActivity extends AppCompatActivity {
      * @param intent intent that will be used to start ItemsListActivity
      * @param category uid of category whose items will be displayed
      */
-    public static final void BY_CATEGORY(Intent intent,String category){
+    public static void BY_CATEGORY(Intent intent, String category){
         intent.putExtra(BY,CATEGORY);
         intent.putExtra(USER_ID,category);
     }
 
-    /**
-     * sets the intent extras to start ItemsListActivity with valid input extras adhering to the contract
-     * @param intent intent that will be used to start ItemsListActivity
-     */
-
-    private LinearLayoutManager linearLayoutManager;
-    private RecyclerView recyclerView;
     private TextView textViewItem_list_NarrowDownTitle;
     private List<ItemData> itemsArrayList;
-    private LayoutInflater mInflater;
     private ItemRVAdapter adapter;
     private DatabaseReference DB_Root_ref;
-    private DatabaseReference mDBListOfItemIdsInCategoryNameRef;
     private DatabaseReference DB_Items_reference;
     private ValueEventListener addItemToListOnValueEvent;
     private String byWhat_UserOrCategory;
     private Intent intentThatStartedMe;
-    private String userIdOrCategoryName;
     private ValueEventListener grabListOfIdsAndFindActualItems;
     private String mode;
 
@@ -125,7 +115,7 @@ public class ItemsListActivity extends AppCompatActivity {
 
         //Views Set Up
         textViewItem_list_NarrowDownTitle = findViewById(R.id.Item_list_NarrowDownTitle);
-        recyclerView = findViewById(R.id.itemsRecyclerView);
+        RecyclerView recyclerView = findViewById(R.id.itemsRecyclerView);
 
 
         //FIREBASE VARIABLES SET UP
@@ -136,8 +126,12 @@ public class ItemsListActivity extends AppCompatActivity {
 
 
         //prepare RecyclerView
-        linearLayoutManager = new LinearLayoutManager(this);
-        mInflater = LayoutInflater.from(this.getBaseContext());
+        /**
+         * sets the intent extras to start ItemsListActivity with valid input extras adhering to the contract
+         * @param intent intent that will be used to start ItemsListActivity
+         */
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        LayoutInflater mInflater = LayoutInflater.from(this.getBaseContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         itemsArrayList = new ArrayList<>();
         adapter = new ItemRVAdapter(mInflater, itemsArrayList);
@@ -268,7 +262,7 @@ public class ItemsListActivity extends AppCompatActivity {
             textViewItem_list_NarrowDownTitle.setText("Items By User");
                 UUID = user_id_from_intent;
         }
-        if (mode == OFFER){
+        if (mode.equals(OFFER)){
             adapter.setIsViewerTheOwner(false);// do not allow user to edit items before picking an offer
         }else{
             adapter.setIsViewerTheOwner(isOwner);
@@ -290,12 +284,12 @@ public class ItemsListActivity extends AppCompatActivity {
 
     private void setUpAdapterToBeFilledWithItemsFromCategory() {
         //if filter Type was category it will get category title
-        userIdOrCategoryName = intentThatStartedMe.getExtras().getString(byWhat_UserOrCategory);
+        String userIdOrCategoryName = intentThatStartedMe.getExtras().getString(byWhat_UserOrCategory);
         textViewItem_list_NarrowDownTitle.setText("Items by " + byWhat_UserOrCategory + " :" + userIdOrCategoryName.toUpperCase());
         Toast.makeText(ItemsListActivity.this, userIdOrCategoryName, Toast.LENGTH_LONG).show();
         // items = new ArrayList<>();
         Log.d(BOLO, "starting" + byWhat_UserOrCategory + " " + userIdOrCategoryName.toLowerCase());
-        mDBListOfItemIdsInCategoryNameRef = FirebaseDatabase.getInstance().getReference("categories").child(userIdOrCategoryName.toLowerCase());
+        DatabaseReference mDBListOfItemIdsInCategoryNameRef = FirebaseDatabase.getInstance().getReference("categories").child(userIdOrCategoryName.toLowerCase());
         //this gets a list of itemIds under the selected category
         DB_Dynamic_ItemsIDListWeObserve_ref = mDBListOfItemIdsInCategoryNameRef;
         //DB_ItemsIDListWeObserve_ref.addValueEventListener(grabListOfIdsAndFindActualItems);
@@ -326,11 +320,11 @@ public class ItemsListActivity extends AppCompatActivity {
 
 
     //Listeners
-    final ItemRVAdapter.OnItemClickListener itemClickListener = new ItemRVAdapter.OnItemClickListener() {
+    private final ItemRVAdapter.OnItemClickListener itemClickListener = new ItemRVAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(ItemData clickedItemData) {
             Toast.makeText(ItemsListActivity.this, "mode:"+ mode + " \nyou clicked" + clickedItemData.getTitle(), Toast.LENGTH_LONG).show();
-            Toast.makeText(ItemsListActivity.this, ((Boolean)(mode==OFFER)).toString() , Toast.LENGTH_LONG).show();
+            Toast.makeText(ItemsListActivity.this, ((Boolean)(mode.equals(OFFER))).toString() , Toast.LENGTH_LONG).show();
             Toast.makeText(ItemsListActivity.this, mode+OFFER , Toast.LENGTH_LONG).show();
 
             //if mode is offer it means that this activity was started for result so do not start any other activity just finish

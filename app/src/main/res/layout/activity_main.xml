@@ -263,7 +263,6 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
@@ -286,7 +285,6 @@
         app:layout_constraintTop_toBottomOf="@+id/MainNavTestBtn16" />
 
     <Button
-        android:id="@+id/mainNavTestBtn2"
         style="@style/look_of_a_button_when_activity_is_work_in_progress"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

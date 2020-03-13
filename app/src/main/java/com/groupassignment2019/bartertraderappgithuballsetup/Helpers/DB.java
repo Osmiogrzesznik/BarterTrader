@@ -12,7 +12,7 @@ import java.util.Locale;
 
 public class DB {
     public static FirebaseAuth Auth = FirebaseAuth.getInstance();
-    static DatabaseReference rootpriv = FirebaseDatabase.getInstance().getReference();
+    private static DatabaseReference rootpriv = FirebaseDatabase.getInstance().getReference();
     public static DatabaseReference root = rootpriv;
     public static DatabaseReference users = root.child("users");
     public static DatabaseReference categories = root.child("categories");

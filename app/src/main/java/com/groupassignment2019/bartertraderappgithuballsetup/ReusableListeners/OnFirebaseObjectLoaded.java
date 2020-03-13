@@ -21,7 +21,7 @@ public class OnFirebaseObjectLoaded<DataModelType> implements ValueEventListener
         }
 
     public OnFirebaseObjectLoaded<DataModelType> copy(int newposition){
-        return new OnFirebaseObjectLoaded<DataModelType>(consumer,newposition,dataModelClass);
+        return new OnFirebaseObjectLoaded<>(consumer, newposition, dataModelClass);
     }
 
         @Override

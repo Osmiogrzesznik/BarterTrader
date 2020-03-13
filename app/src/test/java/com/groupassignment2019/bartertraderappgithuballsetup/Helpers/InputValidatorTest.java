@@ -1,9 +1,6 @@
 package com.groupassignment2019.bartertraderappgithuballsetup.Helpers;
 
-import org.checkerframework.checker.units.qual.A;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 //import org.robolectric.RobolectricTestRunner;
 
 import static org.junit.Assert.*;

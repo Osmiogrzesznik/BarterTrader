@@ -3,7 +3,6 @@ package com.groupassignment2019.bartertraderappgithuballsetup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
         setContentView(R.layout.activity_main);
         FirebaseAuth.getInstance().addAuthStateListener(this);
         //FirebaseAuth.getInstance().signOut();
-        userdetails = (TextView) findViewById(R.id.userdetails);
+        userdetails = findViewById(R.id.userdetails);
 
 
         tv = findViewById(R.id.textView);

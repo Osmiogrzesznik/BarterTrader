@@ -1,24 +1,21 @@
 package com.groupassignment2019.bartertraderappgithuballsetup.Helpers;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.groupassignment2019.bartertraderappgithuballsetup.PostNewItemActivity;
-
 public class InputValidator {
     // TODO: 12/11/2019 displays only Required Field ? On registerActivity
-    public static final String REQUIRED_FIELD = "Required field";
+    private static final String REQUIRED_FIELD = "Required field";
     private final Context ctx;
 
     public InputValidator(Context ctx) {
         this.ctx = ctx;
     }
 
-    public void say(String msg) {
+    private void say(String msg) {
         if (this.ctx == null) {
             return;
         }
@@ -99,7 +96,7 @@ public class InputValidator {
         return Patterns.EMAIL_ADDRESS.matcher(s).matches();
     }
 
-    public boolean isValidPhone(String s) {
+    private boolean isValidPhone(String s) {
         return Patterns.PHONE.matcher(s.trim()).matches();
     }
 
@@ -113,7 +110,7 @@ public class InputValidator {
     }
 
 
-    public String txtFrom(EditText et) {
+    private String txtFrom(EditText et) {
         return et.getText().toString();
     }
 }

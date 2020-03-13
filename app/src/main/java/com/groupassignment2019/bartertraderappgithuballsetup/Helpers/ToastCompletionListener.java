@@ -7,11 +7,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.groupassignment2019.bartertraderappgithuballsetup.PostNewItemActivity;
 
 public class ToastCompletionListener implements DatabaseReference.CompletionListener, OnCompleteListener<Void> {
     private Context context;

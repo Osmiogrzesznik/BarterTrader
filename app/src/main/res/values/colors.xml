@@ -4,11 +4,7 @@
     <color name="colorPrimaryDark">#3D0315</color>
     <color name="colorAccent">#F8400D4E</color>
     <color name="colorHintText">#92FFFFFF</color>
-    <color name="colorBrightest">#40cbc6</color>
-    <color name="colorBright">#4d9fcf</color>
     <color name="colorMedium">#4974a9</color>
-    <color name="colorDark">#5c538c</color>
-    <color name="colorDarkest">#534266</color>
     <color name="brightestStart">#40cbc6</color>
     <color name="brightestEnd">#3b7b8f</color>
     <color name="brightStart">#56b0d3</color>

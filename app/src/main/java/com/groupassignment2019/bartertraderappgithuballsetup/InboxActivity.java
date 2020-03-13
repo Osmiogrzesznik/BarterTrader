@@ -22,7 +22,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
-import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.IdentifiableValueEventListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.adapters.InboxElementRVAdapter;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.InboxElement;
 
@@ -35,7 +34,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class InboxActivity extends AppCompatActivity {
     //Listeners
-    final InboxElementRVAdapter.OnItemClickListener clickListener = new InboxElementRVAdapter.OnItemClickListener() {
+    private final InboxElementRVAdapter.OnItemClickListener clickListener = new InboxElementRVAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(InboxElement clickedinboxElement) {
             if (clickedinboxElement.isComplete()){ //only if inboxElement had finished loading form fb
@@ -44,15 +43,11 @@ public class InboxActivity extends AppCompatActivity {
             intent.putExtra("otherUser", clickedinboxElement.getUserInterlocutor());
             startActivity(intent);
         }
-        };
+        }
     };
 
 
-    public static final String BOLO = "BOLO";
-    private LinearLayoutManager linearLayoutManager;
-    private RecyclerView recyclerView;
-    private List<InboxElement> inboxElementList;
-    private LayoutInflater mInflater;
+    private static final String BOLO = "BOLO";
     private InboxElementRVAdapter adapter;
 //    private IdentifiableValueEventListener<InboxElement> addInboxElementToAdapterWhenSentFromDB;
     private FirebaseUser firebaseUser;
@@ -60,9 +55,6 @@ public class InboxActivity extends AppCompatActivity {
     private TextView tvIfEmpty;
     private DatabaseReference DB_threadHeaders;
     private ChildEventListener addInboxElementToAdapterWhenSentFromDBCEL;
-
-    private CircleImageView ivAddReview;
-
 
 
     //
@@ -75,25 +67,25 @@ public class InboxActivity extends AppCompatActivity {
             Toast.makeText(this, "user is not logged in", Toast.LENGTH_LONG).show();
             finish();
         }
-        tvIfEmpty = (TextView) findViewById(R.id.tv_ifEmpty);
-        ivAddReview = (CircleImageView) findViewById(R.id.iv_AddReview);
+        tvIfEmpty = findViewById(R.id.tv_ifEmpty);
+        CircleImageView ivAddReview = findViewById(R.id.iv_AddReview);
 
 
 
         //Views Set Up
-        recyclerView = findViewById(R.id.inbox_recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.inbox_recyclerView);
 
         //FIREBASE VARIABLES SET UP
         DB_listOfThreadsInbox = DB.users.child(firebaseUser.getUid()).child("inbox");
         DB_threadHeaders = DB.messageThreads;
 
-        inboxElementList = new ArrayList<>();
+        List<InboxElement> inboxElementList = new ArrayList<>();
 
         //prepare RecyclerView
-        linearLayoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
         linearLayoutManager.setReverseLayout(true);
-        mInflater = LayoutInflater.from(this.getBaseContext());
+        LayoutInflater mInflater = LayoutInflater.from(this.getBaseContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
         adapter = new InboxElementRVAdapter(mInflater, inboxElementList, DB.users);

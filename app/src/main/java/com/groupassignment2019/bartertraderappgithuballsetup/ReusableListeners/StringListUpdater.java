@@ -14,9 +14,9 @@ import java.util.List;
 
 // TODO: 16/11/2019 REDUNDANT !!! this is just another ListOfIdsListener
 public class StringListUpdater implements ValueEventListener {
-List<String> list;
-TextView tv;
-Context ct;
+private List<String> list;
+private TextView tv;
+private Context ct;
 
     public StringListUpdater(Context t ,List<String> list, TextView tvp) {
         this.tv = tvp;

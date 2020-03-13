@@ -2,7 +2,6 @@ package com.groupassignment2019.bartertraderappgithuballsetup;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,12 +24,9 @@ public class LoginActivity extends AppCompatActivity implements FirebaseAuth.Aut
 
     private EditText et_email;
     private EditText et_pass;
-    private Button btnLogin;
-    private TextView signUplink;
     private ProgressBar progressBar_on_login_screen;
     private FirebaseAuth mAuth;
-    private ImageView showPasswordIcon;
-private InputValidator inputValidator;
+    private InputValidator inputValidator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO: 12/11/2019 crashes on empty fields
@@ -45,9 +41,9 @@ inputValidator = new InputValidator(LoginActivity.this);
         progressBar_on_login_screen.setVisibility(View.GONE);
         et_email =findViewById(R.id.email_login);
         et_pass =findViewById(R.id.password_login);
-        btnLogin=findViewById(R.id.btn_login);
-        signUplink=findViewById(R.id.signup_txt);
-        showPasswordIcon = findViewById(R.id.showLoginPasswordIcon);
+        Button btnLogin = findViewById(R.id.btn_login);
+        TextView signUplink = findViewById(R.id.signup_txt);
+        ImageView showPasswordIcon = findViewById(R.id.showLoginPasswordIcon);
         showPasswordIcon.setOnTouchListener(new ShowPasswordOnTouchListener(et_pass));
 
 

@@ -25,20 +25,13 @@ import com.groupassignment2019.bartertraderappgithuballsetup.models.UserDataMode
 import com.squareup.picasso.Picasso;
 
 public class DashboardActivity extends AppCompatActivity implements UserObserver {
-    Button btnLogout;
-    FirebaseAuth mAuth;
+    private Button btnLogout;
+    private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private TextView tv_dashboard_welcome_txt;
-    private UserDataModel user;
-    private Toolbar barterBar;
     private TextView tv_unreadThreadsAmount_circle;
     private ImageView iv_profilepic_toolbar;
     private ImageView iv_BigProfilePic_dashboard;
-    private ImageView iv_inbox_icon_toolbar;
-    private Button btnMyProfileDashboard;
-    private Button btnSearchCategoriesDashboard;
-    private Button btnPostNewItemDashboard;
-    private Button btnInboxDashboard;
 
 
     private View.OnClickListener openInboxActivity = new View.OnClickListener() {
@@ -72,17 +65,17 @@ public class DashboardActivity extends AppCompatActivity implements UserObserver
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        barterBar = findViewById(R.id.BarterBar);
+        Toolbar barterBar = findViewById(R.id.BarterBar);
         btnLogout = findViewById(R.id.btn_logout_dashboard);
-        btnMyProfileDashboard = findViewById(R.id.btn_myProfile_dashboard);
-        btnSearchCategoriesDashboard = findViewById(R.id.btn_searchCategories_dashboard);
-        btnPostNewItemDashboard = findViewById(R.id.btn_postNewItem_dashboard);
-        btnInboxDashboard = findViewById(R.id.btn_inbox_dashboard);
+        Button btnMyProfileDashboard = findViewById(R.id.btn_myProfile_dashboard);
+        Button btnSearchCategoriesDashboard = findViewById(R.id.btn_searchCategories_dashboard);
+        Button btnPostNewItemDashboard = findViewById(R.id.btn_postNewItem_dashboard);
+        Button btnInboxDashboard = findViewById(R.id.btn_inbox_dashboard);
         tv_dashboard_welcome_txt = findViewById(R.id.tv_dashboard_welcome_txt);
         iv_BigProfilePic_dashboard = findViewById(R.id.iv_BigProfilePic_dashboard);
         tv_unreadThreadsAmount_circle = barterBar.findViewById(R.id.tv_unreadThreadsAmount_circle);
         iv_profilepic_toolbar = barterBar.findViewById(R.id.iv_profilepic_toolbar);
-        iv_inbox_icon_toolbar = barterBar.findViewById(R.id.iv_inbox_icon_toolbar);
+        ImageView iv_inbox_icon_toolbar = barterBar.findViewById(R.id.iv_inbox_icon_toolbar);
         ratingBar = findViewById(R.id.ratingBar_newReview);//clickable
         tvAmountOfReviews = findViewById(R.id.tv_amountOfReviews_itemDetails);//clickable
 
@@ -133,22 +126,21 @@ public class DashboardActivity extends AppCompatActivity implements UserObserver
         }
 
 
-        user = me;
-        tv_dashboard_welcome_txt.setText("Welcome " + user.getFirstName() + "!");
+        tv_dashboard_welcome_txt.setText("Welcome " + me.getFirstName() + "!");
         ratingBar.setRating(me.getAvgRev());
         tvAmountOfReviews.setText(String.valueOf(me.getAmtRev()));
         //tvSellerHasBeenFlaggedIndicator.setVisibility(me.isFlagged() ? View.VISIBLE : View.GONE);
         //Picasso.get().load(me.getPicture()).into(ivSellerPicItemDetail);
 
 
-        int unreadThreadsAmount = user.calculateUnreadThreadAmount();
+        int unreadThreadsAmount = me.calculateUnreadThreadAmount();
         if (unreadThreadsAmount > 0) {
             tv_unreadThreadsAmount_circle.setVisibility(View.VISIBLE);
             tv_unreadThreadsAmount_circle.setText(String.valueOf(unreadThreadsAmount));
         } else {
             tv_unreadThreadsAmount_circle.setVisibility(View.GONE);
         }
-        String picURl = user.getPicture();
+        String picURl = me.getPicture();
         if (picURl != null) {
             Picasso.get().load(picURl).placeholder(R.drawable.avvy).into(iv_BigProfilePic_dashboard);
             Picasso.get().load(picURl).placeholder(R.drawable.avvy).into(iv_profilepic_toolbar);
@@ -156,7 +148,7 @@ public class DashboardActivity extends AppCompatActivity implements UserObserver
 
     }
 
-    public void GO_TO_inbox(View view) {
+    private void GO_TO_inbox(View view) {
         Intent intent = new Intent(this, InboxActivity.class);
         startActivity(intent);
     }

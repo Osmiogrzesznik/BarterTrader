@@ -1,7 +1,6 @@
 package com.groupassignment2019.bartertraderappgithuballsetup.adapters;
 
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import com.groupassignment2019.bartertraderappgithuballsetup.models.Category;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 
 public class CategoryRVAdapter extends RecyclerView.Adapter<CategoryRVAdapter.CategoryViewHolder> implements Filterable {
@@ -86,7 +84,7 @@ public class CategoryRVAdapter extends RecyclerView.Adapter<CategoryRVAdapter.Ca
         private TextView textViewCategoryDescription;
         private ConstraintLayout categoryCardParentWrapper;
 
-        public CategoryViewHolder(@NonNull View itemView) {
+        CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             categoryCardParentWrapper = itemView.findViewById(R.id.categoryCardParentWrapper);
             textViewCategoryTitle = itemView.findViewById(R.id.textViewCategoryTitle);

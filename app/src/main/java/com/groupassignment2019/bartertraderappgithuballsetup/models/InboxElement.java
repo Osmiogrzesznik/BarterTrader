@@ -1,13 +1,9 @@
 package com.groupassignment2019.bartertraderappgithuballsetup.models;
 
-import android.text.format.DateFormat;
-
 import com.google.firebase.database.Exclude;
 import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
 
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Locale;
 
 public class InboxElement implements Serializable {
     //todo instead of all these weird fiels could just use OtherUser object as a member albeit dynamically loaded;
@@ -93,7 +89,7 @@ public class InboxElement implements Serializable {
         this.lastMessageBody = lastMessageBody;
     }
 
-    public long getLastMessageTime() {
+    private long getLastMessageTime() {
         return lastMessageTime;
     }
 

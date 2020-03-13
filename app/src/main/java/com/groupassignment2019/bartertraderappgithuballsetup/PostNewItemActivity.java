@@ -49,7 +49,6 @@ public class PostNewItemActivity extends AppCompatActivity implements AdapterVie
     private static final int PICK_VIDEO = 42;
     private static final int PICK_IMAGE = 41;
     private ImageView imageViewNewItemImage;
-    private Button addVideoButton;
     private EditText editTextItemDescription;
     private EditText editTextNewItemTitle;
     private Button PostItemButton;
@@ -57,7 +56,6 @@ public class PostNewItemActivity extends AppCompatActivity implements AdapterVie
     private ProgressBar uploadingProgressBar;
 
 
-    private FirebaseUser authUser;
     private Uri imageLocalURI;
     private Uri videoLocalURI;
     private Button WatchVideoButton;
@@ -68,8 +66,6 @@ public class PostNewItemActivity extends AppCompatActivity implements AdapterVie
     private Uri uploadedImageURL;
     private Uri uploadedVideoURL;
     private boolean onlyPicture = true;
-    private String newItemVideoFirebaseFilename;
-    private String newItemImageFirebaseFilename;
 
 
     @Override
@@ -117,17 +113,17 @@ public class PostNewItemActivity extends AppCompatActivity implements AdapterVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_new_item);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        uploadingProgressBar = (ProgressBar) findViewById(R.id.uploadingProgressBar);
+        progressBar = findViewById(R.id.progressBar);
+        uploadingProgressBar = findViewById(R.id.uploadingProgressBar);
 
         WatchVideoButton = findViewById(R.id.viewVideoButton);
-        imageViewNewItemImage = (ImageView) findViewById(R.id.imageViewNewItemImage);
-        addVideoButton = (Button) findViewById(R.id.addVideoButton);
-        editTextItemDescription = (EditText) findViewById(R.id.editTextDescription);
-        editTextNewItemTitle = (EditText) findViewById(R.id.editTextTitle);
-        PostItemButton = (Button) findViewById(R.id.PostItemButton);
+        imageViewNewItemImage = findViewById(R.id.imageViewNewItemImage);
+        Button addVideoButton = findViewById(R.id.addVideoButton);
+        editTextItemDescription = findViewById(R.id.editTextDescription);
+        editTextNewItemTitle = findViewById(R.id.editTextTitle);
+        PostItemButton = findViewById(R.id.PostItemButton);
 
-        authUser = DB.me;
+        FirebaseUser authUser = DB.me;
 
         imageViewNewItemImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,7 +218,7 @@ public class PostNewItemActivity extends AppCompatActivity implements AdapterVie
     }
 
 
-    public void validate_prepareUploads_SaveItemToDB() {
+    private void validate_prepareUploads_SaveItemToDB() {
         String imageViewNewItemImageValue;
         InputValidator iv = new InputValidator(this);
 
@@ -243,7 +239,7 @@ public class PostNewItemActivity extends AppCompatActivity implements AdapterVie
         newItem.setSeller_user_UUID(DB.myUid());
         newItem.setTitle(editTextNewItemTitle.getText().toString());
         newItem.setDescription(editTextItemDescription.getText().toString());
-        newItemImageFirebaseFilename = newItemIDkey + getFileExtension(imageLocalURI);
+        String newItemImageFirebaseFilename = newItemIDkey + getFileExtension(imageLocalURI);
 
         // filesToUpload = new ArrayList<>();
         FileToUpload imageFile = new FileToUpload(imageLocalURI, newItemImageFirebaseFilename, "item_images");
@@ -252,7 +248,7 @@ public class PostNewItemActivity extends AppCompatActivity implements AdapterVie
         PostItemButton.setEnabled(false);
 
         if (videoLocalURI != null) {
-            newItemVideoFirebaseFilename = newItemIDkey + getFileExtension(videoLocalURI);
+            String newItemVideoFirebaseFilename = newItemIDkey + getFileExtension(videoLocalURI);
             FileToUpload videoFile = new FileToUpload(videoLocalURI, newItemVideoFirebaseFilename, "item_videos");
             // filesToUpload.add(videoFile);
             onlyPicture = false;

@@ -39,28 +39,19 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ReviewsActivity extends AppCompatActivity {
     private static final int NEW_REVIEW = 9210;
     //Listeners
-    final ReviewRVAdapter.OnItemClickListener clickListener = new ReviewRVAdapter.OnItemClickListener() {
+    private final ReviewRVAdapter.OnItemClickListener clickListener = new ReviewRVAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(ReviewDataModel clickedReviewDataModel) {
             Toast.makeText(ReviewsActivity.this, "you clicked" + clickedReviewDataModel.getTitle(), Toast.LENGTH_LONG).show();
         }
     };
-    //toolbar
-    private Toolbar barterBar;
     private CircleImageView ivLeftmostimgToolbar;
-    private CircleImageView ivProfilepicToolbar;
-    private ImageView ivInboxIconToolbar;
-    private TextView tvUnreadThreadsAmountCircle;
     private TextView tvMainTextToolbar;
     //other
     private TextView tvIfEmpty;
     private CircleImageView ivBtnAddReview;
-    private RecyclerView recyclerView;
     private ArrayList<ReviewDataModel> reviewsArrayList;
-    private LayoutInflater mInflater;
-    private LinearLayoutManager linearLayoutManager;
     private ReviewRVAdapter reviewRVAdapter;
-    private Intent intentThatStartedMe;
     private IdentifiableValueEventListener<ReviewDataModel> addItemToListOnValueEvent;
     private String yourID;
     private UserDataModel me;
@@ -73,32 +64,33 @@ public class ReviewsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reviews);
 
-        tvIfEmpty = (TextView) findViewById(R.id.tv_ifEmpty);
+        tvIfEmpty = findViewById(R.id.tv_ifEmpty);
 
         //Toolbar UI
-        barterBar = findViewById(R.id.barterBar);
+        //toolbar
+        Toolbar barterBar = findViewById(R.id.barterBar);
         ivLeftmostimgToolbar = barterBar.findViewById(R.id.iv_leftMostImg_toolbar);
-        ivProfilepicToolbar = barterBar.findViewById(R.id.iv_profilepic_toolbar);
-        ivInboxIconToolbar = barterBar.findViewById(R.id.iv_inbox_icon_toolbar);
-        tvUnreadThreadsAmountCircle = barterBar.findViewById(R.id.tv_unreadThreadsAmount_circle);
+        CircleImageView ivProfilepicToolbar = barterBar.findViewById(R.id.iv_profilepic_toolbar);
+        ImageView ivInboxIconToolbar = barterBar.findViewById(R.id.iv_inbox_icon_toolbar);
+        TextView tvUnreadThreadsAmountCircle = barterBar.findViewById(R.id.tv_unreadThreadsAmount_circle);
         tvMainTextToolbar = barterBar.findViewById(R.id.tv_mainText_toolbar);
         ivBtnAddReview = findViewById(R.id.iv_AddReview);
-        recyclerView = findViewById(R.id.reviewsRecyclerView);
+        RecyclerView recyclerView = findViewById(R.id.reviewsRecyclerView);
 
         reviewsArrayList = new ArrayList<>();
 
         //prepare RecyclerView
 
-        mInflater = LayoutInflater.from(this.getBaseContext());
+        LayoutInflater mInflater = LayoutInflater.from(this.getBaseContext());
         reviewRVAdapter = new ReviewRVAdapter(mInflater, reviewsArrayList);
-        linearLayoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(reviewRVAdapter);
         reviewRVAdapter.setOnItemClickListener(clickListener);
 
         //Recover info sent from previous activity
-        intentThatStartedMe = getIntent();
+        Intent intentThatStartedMe = getIntent();
         yourID = intentThatStartedMe.getStringExtra("uuid");
         if (yourID == null) {
             Log.e("BOLO", "no user id passed into reviews Activity with key name of uuid");
@@ -169,7 +161,7 @@ public class ReviewsActivity extends AppCompatActivity {
     }
 
 
-    public void updateUI() {
+    private void updateUI() {
 
         if (me.getTradedWith().containsKey(yourID)) { //allow to write review only after trading
             ivBtnAddReview.setVisibility(View.VISIBLE);

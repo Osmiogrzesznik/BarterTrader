@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -112,15 +111,12 @@ holder.Button_EditOwnedItem_In_ItemListElementCardView.setVisibility(View.VISIBL
      */
     public class ItemDataViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final AppCompatImageView imageViewItemDataCard;
-        private boolean isOwner;
         private TextView textViewItemDataTitle;
-        private ConstraintLayout categoryCardParentWrapper;
         private Button Button_EditOwnedItem_In_ItemListElementCardView;
 
-        public ItemDataViewHolder(@NonNull View itemView,boolean isOwner) {
+        ItemDataViewHolder(@NonNull View itemView, boolean isOwner) {
             super(itemView);
-            this.isOwner = isOwner;
-            categoryCardParentWrapper = itemView.findViewById(R.id.item_CardParentWrapper);
+            ConstraintLayout categoryCardParentWrapper = itemView.findViewById(R.id.item_CardParentWrapper);
             textViewItemDataTitle = itemView.findViewById(R.id.textViewItemTitle);
             imageViewItemDataCard = itemView.findViewById(R.id.item_cardview_imageView);
             Button_EditOwnedItem_In_ItemListElementCardView = itemView.findViewById(R.id.Button_EditOwnedItem_In_ItemListElementCardView);

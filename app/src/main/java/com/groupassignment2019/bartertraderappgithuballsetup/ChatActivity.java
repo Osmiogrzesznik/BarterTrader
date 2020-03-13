@@ -9,21 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 
 import com.google.firebase.database.DatabaseReference;
-import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
-import com.groupassignment2019.bartertraderappgithuballsetup.adapters.ChatRVAdapter;
-import com.groupassignment2019.bartertraderappgithuballsetup.models.ItemData;
-import com.groupassignment2019.bartertraderappgithuballsetup.models.MessageDataModel;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -34,19 +22,13 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
 import com.groupassignment2019.bartertraderappgithuballsetup.adapters.ChatRVAdapter;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.ItemData;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.MessageDataModel;
-import com.groupassignment2019.bartertraderappgithuballsetup.models.MessageThreadDataModel;
 
 import com.groupassignment2019.bartertraderappgithuballsetup.models.MessageThreadDataModel;
-import com.groupassignment2019.bartertraderappgithuballsetup.models.UserDataModel;
-import com.squareup.picasso.Picasso;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import com.groupassignment2019.bartertraderappgithuballsetup.models.UserDataModel;
 import com.squareup.picasso.Picasso;
@@ -64,21 +46,10 @@ public class ChatActivity extends AppCompatActivity implements ChatRVAdapter.OnI
     private String myID;
     private String yourID;
     private String messageThreadID;
-    private boolean msgThreadExists;
     private MessageThreadDataModel messageThread;// todo you have to update it every time message is send
     private DatabaseReference db_msgThrRef;
     private DatabaseReference db_messagesRef;
-    private Toolbar barterBar;
-    private CircleImageView ivLeftmostimgToolbar;
-    private CircleImageView ivProfilepicToolbar;
-    private ImageView ivInboxIconToolbar;
-    private TextView tvUnreadThreadsAmountCircle;
-    private TextView tvMainTextToolbar;
-    private CircleImageView ivSendMessage;
     private List<MessageDataModel> messages;
-    private LinearLayoutManager linearLayoutManager;
-    private LayoutInflater mInflater;
-    private RecyclerView recyclerView;
     private ChatRVAdapter adapter;
     private EditText etMsgBodyInput;
 
@@ -104,7 +75,7 @@ public class ChatActivity extends AppCompatActivity implements ChatRVAdapter.OnI
     private ValueEventListener keepRefreshingAdapterWithNewMessages = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot messagesDS) {
-            msgThreadExists = messagesDS.exists();
+            boolean msgThreadExists = messagesDS.exists();
             if (!msgThreadExists) {
                 Toast.makeText(ChatActivity.this, "no thread we have to create one just before sending your 1st message ", Toast.LENGTH_LONG).show();
                 return;
@@ -230,7 +201,7 @@ public class ChatActivity extends AppCompatActivity implements ChatRVAdapter.OnI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        barterBar = findViewById(R.id.BarterBar);
+        Toolbar barterBar = findViewById(R.id.BarterBar);
 
         DB.getMeReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -246,24 +217,24 @@ public class ChatActivity extends AppCompatActivity implements ChatRVAdapter.OnI
         });
 
         //Toolbar UI
-        ivLeftmostimgToolbar = barterBar.findViewById(R.id.iv_leftMostImg_toolbar);
-        ivProfilepicToolbar = barterBar.findViewById(R.id.iv_profilepic_toolbar);
-        ivInboxIconToolbar = barterBar.findViewById(R.id.iv_inbox_icon_toolbar);
-        tvUnreadThreadsAmountCircle = barterBar.findViewById(R.id.tv_unreadThreadsAmount_circle);
-        tvMainTextToolbar = barterBar.findViewById(R.id.tv_mainText_toolbar);
+        CircleImageView ivLeftmostimgToolbar = barterBar.findViewById(R.id.iv_leftMostImg_toolbar);
+        CircleImageView ivProfilepicToolbar = barterBar.findViewById(R.id.iv_profilepic_toolbar);
+        ImageView ivInboxIconToolbar = barterBar.findViewById(R.id.iv_inbox_icon_toolbar);
+        TextView tvUnreadThreadsAmountCircle = barterBar.findViewById(R.id.tv_unreadThreadsAmount_circle);
+        TextView tvMainTextToolbar = barterBar.findViewById(R.id.tv_mainText_toolbar);
 
         //Chat UI
-        recyclerView = findViewById(R.id.rv_chat);
-        ivSendMessage = findViewById(R.id.iv_sendMessage);
+        RecyclerView recyclerView = findViewById(R.id.rv_chat);
+        CircleImageView ivSendMessage = findViewById(R.id.iv_sendMessage);
         etMsgBodyInput = findViewById(R.id.et_msgBodyInput_chat);
 
         ivProfilepicToolbar.setVisibility(View.GONE);
         ivInboxIconToolbar.setVisibility(View.GONE);
         tvUnreadThreadsAmountCircle.setVisibility(View.GONE);
 
-        linearLayoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 linearLayoutManager.setStackFromEnd(true);
-        mInflater = LayoutInflater.from(this.getBaseContext());
+        LayoutInflater mInflater = LayoutInflater.from(this.getBaseContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
         messages = new ArrayList<>();

@@ -35,18 +35,11 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
     private static final int PICK_ITEM_FOR_OFFER = 42;
     public static final String EXTRA_ITEM_KEY = "item";
-    private ImageView ivImageItemDetail;
-    private TextView tvItemTitleItemDetail;
     private RatingBar ratingBarItemDetail;
     private TextView tvSellerFullNameItemDetail;
     private CircleImageView ivSellerPicItemDetail;
     private TextView tvSellerHasBeenFlaggedIndicator;
-    private TextView tvOtherUserItemsLinkItemDetail;
     private TextView tvAmountOfReviewsItemDetails;
-    private TextView tvItemDescriptionItemDetail;
-    private Button btnSeeItemVideoOptItemDetail;
-    private Button btnMakeOfferToSellerItemDetail;
-    private Button btnMsgSellerItemDetail;
     private ItemData item;
     private UserDataModel seller;
 
@@ -66,9 +59,9 @@ public class ItemDetailsActivity extends AppCompatActivity {
         item = (ItemData) intentThatStartedThisActivity.getSerializableExtra(EXTRA_ITEM_KEY);
 
         //item data display
-        ivImageItemDetail = findViewById(R.id.iv_Image_itemDetail);
-        tvItemTitleItemDetail = findViewById(R.id.tv_itemTitle_itemDetail);
-        tvItemDescriptionItemDetail = findViewById(R.id.tv_itemDescription_itemDetail);
+        ImageView ivImageItemDetail = findViewById(R.id.iv_Image_itemDetail);
+        TextView tvItemTitleItemDetail = findViewById(R.id.tv_itemTitle_itemDetail);
+        TextView tvItemDescriptionItemDetail = findViewById(R.id.tv_itemDescription_itemDetail);
 
         //seller data display
         tvSellerFullNameItemDetail = findViewById(R.id.tv_sellerFullName_itemDetail);
@@ -78,10 +71,10 @@ public class ItemDetailsActivity extends AppCompatActivity {
         tvAmountOfReviewsItemDetails = findViewById(R.id.tv_amountOfReviews_itemDetails);//clickable
 
         //clickables
-        tvOtherUserItemsLinkItemDetail = findViewById(R.id.tv_otherUserItemsLink_itemDetail);
-        btnSeeItemVideoOptItemDetail = findViewById(R.id.btn_seeItemVideo_opt_itemDetail);
-        btnMakeOfferToSellerItemDetail = findViewById(R.id.btn_makeOfferToSeller_itemDetail);
-        btnMsgSellerItemDetail = findViewById(R.id.btn_msgSeller_itemDetail);
+        TextView tvOtherUserItemsLinkItemDetail = findViewById(R.id.tv_otherUserItemsLink_itemDetail);
+        Button btnSeeItemVideoOptItemDetail = findViewById(R.id.btn_seeItemVideo_opt_itemDetail);
+        Button btnMakeOfferToSellerItemDetail = findViewById(R.id.btn_makeOfferToSeller_itemDetail);
+        Button btnMsgSellerItemDetail = findViewById(R.id.btn_msgSeller_itemDetail);
 
         //if user sees his own item, hide buttons disallowing him to trade with himself
         if (item.getSeller_user_UUID().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
@@ -151,7 +144,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
     GO_TO_activity_ChatSendMessageToSeller();
     }
 
-    public void GO_TO_activity_ChatSendMessageToSeller() {
+    private void GO_TO_activity_ChatSendMessageToSeller() {
         Intent intent = new Intent(this,ChatActivity.class);
         intent.putExtra("otherUser",seller);
         startActivity(intent);

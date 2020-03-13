@@ -105,7 +105,6 @@
         app:srcCompat="@drawable/ic_cancel" />
 
     <TextView
-        android:id="@+id/textView6"
         style="@style/AnyTitleStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -116,7 +115,6 @@
         app:layout_constraintStart_toStartOf="@+id/iv_popup_OK_btn" />
 
     <TextView
-        android:id="@+id/textView7"
         style="@style/AnyTitleStyle"
         android:visibility="gone"
         android:layout_width="wrap_content"

@@ -13,7 +13,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import static com.groupassignment2019.bartertraderappgithuballsetup.ItemsListActivity.BOLO;
 
-public class ListOfIdsValueEventListener implements ValueEventListener {
+class ListOfIdsValueEventListener implements ValueEventListener {
 
     private final Context ctx;
     private final ValueEventListener forEveryId;

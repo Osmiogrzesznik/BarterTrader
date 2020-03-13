@@ -31,20 +31,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class WriteNewReviewActivity extends AppCompatActivity {
 
-    //toolbar
-    private Toolbar barterBar;
     private CircleImageView ivLeftmostimgToolbar;
-    private CircleImageView ivProfilepicToolbar;
-    private ImageView ivInboxIconToolbar;
-    private TextView tvUnreadThreadsAmountCircle;
     private TextView tvMainTextToolbar;
 
     //other
     private String yourID;
     private UserDataModel you;
-    private String myID;
     private ReviewDataModel newReview;
-    private String newReviewIdKey;
     private CircleImageView ivLeftMostImgToolbar;
     private RatingBar ratingBarItemDetail;
     private EditText etBody;
@@ -58,11 +51,12 @@ public class WriteNewReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_new_review);
         //Toolbar UI
-        barterBar = findViewById(R.id.BarterBar);
+        //toolbar
+        Toolbar barterBar = findViewById(R.id.BarterBar);
         ivLeftmostimgToolbar = barterBar.findViewById(R.id.iv_leftMostImg_toolbar);
-        ivProfilepicToolbar = barterBar.findViewById(R.id.iv_profilepic_toolbar);
-        ivInboxIconToolbar = barterBar.findViewById(R.id.iv_inbox_icon_toolbar);
-        tvUnreadThreadsAmountCircle = barterBar.findViewById(R.id.tv_unreadThreadsAmount_circle);
+        CircleImageView ivProfilepicToolbar = barterBar.findViewById(R.id.iv_profilepic_toolbar);
+        ImageView ivInboxIconToolbar = barterBar.findViewById(R.id.iv_inbox_icon_toolbar);
+        TextView tvUnreadThreadsAmountCircle = barterBar.findViewById(R.id.tv_unreadThreadsAmount_circle);
         tvMainTextToolbar = barterBar.findViewById(R.id.tv_mainText_toolbar);
 
         ratingBarItemDetail = findViewById(R.id.ratingBar_newReview);
@@ -76,7 +70,7 @@ public class WriteNewReviewActivity extends AppCompatActivity {
         ivInboxIconToolbar.setVisibility(View.GONE);
         tvUnreadThreadsAmountCircle.setVisibility(View.GONE);
 
-        myID = DB.me.getUid();
+        String myID = DB.me.getUid();
 
         Intent startingIntent = getIntent();
         yourID = startingIntent.getStringExtra("yourID");
@@ -118,7 +112,7 @@ public class WriteNewReviewActivity extends AppCompatActivity {
 
 
 
-    public void validate_SaveReview_To_DB() {
+    private void validate_SaveReview_To_DB() {
 
         InputValidator iv = new InputValidator(this);
 
@@ -130,7 +124,7 @@ public class WriteNewReviewActivity extends AppCompatActivity {
             return;
         }
 
-        newReviewIdKey = DB.user_reviews.push().getKey();
+        String newReviewIdKey = DB.user_reviews.push().getKey();
 
         newReview = new ReviewDataModel();
         newReview.keyID = newReviewIdKey;

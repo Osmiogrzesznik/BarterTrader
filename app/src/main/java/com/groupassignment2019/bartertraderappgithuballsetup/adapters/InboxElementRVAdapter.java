@@ -5,9 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,7 +22,6 @@ import com.groupassignment2019.bartertraderappgithuballsetup.models.InboxElement
 import com.groupassignment2019.bartertraderappgithuballsetup.models.UserDataModel;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -33,7 +29,6 @@ public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAd
     private OnItemClickListener onItemClickListener;
     private List<InboxElement> items;
     private LayoutInflater mInflater;
-    private DatabaseReference DB_users;
 
 
     public interface OnItemClickListener {
@@ -45,7 +40,6 @@ public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAd
     }
 
     public InboxElementRVAdapter(LayoutInflater mInflater, List<InboxElement> items, DatabaseReference db_users) {
-        this.DB_users = db_users;
         this.items = items;
         this.mInflater = mInflater;
     }
@@ -134,12 +128,12 @@ public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAd
      * Event Listener completing the inboxElement with the corresponding user information
      * todo should be extracted and just simply added to each datamodel that requires some users data for displaying its contents
      */
-    public class OnUserDataModelLoaded implements ValueEventListener {
+    class OnUserDataModelLoaded implements ValueEventListener {
         private InboxElement inboxElement;
         private RecyclerView.Adapter adapterToNotify;
         private int position;
 
-        public OnUserDataModelLoaded(RecyclerView.Adapter adapterToNotify, InboxElement inboxElement, int position) {
+        OnUserDataModelLoaded(RecyclerView.Adapter adapterToNotify, InboxElement inboxElement, int position) {
             this.inboxElement = inboxElement;
             this.adapterToNotify = adapterToNotify;
             this.position = position;
@@ -175,7 +169,7 @@ public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAd
         private TextView inboxElement_unreadIndicator;
         private ProgressBar progressBar_inboxElement_incompleteYet;
 
-        public InboxElementHolder(@NonNull View itemView) {
+        InboxElementHolder(@NonNull View itemView) {
             super(itemView);
             UserInterlocutor_image = itemView.findViewById(R.id.imageView_inboxElement_UserInterlocutor_image);
             UserInterlocutor_firstLastName = itemView.findViewById(R.id.textView_inboxElement_UserInterlocutor_firstLastName);

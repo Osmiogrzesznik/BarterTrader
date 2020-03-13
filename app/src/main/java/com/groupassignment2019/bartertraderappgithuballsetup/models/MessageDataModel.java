@@ -94,7 +94,7 @@ public class MessageDataModel implements Consumer<ItemData>, CompleteOnlyWhenNee
     }
 
     public void completeYourselfAndNotifyObserver(ObservingAdapter o, int position){
-        OnFirebaseObjectLoaded<ItemData> offeredItemLoad = new OnFirebaseObjectLoaded<ItemData>(this,0,ItemData.class);
+        OnFirebaseObjectLoaded<ItemData> offeredItemLoad = new OnFirebaseObjectLoaded<>(this, 0, ItemData.class);
         OnFirebaseObjectLoaded<ItemData> wantedItemLoad = offeredItemLoad.copy(1);
         DB.items.child(getOfferedItemId()).addListenerForSingleValueEvent(offeredItemLoad);
         DB.items.child(getWantedItemId()).addListenerForSingleValueEvent(wantedItemLoad);
@@ -171,7 +171,7 @@ public class MessageDataModel implements Consumer<ItemData>, CompleteOnlyWhenNee
         this.agreed = agreed;
     }
 
-    public String getOfferedItemId() {
+    private String getOfferedItemId() {
         return offeredItemId;
     }
 
@@ -179,7 +179,7 @@ public class MessageDataModel implements Consumer<ItemData>, CompleteOnlyWhenNee
         this.offeredItemId = offeredItemId;
     }
 
-    public String getWantedItemId() {
+    private String getWantedItemId() {
         return wantedItemId;
     }
 

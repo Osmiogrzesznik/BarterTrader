@@ -29,10 +29,10 @@ public class ChatRVAdapter extends RecyclerView.Adapter<ChatRVAdapter.ClickableM
     private LayoutInflater mInflater;
 
     //By assigning ints for types consistent with layouts, i need only to check getItemViewType once and variable names make code self-explanatory;
-    public static final int MY_OFFER = R.layout.recycler_view_my_offer_item;
-    public static final int MY_MESSAGE = R.layout.recycler_view_my_message_item;
+    private static final int MY_OFFER = R.layout.recycler_view_my_offer_item;
+    private static final int MY_MESSAGE = R.layout.recycler_view_my_message_item;
     public static final int YOUR_OFFER = R.layout.recycler_view_your_offer_item;
-    public static final int YOUR_MESSAGE = R.layout.recycler_view_your_message_item;
+    private static final int YOUR_MESSAGE = R.layout.recycler_view_your_message_item;
 
     /**
      * @param mInflater dependency injected from activity
@@ -243,12 +243,12 @@ public class ChatRVAdapter extends RecyclerView.Adapter<ChatRVAdapter.ClickableM
     /**
      * normal message holder
      */
-    public class MessageHolder extends ClickableMessageHolder {
+    class MessageHolder extends ClickableMessageHolder {
         private TextView msgBody;
 
-        public MessageHolder(@NonNull View itemView) {
+        MessageHolder(@NonNull View itemView) {
             super(itemView);
-            msgBody = (TextView) itemView.findViewById(R.id.msg_body);
+            msgBody = itemView.findViewById(R.id.msg_body);
         }
 
     }
@@ -256,19 +256,19 @@ public class ChatRVAdapter extends RecyclerView.Adapter<ChatRVAdapter.ClickableM
     /**
      * View holder for offers
      */
-    public class OfferHolder extends ClickableMessageHolder {
+    class OfferHolder extends ClickableMessageHolder {
         private CircleImageView ivYourItemImage;
         private CircleImageView ivMyItemImage;
         private TextView tvYourItemTitle;
         private TextView tvMyItemTitle;
 private ImageView BgPic;
-        public OfferHolder(@NonNull View itemView) {
+        OfferHolder(@NonNull View itemView) {
             super(itemView);
             BgPic = itemView.findViewById(R.id.iv_logoSwapArrows_OfferMsg);
-            ivYourItemImage = (CircleImageView) itemView.findViewById(R.id.iv_yourItem_OfferMsg);
-            ivMyItemImage = (CircleImageView) itemView.findViewById(R.id.iv_myItem_OfferMsg);
-            tvYourItemTitle = (TextView) itemView.findViewById(R.id.tv_yourItem_title_OfferMsg);
-            tvMyItemTitle = (TextView) itemView.findViewById(R.id.tv_myItem_title_OfferMsg);
+            ivYourItemImage = itemView.findViewById(R.id.iv_yourItem_OfferMsg);
+            ivMyItemImage = itemView.findViewById(R.id.iv_myItem_OfferMsg);
+            tvYourItemTitle = itemView.findViewById(R.id.tv_yourItem_title_OfferMsg);
+            tvMyItemTitle = itemView.findViewById(R.id.tv_myItem_title_OfferMsg);
         }
     }
 
@@ -278,10 +278,10 @@ private ImageView BgPic;
     public class ClickableMessageHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private TextView tvTime;
 
-        public ClickableMessageHolder(@NonNull View itemView) {
+        ClickableMessageHolder(@NonNull View itemView) {
             super(itemView);
             itemView.setLongClickable(true);
-            tvTime = (TextView) itemView.findViewById(R.id.tv_time);
+            tvTime = itemView.findViewById(R.id.tv_time);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }

@@ -17,7 +17,7 @@ public class Category {
 //            "bicycles",
     };
 
-    public static String[] DESCRIPTIONS = {
+    private static String[] DESCRIPTIONS = {
             "Clothes, shoes, sportwear",
             "Mobile devices, consoles, electronics",
             "DIY, materials, equipment",
@@ -25,7 +25,7 @@ public class Category {
 //            "bicycles",
     };
 
-    public static int[] BACKGROUND_DRAWABLES = {
+    private static int[] BACKGROUND_DRAWABLES = {
             R.drawable.back_bright,
             R.drawable.back_medium,
             R.drawable.back_dark,
@@ -33,7 +33,7 @@ public class Category {
 //            R.drawable.ic_cat_bicycles,
     };
 
-    public static int[] ICONS = {
+    private static int[] ICONS = {
             R.drawable.ic_cat_clothes,
             R.drawable.ic_cat_gadgets,
             R.drawable.ic_cat_tools,
@@ -48,7 +48,7 @@ public class Category {
         if(ALL_CATEGORIES != null){
             return ALL_CATEGORIES;
         }
-        ALL_CATEGORIES = new ArrayList<Category>();
+        ALL_CATEGORIES = new ArrayList<>();
 
         for (int i = 0; i < CATEGORIES.length ; i++) {
 
@@ -60,12 +60,12 @@ public class Category {
     }
 
 
-    public String categoryTitle;
-    public Uri imageUri;
+    private String categoryTitle;
+    private Uri imageUri;
 
 
     public int backgroundDrawableId;
-    public int imageResource;
+    private int imageResource;
     public String description;
 
     public Uri getImageUri() {
@@ -77,7 +77,7 @@ public class Category {
     }
 
 
-    public Category(String categoryTitle, int imageResource,int backgroundDrawableId, String description) {
+    private Category(String categoryTitle, int imageResource, int backgroundDrawableId, String description) {
         this.categoryTitle = categoryTitle;
         this.backgroundDrawableId = backgroundDrawableId;
         this.imageResource = imageResource;

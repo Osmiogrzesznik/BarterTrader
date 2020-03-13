@@ -33,7 +33,7 @@ public class ValidatorTest {
     public void validator() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        InputValidator iv = new InputValidator();
+        InputValidator iv = new InputValidator(appContext);
         String ett = "test@test.com";
         EditText et = new EditText(appContext);
         et.setText(ett);

@@ -43,27 +43,10 @@ public class MyProfileActivity extends AppCompatActivity implements UserObserver
 //    private TextView tv_dashboard_welcome_txt;
     private TextView tv_unreadThreadsAmount_circle;
     private ImageView iv_profilepic_toolbar;
-//    private ImageView iv_BigProfilePic_dashboard;
-    private ImageView iv_inbox_icon_toolbar;
-//    private TextView tvAmountOfReviews;
-//    private RatingBar ratingBar;
-    private UserDataModel user;
-    private Toolbar barterBar;
     private TextView tvFullName;
-    private TextView barterLevelTitle;
-    private TextView bartAmount;
-    private TextView textView2;
-    private Button btnMyProfileDashboard;
     private CircleImageView ivBigProfilePicDashboard;
-    private CircleImageView ivLeftMostImgToolbar;
-    private CircleImageView ivProfilepicToolbar;
-    private ImageView ivInboxIconToolbar;
-    private TextView tvUnreadThreadsAmountCircle;
-    private TextView tvMainTextToolbar;
     private RatingBar ratingBarItemDetail;
     private TextView tvAmountOfReviewsItemDetails;
-    private TextView tvSellerReviewsLinkItemDetail;
-    private Button btnFlagUser;
     private Uri imageLocalURI;
     private ProgressBar progressBar2;
 
@@ -75,7 +58,7 @@ public class MyProfileActivity extends AppCompatActivity implements UserObserver
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
-        barterBar = findViewById(R.id.BarterBar);
+        Toolbar barterBar = findViewById(R.id.BarterBar);
 
 
         DB.getMeReference().addValueEventListener(
@@ -94,22 +77,22 @@ public class MyProfileActivity extends AppCompatActivity implements UserObserver
                 }
         );
 
-        progressBar2 = (ProgressBar) findViewById(R.id.progressBar2);
-        tvFullName = (TextView) findViewById(R.id.tv_dashboard_welcome_txt);
-        barterLevelTitle = (TextView) findViewById(R.id.barterLevelTitle);
-        bartAmount = (TextView) findViewById(R.id.bartAmount);
-        textView2 = (TextView) findViewById(R.id.textView2);
-        btnMyProfileDashboard = (Button) findViewById(R.id.btn_myProfile_dashboard);
-        ivBigProfilePicDashboard = (CircleImageView) findViewById(R.id.iv_BigProfilePic_dashboard);
-        ivLeftMostImgToolbar = (CircleImageView) findViewById(R.id.iv_leftMostImg_toolbar);
-        ivProfilepicToolbar = (CircleImageView) findViewById(R.id.iv_profilepic_toolbar);
-        ivInboxIconToolbar = (ImageView) findViewById(R.id.iv_inbox_icon_toolbar);
-        tvUnreadThreadsAmountCircle = (TextView) findViewById(R.id.tv_unreadThreadsAmount_circle);
-        tvMainTextToolbar = (TextView) findViewById(R.id.tv_mainText_toolbar);
-        ratingBarItemDetail = (RatingBar) findViewById(R.id.ratingBar_newReview);
-        tvAmountOfReviewsItemDetails = (TextView) findViewById(R.id.tv_amountOfReviews_itemDetails);
-        tvSellerReviewsLinkItemDetail = (TextView) findViewById(R.id.tv_sellerReviews_Link_itemDetail);
-        btnFlagUser = (Button) findViewById(R.id.btn_flag_user);
+        progressBar2 = findViewById(R.id.progressBar2);
+        tvFullName = findViewById(R.id.tv_dashboard_welcome_txt);
+        TextView barterLevelTitle = findViewById(R.id.barterLevelTitle);
+        TextView bartAmount = findViewById(R.id.bartAmount);
+        TextView textView2 = findViewById(R.id.textView2);
+        Button btnMyProfileDashboard = findViewById(R.id.btn_myProfile_dashboard);
+        ivBigProfilePicDashboard = findViewById(R.id.iv_BigProfilePic_dashboard);
+        CircleImageView ivLeftMostImgToolbar = findViewById(R.id.iv_leftMostImg_toolbar);
+        CircleImageView ivProfilepicToolbar = findViewById(R.id.iv_profilepic_toolbar);
+        ImageView ivInboxIconToolbar = findViewById(R.id.iv_inbox_icon_toolbar);
+        TextView tvUnreadThreadsAmountCircle = findViewById(R.id.tv_unreadThreadsAmount_circle);
+        TextView tvMainTextToolbar = findViewById(R.id.tv_mainText_toolbar);
+        ratingBarItemDetail = findViewById(R.id.ratingBar_newReview);
+        tvAmountOfReviewsItemDetails = findViewById(R.id.tv_amountOfReviews_itemDetails);
+        TextView tvSellerReviewsLinkItemDetail = findViewById(R.id.tv_sellerReviews_Link_itemDetail);
+        Button btnFlagUser = findViewById(R.id.btn_flag_user);
 
 
 
@@ -122,7 +105,8 @@ public class MyProfileActivity extends AppCompatActivity implements UserObserver
 //        iv_BigProfilePic_dashboard = findViewById(R.id.iv_BigProfilePic_dashboard);
         tv_unreadThreadsAmount_circle = barterBar.findViewById(R.id.tv_unreadThreadsAmount_circle);
         iv_profilepic_toolbar = barterBar.findViewById(R.id.iv_profilepic_toolbar);
-        iv_inbox_icon_toolbar = barterBar.findViewById(R.id.iv_inbox_icon_toolbar);
+        //    private ImageView iv_BigProfilePic_dashboard;
+        ImageView iv_inbox_icon_toolbar = barterBar.findViewById(R.id.iv_inbox_icon_toolbar);
 //        ratingBar = findViewById(R.id.ratingBar_itemDetail);//clickable
 //        tvAmountOfReviews = findViewById(R.id.tv_amountOfReviews_itemDetails);//clickable
 
@@ -163,10 +147,11 @@ public class MyProfileActivity extends AppCompatActivity implements UserObserver
             finish();
         }
 
-        user = me;
-        tvFullName.setText(user.getFullName());
-        ratingBarItemDetail.setRating(user.getAvgRev());
-        tvAmountOfReviewsItemDetails.setText(String.valueOf(user.getAmtRev()));
+        //    private TextView tvAmountOfReviews;
+        //    private RatingBar ratingBar;
+        tvFullName.setText(me.getFullName());
+        ratingBarItemDetail.setRating(me.getAvgRev());
+        tvAmountOfReviewsItemDetails.setText(String.valueOf(me.getAmtRev()));
 
 
 
@@ -176,14 +161,14 @@ public class MyProfileActivity extends AppCompatActivity implements UserObserver
 
 
 
-        int unreadThreadsAmount = user.calculateUnreadThreadAmount();
+        int unreadThreadsAmount = me.calculateUnreadThreadAmount();
         if (unreadThreadsAmount > 0) {
             tv_unreadThreadsAmount_circle.setVisibility(View.VISIBLE);
             tv_unreadThreadsAmount_circle.setText(String.valueOf(unreadThreadsAmount));
         } else {
             tv_unreadThreadsAmount_circle.setVisibility(View.GONE);
         }
-        String picURl = user.getPicture();
+        String picURl = me.getPicture();
         if (picURl != null) {
             Picasso.get().load(picURl).placeholder(R.drawable.avvy).into(ivBigProfilePicDashboard);
             Picasso.get().load(picURl).placeholder(R.drawable.avvy).into(iv_profilepic_toolbar);
