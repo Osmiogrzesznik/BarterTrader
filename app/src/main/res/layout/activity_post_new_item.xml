@@ -19,13 +19,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/untitled" />
+        app:srcCompat="@drawable/untitled"
+        android:contentDescription="@string/item_image" />
 
     <Button
         android:id="@+id/addVideoButton"
         style="@style/AnyTextButton"
         android:background="@drawable/button_states_selector"
-        android:text="Add Video"
+        android:text="@string/add_video"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/spinner"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_states_selector"
-        android:text="View Video"
+        android:text="@string/view_video"
         android:textColor="@android:color/white"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewNewItemImage"
@@ -48,53 +49,56 @@
         android:id="@+id/spinner"
         style="@style/spinnerStyle"
         android:background="#00000000"
-        app:layout_constraintBottom_toTopOf="@+id/editTextNewItemTitle"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addVideoButton"
-        tools:listitem="@layout/spinnerstyle" />
+        tools:listitem="@layout/spinner_style" />
+
 
     <EditText
-        android:id="@+id/editTextItemDescription"
+        android:id="@+id/editTextDescription"
         style="@style/EditTextStyle"
         android:layout_width="354dp"
         android:layout_height="148dp"
         android:background="@drawable/edittext_states_selector"
         android:ems="10"
         android:gravity="start"
-        android:hint=" PLEASE ADD DESCRIPTION"
-        android:inputType="date|textShortMessage|textLongMessage|textWebEmailAddress|text|phone|textEmailSubject"
+        android:hint="@string/item_desc_hint"
+        android:inputType="textMultiLine"
         android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/PostItemButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNewItemTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTitle"
+        android:importantForAutofill="no" />
 
     <EditText
-        android:id="@+id/editTextNewItemTitle"
+        android:id="@+id/editTextTitle"
         style="@style/EditTextStyle"
         android:layout_width="344dp"
         android:layout_height="53dp"
         android:background="@drawable/edittext_states_selector"
         android:ems="10"
-        android:hint="Name of your Item"
+        android:hint="@string/item_name_hint"
         android:inputType="textShortMessage|text"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/editTextItemDescription"
+        app:layout_constraintBottom_toTopOf="@+id/editTextDescription"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/PostItemButton"
         style="@style/AnyTextButton"
         android:background="@drawable/button_states_selector"
-        android:text="Post Item"
+        android:text="@string/post_item"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextItemDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextDescription" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -105,5 +109,17 @@
         app:layout_constraintBottom_toBottomOf="@+id/PostItemButton"
         app:layout_constraintEnd_toEndOf="@+id/imageViewNewItemImage"
         app:layout_constraintStart_toStartOf="@+id/imageViewNewItemImage"
-        app:layout_constraintTop_toBottomOf="@+id/editTextItemDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextDescription" />
+
+    <ProgressBar
+        android:progress="0"
+        android:max="100"
+        android:id="@+id/uploadingProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/PostItemButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDescription" />
 </androidx.constraintlayout.widget.ConstraintLayout>

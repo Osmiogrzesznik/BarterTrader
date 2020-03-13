@@ -31,12 +31,9 @@
 
     <RatingBar
         android:id="@+id/reviewCard_RatingBar"
-        style="@style/Widget.AppCompat.RatingBar.Small"
+        style="@style/Widget.AppCompat.RatingBar.Small.BTapp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:numStars="5"
-        android:progressTint="#eeFAC403"
-        android:rating="3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewReviewTitle" />
 

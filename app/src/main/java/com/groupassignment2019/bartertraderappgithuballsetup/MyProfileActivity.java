@@ -29,7 +29,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
-import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.FileToUpload;
 import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.UserObserver;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.UserDataModel;
 import com.squareup.picasso.Picasso;
@@ -107,7 +106,7 @@ public class MyProfileActivity extends AppCompatActivity implements UserObserver
         ivInboxIconToolbar = (ImageView) findViewById(R.id.iv_inbox_icon_toolbar);
         tvUnreadThreadsAmountCircle = (TextView) findViewById(R.id.tv_unreadThreadsAmount_circle);
         tvMainTextToolbar = (TextView) findViewById(R.id.tv_mainText_toolbar);
-        ratingBarItemDetail = (RatingBar) findViewById(R.id.ratingBar_itemDetail);
+        ratingBarItemDetail = (RatingBar) findViewById(R.id.ratingBar_newReview);
         tvAmountOfReviewsItemDetails = (TextView) findViewById(R.id.tv_amountOfReviews_itemDetails);
         tvSellerReviewsLinkItemDetail = (TextView) findViewById(R.id.tv_sellerReviews_Link_itemDetail);
         btnFlagUser = (Button) findViewById(R.id.btn_flag_user);

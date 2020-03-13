@@ -15,11 +15,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
-import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.UserDataLoader;
 import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.UserObserver;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.UserDataModel;
 import com.squareup.picasso.Picasso;
@@ -41,11 +41,10 @@ public class DashboardActivity extends AppCompatActivity implements UserObserver
     private Button btnInboxDashboard;
 
 
-
     private View.OnClickListener openInboxActivity = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-           GO_TO_inbox(v);
+            GO_TO_inbox(v);
         }
     };
 
@@ -61,7 +60,7 @@ public class DashboardActivity extends AppCompatActivity implements UserObserver
     private View.OnClickListener openCategoriesActivity = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-              Intent intent = new Intent(DashboardActivity.this, CategoriesActivity.class);
+            Intent intent = new Intent(DashboardActivity.this, CategoriesActivity.class);
             startActivity(intent);
         }
     };
@@ -84,7 +83,7 @@ public class DashboardActivity extends AppCompatActivity implements UserObserver
         tv_unreadThreadsAmount_circle = barterBar.findViewById(R.id.tv_unreadThreadsAmount_circle);
         iv_profilepic_toolbar = barterBar.findViewById(R.id.iv_profilepic_toolbar);
         iv_inbox_icon_toolbar = barterBar.findViewById(R.id.iv_inbox_icon_toolbar);
-        ratingBar = findViewById(R.id.ratingBar_itemDetail);//clickable
+        ratingBar = findViewById(R.id.ratingBar_newReview);//clickable
         tvAmountOfReviews = findViewById(R.id.tv_amountOfReviews_itemDetails);//clickable
 
 
@@ -92,7 +91,9 @@ public class DashboardActivity extends AppCompatActivity implements UserObserver
 
         iv_inbox_icon_toolbar.setOnClickListener(openInboxActivity);
 
-        DB.getMeReference().addValueEventListener(
+        FirebaseUser AuthMe = FirebaseAuth.getInstance().getCurrentUser();
+
+        DB.users.child(AuthMe.getUid()).addValueEventListener(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -103,7 +104,7 @@ public class DashboardActivity extends AppCompatActivity implements UserObserver
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(DashboardActivity.this, "could not load " , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DashboardActivity.this, "could not load ", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -115,17 +116,22 @@ public class DashboardActivity extends AppCompatActivity implements UserObserver
                 Intent intToMain = new Intent(DashboardActivity.this, LoginActivity.class);
                 intToMain.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intToMain);
-                finish();
+                DashboardActivity.this.finish();
             }
         });
 
     }
 
+    /**
+     * main task here is to update UI on any changes in user data - new unread inbox items, changes in picture and so on
+     * @param me
+     */
     @Override
     public void updateUI(UserDataModel me) {
         if (me == null) {
             finish();
         }
+
 
         user = me;
         tv_dashboard_welcome_txt.setText("Welcome " + user.getFirstName() + "!");
@@ -178,6 +184,12 @@ public class DashboardActivity extends AppCompatActivity implements UserObserver
     public void GO_TO_activity_reviews(View view) {
         Intent intent = new Intent(this, ReviewsActivity.class);
         intent.putExtra("uuid", DB.myUid());
+        startActivity(intent);
+    }
+
+    public void GO_TO_activity_ItemsByMe(View view) {
+        Intent intent = new Intent(this, ItemsListActivity.class);
+        ItemsListActivity.BY_ME(intent); // contract enforcing static method
         startActivity(intent);
     }
 }

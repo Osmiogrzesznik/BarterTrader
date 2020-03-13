@@ -34,7 +34,7 @@
         app:layout_constraintTop_toBottomOf="@+id/iv_Image_itemDetail" />
 
     <RatingBar
-        android:id="@+id/ratingBar_itemDetail"
+        android:id="@+id/ratingBar_newReview"
         style="@style/Widget.AppCompat.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
         android:layout_marginTop="12dp"
         android:onClick="GO_TO_activity_SellerProfile"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar_itemDetail"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar_newReview"
         tools:src="@tools:sample/avatars"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -116,9 +116,9 @@
         android:textColor="@color/White"
         android:onClick="GO_TO_activity_SellerReviews"
         android:text="12"
-        app:layout_constraintBottom_toBottomOf="@+id/ratingBar_itemDetail"
-        app:layout_constraintStart_toEndOf="@+id/ratingBar_itemDetail"
-        app:layout_constraintTop_toTopOf="@+id/ratingBar_itemDetail" />
+        app:layout_constraintBottom_toBottomOf="@+id/ratingBar_newReview"
+        app:layout_constraintStart_toEndOf="@+id/ratingBar_newReview"
+        app:layout_constraintTop_toTopOf="@+id/ratingBar_newReview" />
 
     <ScrollView
         android:layout_width="match_parent"

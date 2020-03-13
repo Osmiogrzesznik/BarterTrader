@@ -7,6 +7,21 @@
     android:background="@drawable/back_design"
     tools:context=".ReviewsActivity">
 
+    <TextView
+        android:id="@+id/tv_ifEmpty"
+        style="@style/AnyTitleStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="this user has no reviews yet\n"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
     <include layout="@layout/toolbar_layout"
         android:id="@+id/barterBar"
         />
@@ -24,7 +39,7 @@
         tools:listitem="@layout/cardview_review" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/btnAddReview"
+        android:id="@+id/iv_AddReview"
         android:onClick="addReview"
         android:visibility="gone"
         android:layout_width="80dp"

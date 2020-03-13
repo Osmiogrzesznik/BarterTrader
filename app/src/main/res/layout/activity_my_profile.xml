@@ -48,7 +48,7 @@
         android:text="42"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/ratingBar_itemDetail"
+        app:layout_constraintBottom_toTopOf="@+id/ratingBar_newReview"
         app:layout_constraintEnd_toStartOf="@+id/textView2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/barterLevelTitle"
@@ -109,7 +109,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <RatingBar
-        android:id="@+id/ratingBar_itemDetail"
+        android:id="@+id/ratingBar_newReview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -129,11 +129,11 @@
         android:text="12"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
         android:textColor="@color/White"
-        app:layout_constraintBottom_toBottomOf="@+id/ratingBar_itemDetail"
+        app:layout_constraintBottom_toBottomOf="@+id/ratingBar_newReview"
         app:layout_constraintEnd_toStartOf="@+id/tv_sellerReviews_Link_itemDetail"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ratingBar_itemDetail"
-        app:layout_constraintTop_toTopOf="@+id/ratingBar_itemDetail" />
+        app:layout_constraintStart_toEndOf="@+id/ratingBar_newReview"
+        app:layout_constraintTop_toTopOf="@+id/ratingBar_newReview" />
 
 
     <TextView

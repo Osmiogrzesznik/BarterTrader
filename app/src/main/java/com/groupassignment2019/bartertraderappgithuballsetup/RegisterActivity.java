@@ -63,15 +63,15 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         //TEST
-        rnd = new Random();
-        if (rnd == null) throw new NullPointerException("random is still null");
-
-        int randSuffix = rnd.nextInt() & Integer.MAX_VALUE; // zero out the sign bit;
-        et_firstname.setText("Testeusz"+randSuffix);
-        et_lastname.setText("Testowski"+randSuffix);
-        et_email.setText("test"+randSuffix+"@test.com");
-        et_phone.setText("0123456789"+randSuffix);
-        et_pass.setText("password");
+//        rnd = new Random();
+//        if (rnd == null) throw new NullPointerException("random is still null");
+//
+//        int randSuffix = rnd.nextInt() & Integer.MAX_VALUE; // zero out the sign bit;
+//        et_firstname.setText("Testeusz" + randSuffix);
+//        et_lastname.setText("Testowski" + randSuffix);
+//        et_email.setText("test" + randSuffix + "@test.com");
+//        et_phone.setText("0123456789" + randSuffix);
+//        et_pass.setText("password");
 
         btn_Reg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,21 +81,18 @@ public class RegisterActivity extends AppCompatActivity {
                 String firstname = et_firstname.getText().toString().trim();
                 String lastname = et_lastname.getText().toString().trim();
                 String phone = et_phone.getText().toString().trim();
-                EditText[] allFields = {et_firstname,et_lastname,et_email,et_pass,et_phone};
+                EditText[] allFields = {et_firstname, et_lastname, et_email, et_pass, et_phone};
 
-                if(
-                        inputValidator.notEmptyAll(allFields)
-                        && inputValidator.notShorterThan(et_pass,6)
-                        && inputValidator.isValidEmail(et_email)
-                        && inputValidator.isValidPhone(et_phone)
-                ){
+                if (
+                        inputValidator.isValidEmail(et_email)
+                                && inputValidator.isValidPhone(et_phone)
+                                && inputValidator.notEmptyAll(allFields)
+                                && inputValidator.notShorterThan(et_pass, 6)
+                ) {
                     registerUserAndCreateDatabaseEntry();
-                }
-                else {
+                } else {
                     return;
                 }
-
-
 
 
             }
@@ -108,33 +105,31 @@ public class RegisterActivity extends AppCompatActivity {
         String email = et_email.getText().toString().trim();
         String password = et_pass.getText().toString().trim();
         progressCircle.setVisibility(View.INVISIBLE);
-        mAuth.createUserWithEmailAndPassword(email,password)
+        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    String uid = mAuth.getCurrentUser().getUid();
-                    CreateUserInDatabase(uid);
-                }
-                else{
-                    Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            String uid = mAuth.getCurrentUser().getUid();
+                            CreateUserInDatabase(uid);
+                        } else {
+                            Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
     }
 
     private void CreateUserInDatabase(String uid) {
         String firstname = et_firstname.getText().toString().trim();
         String lastname = et_lastname.getText().toString().trim();
         String phone = et_phone.getText().toString().trim();
-        final UserDataModel newUser = new UserDataModel(firstname,lastname,phone,uid);
+        final UserDataModel newUser = new UserDataModel(firstname, lastname, phone, uid);
         DB_users.child(uid).setValue(newUser).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     UserWasAdded_NowShowNextActivity(newUser);
-                }
-                else{
+                } else {
                     Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
@@ -144,7 +139,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void UserWasAdded_NowShowNextActivity(UserDataModel newUser) {
         progressCircle.setVisibility(View.INVISIBLE);
         Toast.makeText(this, "Welcome " + newUser.getFullName() + " ! ", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(this,DashboardActivity.class);
+        Intent intent = new Intent(this, DashboardActivity.class);
         startActivity(intent);
     }
 

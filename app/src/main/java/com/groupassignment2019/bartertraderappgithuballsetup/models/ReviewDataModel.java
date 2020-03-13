@@ -1,6 +1,12 @@
 package com.groupassignment2019.bartertraderappgithuballsetup.models;
 
-public class ReviewDataModel {
+import com.google.firebase.database.Exclude;
+
+import java.io.Serializable;
+
+public class ReviewDataModel implements Serializable {
+@Exclude
+    public String keyID;
 
     private String authorUID;
     private String receiverUID;//? Redundant
@@ -11,14 +17,6 @@ public class ReviewDataModel {
     public ReviewDataModel() {
     }
 
-
-    public ReviewDataModel(String authorUID, String receiverUID, String title, String body, int rating) {
-        this.authorUID = authorUID;
-        this.receiverUID = receiverUID;
-        this.title = title;
-        this.body = body;
-        this.rating = rating;
-    }
 
     public String getAuthorUID() {
         return authorUID;

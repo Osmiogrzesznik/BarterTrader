@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -31,6 +30,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
@@ -54,10 +54,10 @@ public class PostNewItemActivity extends AppCompatActivity implements AdapterVie
     private EditText editTextNewItemTitle;
     private Button PostItemButton;
     private ProgressBar progressBar;
+    private ProgressBar uploadingProgressBar;
 
 
-
-    private FirebaseUser user;
+    private FirebaseUser authUser;
     private Uri imageLocalURI;
     private Uri videoLocalURI;
     private Button WatchVideoButton;
@@ -106,7 +106,7 @@ public class PostNewItemActivity extends AppCompatActivity implements AdapterVie
                 videoLocalURI = data.getData();
                 WatchVideoButton.setVisibility(View.VISIBLE);
                 Toast.makeText(this, "vid " + videoLocalURI.toString(), Toast.LENGTH_LONG).show();
-                Log.d("BOLO","vid URl :  "+ videoLocalURI.toString());
+                Log.d("BOLO", "vid URl :  " + videoLocalURI.toString());
                 break;
         }
 
@@ -118,15 +118,16 @@ public class PostNewItemActivity extends AppCompatActivity implements AdapterVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_new_item);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        uploadingProgressBar = (ProgressBar) findViewById(R.id.uploadingProgressBar);
 
         WatchVideoButton = findViewById(R.id.viewVideoButton);
         imageViewNewItemImage = (ImageView) findViewById(R.id.imageViewNewItemImage);
         addVideoButton = (Button) findViewById(R.id.addVideoButton);
-        editTextItemDescription = (EditText) findViewById(R.id.editTextItemDescription);
-        editTextNewItemTitle = (EditText) findViewById(R.id.editTextNewItemTitle);
+        editTextItemDescription = (EditText) findViewById(R.id.editTextDescription);
+        editTextNewItemTitle = (EditText) findViewById(R.id.editTextTitle);
         PostItemButton = (Button) findViewById(R.id.PostItemButton);
 
-        user = DB.me;
+        authUser = DB.me;
 
         imageViewNewItemImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,7 +153,7 @@ public class PostNewItemActivity extends AppCompatActivity implements AdapterVie
             public void onClick(View v) {
                 //videoLocalUri will not be null because button is gone if this is the case
                 Intent intent = new Intent(PostNewItemActivity.this, VideoActivity.class);
-                intent.putExtra("url",videoLocalURI.toString());
+                intent.putExtra("url", videoLocalURI.toString());
                 startActivity(intent);
             }
         });
@@ -174,7 +175,7 @@ public class PostNewItemActivity extends AppCompatActivity implements AdapterVie
 
         //ArrayAdapter adapter=ArrayAdapter.createFromResource(this, R.array.Cathegories,android.R.layout.simple_spinner_item );
         final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                this, R.layout.spinnerstyle, categoriesList) {
+                this, R.layout.spinner_style, categoriesList) {
             @Override
             public boolean isEnabled(int position) {
                 if (position == 0) {
@@ -201,7 +202,7 @@ public class PostNewItemActivity extends AppCompatActivity implements AdapterVie
             }
         };
 
-        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinnerstyle);
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_style);
         spinner.setAdapter(spinnerArrayAdapter);
         spinner.setOnItemSelectedListener(this);
 
@@ -244,16 +245,16 @@ public class PostNewItemActivity extends AppCompatActivity implements AdapterVie
         newItem.setDescription(editTextItemDescription.getText().toString());
         newItemImageFirebaseFilename = newItemIDkey + getFileExtension(imageLocalURI);
 
-       // filesToUpload = new ArrayList<>();
+        // filesToUpload = new ArrayList<>();
         FileToUpload imageFile = new FileToUpload(imageLocalURI, newItemImageFirebaseFilename, "item_images");
-       // filesToUpload.add(imageFile);
-progressBar.setVisibility(View.VISIBLE);
-PostItemButton.setEnabled(false);
+        // filesToUpload.add(imageFile);
+        progressBar.setVisibility(View.VISIBLE);
+        PostItemButton.setEnabled(false);
 
         if (videoLocalURI != null) {
             newItemVideoFirebaseFilename = newItemIDkey + getFileExtension(videoLocalURI);
             FileToUpload videoFile = new FileToUpload(videoLocalURI, newItemVideoFirebaseFilename, "item_videos");
-           // filesToUpload.add(videoFile);
+            // filesToUpload.add(videoFile);
             onlyPicture = false;
             // todo upload picture
             uploadVideoFileAndCheckIfAllCompleted(videoFile);
@@ -264,8 +265,7 @@ PostItemButton.setEnabled(false);
 
         //final int uploadURIcount = filesToUpload.size();
 
-            uploadImageFileAndCheckIfAllCompleted(imageFile);
-
+        uploadImageFileAndCheckIfAllCompleted(imageFile);
 
 
 //        String videoToUploadPathToFile;
@@ -275,7 +275,7 @@ PostItemButton.setEnabled(false);
 //        //String PostItemButtonValue =  PostItemButton.getText().toString();
     }
 
-    private String getFileExtension(Uri uri){
+    private String getFileExtension(Uri uri) {
         return "." + MimeTypeMap.getSingleton().getExtensionFromMimeType(getContentResolver().getType(uri));
     }
 
@@ -285,13 +285,12 @@ PostItemButton.setEnabled(false);
                 .child(fileToUpload.getRemoteFileName()); // filename
         uploadRef.putFile(fileToUpload.getLocalUri()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
-            {
-Log.d("BOLO","success uploading video file");
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Log.d("BOLO", "success uploading video file");
                 uploadRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Log.d("BOLO","success getting url downlad video file");
+                        Log.d("BOLO", "success getting url downlad video file");
                         // TODO: 04/12/2019 Picture is not saved ?!
                         // todo make it dead simple two separate
 
@@ -306,12 +305,18 @@ Log.d("BOLO","success uploading video file");
                     }
                 });
             }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                double progressAsPercentage = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                uploadingProgressBar.setProgress((int) progressAsPercentage);
+            }
         }).addOnCanceledListener(new OnCanceledListener() {
             @Override
             public void onCanceled() {
                 Toast.makeText(PostNewItemActivity.this, " failed to upload the video - cancelled", Toast.LENGTH_SHORT).show();
             }
-         }).addOnFailureListener(new OnFailureListener() {
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(PostNewItemActivity.this, " failed to upload the video", Toast.LENGTH_SHORT).show();
@@ -326,16 +331,15 @@ Log.d("BOLO","success uploading video file");
                 .child(fileToUpload.getRemoteFileName()); // filename
         uploadRef.putFile(fileToUpload.getLocalUri()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
-            {
-                Log.d("BOLO","success uploading image file");
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Log.d("BOLO", "success uploading image file");
                 uploadRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Log.d("BOLO","success getting url of image file");
+                        Log.d("BOLO", "success getting url of image file");
                         // TODO: 04/12/2019 Picture is not saved ?!
                         // todo make it dead simple  - two separate ones , array of files to upload didnt work
-                        if (uri == null){
+                        if (uri == null) {
                             throw new NullPointerException("image added but firebase send null back ?!!!!");
                         }
                         //fileToUpload.setDownloadUri(uri);
@@ -363,9 +367,9 @@ Log.d("BOLO","success uploading video file");
      */
     private void IfAllCompletedSaveToDB() {
         // TODO: 04/12/2019 Picture is not saved ?!
-Log.d("BOLO","ifallcompletedSaveTodb");
+        Log.d("BOLO", "ifallcompletedSaveTodb");
         //check if picture uploaded
-        if (onlyPicture && uploadedImageURL != null){
+        if (onlyPicture && uploadedImageURL != null) {
             saveItemToDB();
         }
 
@@ -398,13 +402,13 @@ Log.d("BOLO","ifallcompletedSaveTodb");
     }
 
     private void saveItemToDB() {
-        if (uploadedVideoURL != null){
+        if (uploadedVideoURL != null) {
             newItem.setVideoURI(String.valueOf(uploadedVideoURL));// will be null if no video - its ok for Firebase
         }
         newItem.setPictureURI(String.valueOf(uploadedImageURL));
 
         ItemData fofofo = newItem;
-       Log.d("BOLO","about to save to db");
+        Log.d("BOLO", "about to save to db");
         DB.items.child(newItemIDkey).setValue(newItem).addOnCompleteListener(
                 new OnCompleteListener<Void>() {
                     @Override
@@ -418,6 +422,9 @@ Log.d("BOLO","ifallcompletedSaveTodb");
                             intent.putExtra(ItemDetailsActivity.EXTRA_ITEM_KEY, newItem);
                             startActivity(intent);
                             finish();
+                        } else {
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(PostNewItemActivity.this, "Problem occured please try again later", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

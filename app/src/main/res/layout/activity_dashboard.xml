@@ -18,7 +18,7 @@
         android:text="Welcome!You are logged in"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/ratingBar_itemDetail"
+        app:layout_constraintBottom_toTopOf="@+id/ratingBar_newReview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_BigProfilePic_dashboard" />
@@ -35,7 +35,7 @@
         android:text="Log out"
         android:textAppearance="@android:style/TextAppearance.Medium"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/btn_postNewItem_dashboard"
+        app:layout_constraintBottom_toTopOf="@+id/btn_myItems_dashboard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +64,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar_itemDetail" />
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar_newReview" />
+
+    <Button
+        android:id="@+id/btn_myItems_dashboard"
+        style="@style/AnyTextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="GO_TO_activity_ItemsByMe"
+        android:text="My Items"
+        app:layout_constraintBottom_toTopOf="@+id/btn_postNewItem_dashboard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_logout_dashboard" />
 
     <Button
         android:id="@+id/btn_postNewItem_dashboard"
@@ -77,7 +90,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_logout_dashboard" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_myItems_dashboard" />
 
     <Button
         android:id="@+id/btn_inbox_dashboard"
@@ -115,7 +128,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <RatingBar
-        android:id="@+id/ratingBar_itemDetail"
+        android:id="@+id/ratingBar_newReview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -136,22 +149,22 @@
         android:onClick="GO_TO_activity_reviews"
         android:text="12"
         android:textColor="@color/White"
-        app:layout_constraintBottom_toBottomOf="@+id/ratingBar_itemDetail"
+        app:layout_constraintBottom_toBottomOf="@+id/ratingBar_newReview"
         app:layout_constraintEnd_toStartOf="@+id/tv_sellerReviews_Link_itemDetail"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/ratingBar_itemDetail"
-        app:layout_constraintTop_toTopOf="@+id/ratingBar_itemDetail" />
+        app:layout_constraintStart_toEndOf="@+id/ratingBar_newReview"
+        app:layout_constraintTop_toTopOf="@+id/ratingBar_newReview" />
 
 
     <TextView
         android:id="@+id/tv_sellerReviews_Link_itemDetail"
+        style="@style/TextLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:onClick="GO_TO_activity_reviews"
         android:text="reviews"
         android:textColor="@color/White"
-        style="@style/TextLarge"
         app:layout_constraintBottom_toBottomOf="@+id/tv_amountOfReviews_itemDetails"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

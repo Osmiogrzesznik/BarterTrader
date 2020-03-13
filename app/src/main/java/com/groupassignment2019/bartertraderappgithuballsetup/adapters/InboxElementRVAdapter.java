@@ -29,12 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAdapter.InboxElementHolder> implements Filterable, Consumer<InboxElement> {
+public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAdapter.InboxElementHolder> {
     private OnItemClickListener onItemClickListener;
-    //    private Context mContext;
     private List<InboxElement> items;
-    private List<InboxElement> itemsFull;
-    //private Random rnd;
     private LayoutInflater mInflater;
     private DatabaseReference DB_users;
 
@@ -50,32 +47,38 @@ public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAd
     public InboxElementRVAdapter(LayoutInflater mInflater, List<InboxElement> items, DatabaseReference db_users) {
         this.DB_users = db_users;
         this.items = items;
-        this.itemsFull = new ArrayList<>(items);
         this.mInflater = mInflater;
     }
 
-    public void updateItems(List<InboxElement> newList) {
-        this.items = newList;
-        this.itemsFull = new ArrayList<>(items);
-        notifyDataSetChanged();
-    }
 
-    public void consume(String key, InboxElement inboxElement,int identifier) {
-        this.itemsFull.add(inboxElement);
-        this.items.add(inboxElement);
+    public void addOrUpdateInboxElement(String key, InboxElement newOrUpdatedInboxElement) {
+        //if its already there , just update it
+        int idx = 0;
+        for (InboxElement ie : items){
+            if (key.equals(ie.getMessageThreadId())){
+                //ie = newOrUpdatedInboxElement;
+                items.set(idx,newOrUpdatedInboxElement);
+                notifyItemChanged(idx);
+                return;
+            }
+            idx++;
+        }
+        //if this line is reached this means its new inbox element
+        this.items.add(newOrUpdatedInboxElement);
         notifyDataSetChanged();
         //now request for User
     }
 
-    @Override
-    public void noObject(String key, int identifier) {
+
+
+    public void removeInboxElement(String key) {
+        //never happens really
         Log.e("BOLO", "nonexistent message thread id:"+key+" refferred within InboxActivity.Check Data Consistency. ");
     }
 
     @NonNull
     @Override
     public InboxElementHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View viewRow = mInflater
                 .inflate(R.layout.inbox_recyclerview_element, parent, false);
         return new InboxElementHolder(viewRow);
@@ -193,53 +196,6 @@ public class InboxElementRVAdapter extends RecyclerView.Adapter<InboxElementRVAd
             }
         }
     }
-
-
-    /**
-     * <p>Returns a filter that can be used to constrain data with a filtering
-     * pattern.</p>
-     *
-     * <p>This method is usually implemented by {@link Adapter}
-     * classes.</p>
-     *
-     * @return a filter used to constrain data
-     */
-    @Override
-    public Filter getFilter() {
-        return categoryFilter;
-    }
-
-    private Filter categoryFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            List<InboxElement> filteredList = new ArrayList<>();
-            if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(itemsFull);
-            } else {
-                String searchQuery = constraint.toString().toLowerCase().trim();
-
-                for (InboxElement inbElem : itemsFull) {
-                    if (inbElem.getUserInterlocutor().getFullName().toLowerCase().contains(searchQuery)) {
-                        filteredList.add(inbElem);
-                    }
-                }
-
-
-            }
-
-            FilterResults filterResults = new FilterResults();
-            filterResults.values = filteredList;
-            return filterResults;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            items.clear();
-            items.addAll((List) results.values);
-            notifyDataSetChanged();
-        }
-
-    };
 
 
 }

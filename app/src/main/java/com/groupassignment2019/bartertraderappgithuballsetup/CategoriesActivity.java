@@ -43,7 +43,7 @@ public class CategoriesActivity extends AppCompatActivity {
      * from it), making modifications to it as desired, until the next
      * time onCreateOptionsMenu() is called.
      *
-     * <p>When you consume items to the menu, you can implement the Activity's
+     * <p>When you addOrUpdateInboxElement items to the menu, you can implement the Activity's
      * {@link #onOptionsItemSelected} method to handle them there.
      *
      * @param menu The options menu in which you place your items.

@@ -74,7 +74,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
         tvSellerFullNameItemDetail = findViewById(R.id.tv_sellerFullName_itemDetail);
         ivSellerPicItemDetail = findViewById(R.id.iv_sellerPic_itemDetail);
         tvSellerHasBeenFlaggedIndicator = findViewById(R.id.tv_seller_hasBeenFlaggedIndicator);
-        ratingBarItemDetail = findViewById(R.id.ratingBar_itemDetail);//clickable
+        ratingBarItemDetail = findViewById(R.id.ratingBar_newReview);//clickable
         tvAmountOfReviewsItemDetails = findViewById(R.id.tv_amountOfReviews_itemDetails);//clickable
 
         //clickables

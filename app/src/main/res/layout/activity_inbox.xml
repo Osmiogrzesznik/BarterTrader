@@ -23,7 +23,6 @@
         />
 
 
-    ¬
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/inbox_recyclerView"

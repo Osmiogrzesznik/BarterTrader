@@ -2,6 +2,7 @@ package com.groupassignment2019.bartertraderappgithuballsetup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,20 +11,24 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.groupassignment2019.bartertraderappgithuballsetup.Helpers.DB;
 import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.IdentifiableValueEventListener;
-import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.UserDataLoader;
-import com.groupassignment2019.bartertraderappgithuballsetup.ReusableListeners.UserObserver;
 import com.groupassignment2019.bartertraderappgithuballsetup.adapters.ReviewRVAdapter;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.ReviewDataModel;
 import com.groupassignment2019.bartertraderappgithuballsetup.models.UserDataModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -31,7 +36,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * expects extras:
  * uuid: id of user whose reviews should be shown;
  */
-public class ReviewsActivity extends AppCompatActivity  implements UserObserver {
+public class ReviewsActivity extends AppCompatActivity {
+    private static final int NEW_REVIEW = 9210;
     //Listeners
     final ReviewRVAdapter.OnItemClickListener clickListener = new ReviewRVAdapter.OnItemClickListener() {
         @Override
@@ -39,7 +45,16 @@ public class ReviewsActivity extends AppCompatActivity  implements UserObserver 
             Toast.makeText(ReviewsActivity.this, "you clicked" + clickedReviewDataModel.getTitle(), Toast.LENGTH_LONG).show();
         }
     };
-    private CircleImageView viBtnAddReview;
+    //toolbar
+    private Toolbar barterBar;
+    private CircleImageView ivLeftmostimgToolbar;
+    private CircleImageView ivProfilepicToolbar;
+    private ImageView ivInboxIconToolbar;
+    private TextView tvUnreadThreadsAmountCircle;
+    private TextView tvMainTextToolbar;
+    //other
+    private TextView tvIfEmpty;
+    private CircleImageView ivBtnAddReview;
     private RecyclerView recyclerView;
     private ArrayList<ReviewDataModel> reviewsArrayList;
     private LayoutInflater mInflater;
@@ -47,78 +62,198 @@ public class ReviewsActivity extends AppCompatActivity  implements UserObserver 
     private ReviewRVAdapter reviewRVAdapter;
     private Intent intentThatStartedMe;
     private IdentifiableValueEventListener<ReviewDataModel> addItemToListOnValueEvent;
-    private String UserId_WhoseReviewsWeSee;
+    private String yourID;
     private UserDataModel me;
+    private UserDataModel you;
+    private boolean reviewWasWrittenAndAverageHasToBeRecalculated = false;
+    private ReviewDataModel newReview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reviews);
 
-        viBtnAddReview = findViewById(R.id.btnAddReview);
+        tvIfEmpty = (TextView) findViewById(R.id.tv_ifEmpty);
+
+        //Toolbar UI
+        barterBar = findViewById(R.id.barterBar);
+        ivLeftmostimgToolbar = barterBar.findViewById(R.id.iv_leftMostImg_toolbar);
+        ivProfilepicToolbar = barterBar.findViewById(R.id.iv_profilepic_toolbar);
+        ivInboxIconToolbar = barterBar.findViewById(R.id.iv_inbox_icon_toolbar);
+        tvUnreadThreadsAmountCircle = barterBar.findViewById(R.id.tv_unreadThreadsAmount_circle);
+        tvMainTextToolbar = barterBar.findViewById(R.id.tv_mainText_toolbar);
+        ivBtnAddReview = findViewById(R.id.iv_AddReview);
         recyclerView = findViewById(R.id.reviewsRecyclerView);
 
         reviewsArrayList = new ArrayList<>();
 
         //prepare RecyclerView
+
         mInflater = LayoutInflater.from(this.getBaseContext());
         reviewRVAdapter = new ReviewRVAdapter(mInflater, reviewsArrayList);
         linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(reviewRVAdapter);
         reviewRVAdapter.setOnItemClickListener(clickListener);
 
         //Recover info sent from previous activity
         intentThatStartedMe = getIntent();
-        UserId_WhoseReviewsWeSee = intentThatStartedMe.getStringExtra("uuid");
-        if (UserId_WhoseReviewsWeSee == null){
-            Log.e("BOLO","no user id passed into reviews Activity with key name of uuid");
+        yourID = intentThatStartedMe.getStringExtra("uuid");
+        if (yourID == null) {
+            Log.e("BOLO", "no user id passed into reviews Activity with key name of uuid");
             throw new NullPointerException("no user id passed into reviews Activity with key name of uuid");
         }
 
-        DB.Auth.addAuthStateListener(new UserDataLoader(this)); // require user to be logged in ? fishy this object
+        FirebaseUser AuthMe = FirebaseAuth.getInstance().getCurrentUser();
 
-        //this will happen for every review
-        // TODO: 09/11/2019 this can be used rather for every userId in review to get some Pictures
-        DB.user_reviews
-                .child(UserId_WhoseReviewsWeSee)
-                .addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists()){
-                    Toast.makeText(ReviewsActivity.this, "no such user:"+UserId_WhoseReviewsWeSee , Toast.LENGTH_LONG).show();
-                    finish();
-                    return;
+        DB.users.child(AuthMe.getUid()).addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        UserDataModel user = dataSnapshot.getValue(UserDataModel.class);
+                        Log.d("BOLO", user.toString());
+                        me = user;
+                        updateUI();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(ReviewsActivity.this, "could not load ", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                reviewsArrayList.clear();
-                for (DataSnapshot reviewSnapshot: dataSnapshot.getChildren()){
-                    ReviewDataModel reviewData = reviewSnapshot.getValue(ReviewDataModel.class);
-                    reviewsArrayList.add(reviewData);
-                }
-                reviewRVAdapter.notifyDataSetChanged();
-            }
+        );
+        //TODO pictures of authors ?
+        DB.users.child(yourID)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot user_youDS) {
+                        if (user_youDS.exists()) {
+                            you = user_youDS.getValue(UserDataModel.class);
+                            updateUI();
+                        } else {
+                            //never should happen really (only admins can delete account on request after reviewing no crime has been commited);
+                            Toast.makeText(ReviewsActivity.this, "Sorry User has Just deleted his account", Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
-
-    }
+                    }
+                });
 
 
-    public void addReview(View view) {
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
     }
 
     @Override
-    public void updateUI(UserDataModel userDataModel) {
-        me = userDataModel;
-        if (me.getTradedWith().containsKey(UserId_WhoseReviewsWeSee)){
-        viBtnAddReview.setVisibility(View.VISIBLE);
-        }
+    protected void onStart() {
+        super.onStart();
+        DB.user_reviews
+                .child(yourID)
+                .addValueEventListener(keepUpdatingReviewsListAdapter);
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        DB.user_reviews
+                .child(yourID)
+                .removeEventListener(keepUpdatingReviewsListAdapter);
+    }
+
+    public void addReview(View view) {
+        Intent intent = new Intent(this, WriteNewReviewActivity.class);
+        intent.putExtra("yourID", yourID);
+        startActivityForResult(intent, NEW_REVIEW);
+    }
+
+
+    public void updateUI() {
+
+        if (me.getTradedWith().containsKey(yourID)) { //allow to write review only after trading
+            ivBtnAddReview.setVisibility(View.VISIBLE);
+        }
+
+        if (you != null){
+        tvMainTextToolbar.setText(you.getFullName());
+            if (you.getPicture() != null) {
+                Picasso.get().load(you.getPicture()).into(ivLeftmostimgToolbar);
+            }
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // check if the request code is same as what is passed  here it is 2
+        if (requestCode == NEW_REVIEW && resultCode == RESULT_OK) {
+            newReview = (ReviewDataModel) data.getSerializableExtra("newReview");
+            reviewWasWrittenAndAverageHasToBeRecalculated = true;
+        }
+
+    }
+
+
+    private ValueEventListener keepUpdatingReviewsListAdapter = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot reviewsListDS) {
+            if (!reviewsListDS.exists()) {
+                //happens if no reviews had been written yet
+                tvIfEmpty.setVisibility(View.VISIBLE);
+                Toast.makeText(ReviewsActivity.this, "this user have no reviews yet be first:" + yourID, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            tvIfEmpty.setVisibility(View.GONE);
+            reviewsArrayList.clear();
+            for (DataSnapshot reviewDS : reviewsListDS.getChildren()) {
+                ReviewDataModel reviewData = reviewDS.getValue(ReviewDataModel.class);
+                reviewsArrayList.add(reviewData);
+            }
+            reviewRVAdapter.notifyDataSetChanged();
+            //only if review has just been written
+            if (reviewWasWrittenAndAverageHasToBeRecalculated && newReview != null) {
+                int amountOfReviews = reviewsArrayList.size();
+                int sumOfReviewsRatings = 0;
+                for (ReviewDataModel review : reviewsArrayList) {
+                    sumOfReviewsRatings = sumOfReviewsRatings + review.getRating();
+                    //if newly added review is our review
+                    if (review.keyID != null && review.keyID.equals(newReview.keyID)) {
+
+                        /**
+                         * as there is no possibility to remove a review
+                         * the newly added one will be always the last one
+                         *
+                         *                         calculateAverage
+                         * this way data will be consistent without using transaction because
+                         * every user currently observing reviewsList
+                         * will run this code only if he wrote last new review
+                         *
+                         *amountOfReviews will never be zero because this code wouldnt run if there would be no elements
+                         */
+
+                        int avgOfReviews = Math.round(sumOfReviewsRatings / amountOfReviews);
+
+                        HashMap<String, Object> mapUpdate = new HashMap();
+                        mapUpdate.put("/avgRev/", avgOfReviews);
+                        mapUpdate.put("/amtRev/", amountOfReviews);
+                        DB.users.child(yourID).updateChildren(mapUpdate); // update seller average and amount of reviews
+                        //reset to allow another review
+                        reviewWasWrittenAndAverageHasToBeRecalculated = false;
+                        newReview = null; // can be done safely because newly added review is different object
+                    }
+                }
+            }
+
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
 }
 
 

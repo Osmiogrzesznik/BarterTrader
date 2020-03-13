@@ -139,6 +139,30 @@
         <item name="android:textColor">@color/White</item>
     </style>
 
+    <style name="Widget.AppCompat.RatingBar.Small.BTapp">
+        <item name="android:rating">3</item>
+        <item name="android:max">5</item>
+        <item name="android:numStars">5</item>
+        <item name="android:stepSize">1</item>
+        <item name="android:progressTint">#eeFAC403</item>
+    </style>
+
+    <style name="Widget.AppCompat.RatingBar.Large">
+        <item name="android:rating">3</item>
+        <item name="android:max">5</item>
+        <item name="android:numStars">5</item>
+        <item name="android:stepSize">1</item>
+        <item name="android:progressTint">#eeFAC403</item>
+    </style>
+
+    <style name="BTRatingBar" parent="Widget.AppCompat.RatingBar.Large">
+        <item name="android:rating">3</item>
+        <item name="android:max">5</item>
+        <item name="android:numStars">5</item>
+        <item name="android:stepSize">1</item>
+        <item name="android:progressTint">#eeFAC403</item>
+    </style>
+
 
     <color name="White">#ffffffff</color>
 </resources>

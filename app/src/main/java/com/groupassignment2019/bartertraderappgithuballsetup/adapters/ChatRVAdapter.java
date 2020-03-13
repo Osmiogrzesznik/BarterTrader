@@ -57,7 +57,7 @@ public class ChatRVAdapter extends RecyclerView.Adapter<ChatRVAdapter.ClickableM
         int output = -1;
         //TODO modify data model no need for FRom or To - since other user id is in key of message thread you can use only author field
         boolean authorIsMe = DB.isMe(message.getFrom());//compare Author userId with currently logged one;
-        if (message.isOffer()) {
+        if (message.isOffer() && !message.isAgreed()) {
             output = authorIsMe ? MY_OFFER : YOUR_OFFER;
         } else {// normal message
             output = authorIsMe ? MY_MESSAGE : YOUR_MESSAGE;
@@ -180,7 +180,7 @@ public class ChatRVAdapter extends RecyclerView.Adapter<ChatRVAdapter.ClickableM
      */
     private void bindOfferHolder(OfferHolder holder, MessageDataModel message, int position, int viewType) {
         if (message.isAgreed()){
-            holder.ivMyItemImage.setVisibility(View.GONE);
+            holder.ivMyItemImage.setVisibility(View.VISIBLE);
             holder.ivYourItemImage.setVisibility(View.GONE);// if trade was made there is no item to retrieve the images so make them gone
             holder.tvYourItemTitle.setVisibility(View.GONE);
             holder.tvMyItemTitle.setText(message.getBody());

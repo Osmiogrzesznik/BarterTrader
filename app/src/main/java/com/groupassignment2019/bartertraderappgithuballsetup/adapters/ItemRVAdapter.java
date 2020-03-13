@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.ItemDataViewHolder> implements Filterable , Consumer<ItemData> {
+public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.ItemDataViewHolder> implements Filterable{
     private OnItemClickListener onItemClickListener;
 //    private Context mContext;
     private List<ItemData> items;
@@ -54,14 +54,13 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.ItemDataVi
     }
 
 
-    public void consume(String key, ItemData itemData, int identifier){
+    public void addOrModifyItemData(String key, ItemData itemData){
         this.itemsFull.add(itemData);
         this.items.add(itemData);
         notifyDataSetChanged();
     }
 
-    @Override
-    public void noObject(String key, int identifier) {
+    public void removeItemData(String key) {
         String msg = "some item is missing in the list ";
         Log.d("BOLO", msg);
        // Toast.makeText(, "", Toast.LENGTH_SHORT).show();
